@@ -12,20 +12,13 @@
     --deep: #020C14; --dark: #05121E; --mid: #0A1E30;
     --surface: #0D2337; --surface2: #122B42;
     --white: #EEF6FB; --white2: #D8EDF7; --text-muted: #7AAEC8;
-    --nav-bg: rgba(2,12,20,0.97); --sec-border: rgba(74,172,220,0.08);
-  }
-  [data-theme="light"] {
-    --deep: #EAF4FB; --dark: #D8ECF7; --mid: #C4E2F2;
-    --surface: #FFFFFF; --surface2: #EAF4FB;
-    --white: #072236; --white2: #0E3350; --text-muted: #2A6E99;
-    --nav-bg: rgba(234,244,251,0.97); --sec-border: rgba(26,110,154,0.15);
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{background:var(--deep);color:var(--white);font-family:'Lato',sans-serif;overflow-x:hidden}
 
   /* NAV */
-  nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:13px 56px;background:var(--nav-bg);border-bottom:1px solid rgba(74,172,220,.15)}
+  nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:13px 56px;background:rgba(2,12,20,0.97);border-bottom:1px solid rgba(74,172,220,.15)}
   .nav-logo{display:flex;align-items:center;gap:13px;text-decoration:none}
   .nav-logo-img{width:48px;height:48px;border-radius:50%;border:2px solid var(--gold);overflow:hidden}
   .nav-logo-img img{width:100%;height:100%;object-fit:cover}
@@ -44,7 +37,7 @@
   .btn-gold{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:#020C14;background:linear-gradient(135deg,var(--gold-light),var(--gold));border:none;padding:15px 34px;cursor:pointer;text-decoration:none;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%)}
   .btn-outline{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);background:transparent;border:1px solid var(--gold);padding:14px 34px;cursor:pointer;text-decoration:none;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%)}
 
-  /* SHARED STYLES */
+  /* SHARED */
   section{position:relative;z-index:1}
   .sec-lbl{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.4em;color:var(--gold);text-transform:uppercase;margin-bottom:11px;opacity:.85}
   .sec-lbl::before{content:'— '}
@@ -57,13 +50,12 @@
   .sec-center .gold-line{margin:20px auto}
 
   /* ABOUT */
-  #about{padding:108px 60px;background:linear-gradient(160deg,var(--deep) 0%,var(--dark) 100%);border-top:1px solid var(--sec-border)}
+  #about{padding:108px 60px;background:linear-gradient(160deg,var(--deep) 0%,var(--dark) 100%);border-top:1px solid rgba(74,172,220,.15)}
   .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:76px;max-width:1200px;margin:0 auto;align-items:center}
-  .about-frame{position:relative;max-width:410px}
-  .about-img{width:100%;aspect-ratio:3/4;object-fit:cover;border:1px solid rgba(74,172,220,.3);background:var(--surface)}
+  .about-img{width:100%;aspect-ratio:3/4;object-fit:cover;border:1px solid rgba(74,172,220,.3)}
 
-  /* VIDEOS */
-  #sermons{padding:96px 60px;background:linear-gradient(160deg,var(--dark),var(--deep));border-top:1px solid var(--sec-border)}
+  /* SERMONS - 11 Videos */
+  #sermons{padding:96px 60px;background:linear-gradient(160deg,var(--dark),var(--deep));border-top:1px solid rgba(74,172,220,.15)}
   .videos-container{max-width:1200px;margin:0 auto}
   .videos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:28px}
   .video-card{background:var(--surface);border:1px solid rgba(74,172,220,.15);border-radius:8px;overflow:hidden;transition:all .3s}
@@ -75,14 +67,13 @@
   .video-link{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.15em;color:var(--gold);text-decoration:none}
 
   /* DOCUMENTS */
-  #documents{padding:96px 60px;background:var(--deep);border-top:1px solid var(--sec-border)}
+  #documents{padding:96px 60px;background:var(--deep);border-top:1px solid rgba(74,172,220,.15)}
   .docs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:20px;max-width:1200px;margin:0 auto}
   .doc-card{background:linear-gradient(160deg,var(--surface),var(--surface2));border:1px solid rgba(74,172,220,.15);padding:28px 24px;display:flex;flex-direction:column;gap:10px;transition:all .3s;cursor:pointer}
   .doc-card:hover{transform:translateY(-5px);border-color:var(--gold)}
 
   @media(max-width:900px){
-    .about-grid{grid-template-columns:1fr}
-    .videos-grid{grid-template-columns:1fr}
+    .about-grid,.videos-grid{grid-template-columns:1fr}
     nav{padding:13px 18px}
   }
 </style>
@@ -124,76 +115,144 @@
 <!-- ABOUT -->
 <section id="about">
   <div class="about-grid">
-    <div class="about-frame">
+    <div>
       <img class="about-img" src="photos/jay-uriel.jpeg" alt="Prophet Jay Uriel"
-           onerror="this.src='photos/jay-uriel.png'; this.onerror=null;">
+           onerror="this.src='photos/jay-uriel.png';this.onerror=null;">
     </div>
     <div>
       <div class="sec-lbl">Our Leader</div>
       <h2 class="sec-title">Prophet <span>Jay Uriel</span></h2>
       <div class="gold-line"></div>
-      <div style="font-size:1.05rem;line-height:1.8;color:var(--text-muted);margin:25px 0">
+      <p style="font-size:1.05rem;line-height:1.85;color:var(--text-muted);margin:20px 0">
         Prophet Jay Uriel is a consecrated vessel called by God — a prophetic voice and teacher of the Word raised up for this generation. 
         With a burning passion for truth and a heart surrendered to the Holy Spirit, he carries a mantle of revelation that transforms lives.
-      </div>
+      </p>
     </div>
   </div>
 </section>
 
-<!-- SERMONS - All 4 YouTube Videos Restored -->
+<!-- SERMONS - All 11 Videos -->
 <section id="sermons">
   <div class="sec-center">
     <div class="sec-lbl">Anointed Messages</div>
     <h2 class="sec-title">Sermons & <span>Preachings</span></h2>
     <div class="gold-line"></div>
-    <p class="sec-sub">Watch and receive from the prophetic messages of Prophet Jay Uriel. Each sermon carries an impartation.</p>
+    <p class="sec-sub">Watch and receive from the prophetic messages of Prophet Jay Uriel. Each sermon carries an impartation — press play and encounter God.</p>
   </div>
   
   <div class="videos-container">
     <div class="videos-grid">
-      <!-- Video 1 -->
+
       <div class="video-card">
         <div class="video-wrapper">
-          <iframe src="https://www.youtube.com/embed/MnnpCZcyYiI" title="The Power of Faith in Christ" allowfullscreen loading="lazy"></iframe>
+          <iframe src="https://www.youtube.com/embed/0TS902WHcVc" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-info">
+          <div class="video-title">Sermon Title 1</div>
+          <a href="https://youtu.be/0TS902WHcVc" target="_blank" class="video-link">Watch on YouTube →</a>
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/36V_GmO3050" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-info">
+          <div class="video-title">Sermon Title 2</div>
+          <a href="https://youtu.be/36V_GmO3050" target="_blank" class="video-link">Watch on YouTube →</a>
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/MnnpCZcyYiI" allowfullscreen loading="lazy"></iframe>
         </div>
         <div class="video-info">
           <div class="video-title">The Power of Faith in Christ</div>
-          <a href="https://www.youtube.com/watch?v=MnnpCZcyYiI" target="_blank" class="video-link">Watch on YouTube →</a>
+          <a href="https://youtu.be/MnnpCZcyYiI" target="_blank" class="video-link">Watch on YouTube →</a>
         </div>
       </div>
 
-      <!-- Video 2 -->
       <div class="video-card">
         <div class="video-wrapper">
-          <iframe src="https://www.youtube.com/embed/vwsWuBSVxbs" title="The Kingdom Mindset" allowfullscreen loading="lazy"></iframe>
+          <iframe src="https://www.youtube.com/embed/yb0ykMTb_dE" allowfullscreen loading="lazy"></iframe>
         </div>
         <div class="video-info">
-          <div class="video-title">The Kingdom Mindset</div>
-          <a href="https://www.youtube.com/watch?v=vwsWuBSVxbs" target="_blank" class="video-link">Watch on YouTube →</a>
+          <div class="video-title">Sermon Title 4</div>
+          <a href="https://youtu.be/yb0ykMTb_dE" target="_blank" class="video-link">Watch on YouTube →</a>
         </div>
       </div>
 
-      <!-- Video 3 -->
       <div class="video-card">
         <div class="video-wrapper">
-          <iframe src="https://www.youtube.com/embed/kEj4c_ayeDY" title="How to Access the Kingdom" allowfullscreen loading="lazy"></iframe>
+          <iframe src="https://www.youtube.com/embed/RvP9Mha5bTA" allowfullscreen loading="lazy"></iframe>
         </div>
         <div class="video-info">
-          <div class="video-title">How to Access the Kingdom</div>
-          <a href="https://www.youtube.com/watch?v=kEj4c_ayeDY" target="_blank" class="video-link">Watch on YouTube →</a>
+          <div class="video-title">Sermon Title 5</div>
+          <a href="https://youtu.be/RvP9Mha5bTA" target="_blank" class="video-link">Watch on YouTube →</a>
         </div>
       </div>
 
-      <!-- Video 4 -->
       <div class="video-card">
         <div class="video-wrapper">
-          <iframe src="https://www.youtube.com/embed/bcwtsyJVtwnYQhFH" title="Walking in God’s Grace" allowfullscreen loading="lazy"></iframe>
+          <iframe src="https://www.youtube.com/embed/_AZxY5wJ7Pk" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-info">
+          <div class="video-title">Sermon Title 6</div>
+          <a href="https://youtu.be/_AZxY5wJ7Pk" target="_blank" class="video-link">Watch on YouTube →</a>
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/S-IFCaO4A4s" allowfullscreen loading="lazy"></iframe>
         </div>
         <div class="video-info">
           <div class="video-title">Walking in God’s Grace</div>
-          <a href="https://youtu.be/S-IFCaO4A4s?si=bcwtsyJVtwnYQhFH" target="_blank" class="video-link">Watch on YouTube →</a>
+          <a href="https://youtu.be/S-IFCaO4A4s" target="_blank" class="video-link">Watch on YouTube →</a>
         </div>
       </div>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/y7glFO4EkNk" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-info">
+          <div class="video-title">Sermon Title 8</div>
+          <a href="https://youtu.be/y7glFO4EkNk" target="_blank" class="video-link">Watch on YouTube →</a>
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/LkaIPh6m6pc" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-info">
+          <div class="video-title">Sermon Title 9</div>
+          <a href="https://youtu.be/LkaIPh6m6pc" target="_blank" class="video-link">Watch on YouTube →</a>
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/vwsWuBSVxbs" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-info">
+          <div class="video-title">The Kingdom Mindset</div>
+          <a href="https://youtu.be/vwsWuBSVxbs" target="_blank" class="video-link">Watch on YouTube →</a>
+        </div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/ezxL__tQr8A" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-info">
+          <div class="video-title">Sermon Title 11</div>
+          <a href="https://youtu.be/ezxL__tQr8A" target="_blank" class="video-link">Watch on YouTube →</a>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -204,14 +263,17 @@
     <div class="sec-lbl">Written Revelation</div>
     <h2 class="sec-title">Teaching <span>Notes</span></h2>
     <div class="gold-line"></div>
-    <p class="sec-sub">Study materials from Prophet Jay Uriel (files from the <strong>files/</strong> folder).</p>
+    <p class="sec-sub">Study materials and prophetic notes from Prophet Jay Uriel.</p>
   </div>
   <div class="docs-grid" id="docsGrid"></div>
 </section>
 
 <script>
-// Load documents from files/ folder
-const docs = ['The Prophetic Foundation','Walking in the Spirit','Authority of the Word','Kingdom Principles','The Fear of the Lord','Covenant & Promise'];
+// Documents from files/ folder
+const docs = [
+  'The Prophetic Foundation', 'Walking in the Spirit', 'Authority of the Word',
+  'Kingdom Principles', 'The Fear of the Lord', 'Covenant & Promise'
+];
 const dGrid = document.getElementById('docsGrid');
 docs.forEach((title, i) => {
   const num = String(i+1).padStart(2, '0');
@@ -219,10 +281,10 @@ docs.forEach((title, i) => {
   const d = document.createElement('div');
   d.className = 'doc-card';
   d.innerHTML = `
-    <div style="font-size:2rem">📄</div>
+    <div style="font-size:2.2rem">📄</div>
     <div style="font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.24em;color:var(--gold);opacity:.75">Notes ${num}</div>
-    <div style="font-family:'Playfair Display',serif;font-size:.97rem;color:var(--white);font-weight:700;line-height:1.4">${title}</div>
-    <div style="margin-top:auto;font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.18em;color:var(--gold);text-transform:uppercase">Open Document →</div>`;
+    <div style="font-family:'Playfair Display',serif;font-size:.97rem;color:var(--white);font-weight:700">${title}</div>
+    <div style="margin-top:auto;font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.18em;color:var(--gold)">Open Document →</div>`;
   d.onclick = () => window.open(file, '_blank');
   dGrid.appendChild(d);
 });
