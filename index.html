@@ -831,13 +831,18 @@ document.addEventListener('keydown', e => {
   <button id="choosePrayer">🙏 Prayer Request</button>
   <button id="chooseMentorship">👥 Mentorship Program</button>
 </div>
+<!-- Choice Buttons -->
+<div id="formChoice">
+  <button id="choosePrayer">🙏 Prayer Request</button>
+  <button id="chooseMentorship">👥 Mentorship Program</button>
+</div>
 
 <!-- Prayer Form -->
 <form id="prayerForm" class="form-section">
   <input id="pName" placeholder="Your Name" required>
   <input id="pEmail" placeholder="Your Email">
   <input id="pSubject" placeholder="Subject">
-  <textarea id="pMessage" placeholder="Share your prayer request here…" required></textarea>
+  <textarea id="pMessage" placeholder="Prayer Request" required></textarea>
   <button id="prayerSubmit" type="button">Send Prayer Request</button>
 </form>
 
@@ -853,21 +858,11 @@ document.addEventListener('keydown', e => {
 <div id="formConfirm"></div>
 
 <style>
-#formChoice { margin-bottom: 20px; text-align:center; }
-#formChoice button { margin: 0 10px; padding: 10px 16px; cursor:pointer; border:none; border-radius:6px; background:#2d9e6a; color:#fff; }
+#formChoice { margin-bottom: 20px; }
+#formChoice button { margin-right: 10px; padding: 8px 14px; cursor:pointer; }
 
-.form-section { margin-top: 10px; max-width:500px; margin:auto; opacity:0; display:none; transition:opacity 0.5s ease; }
-.form-section.show { display:block; opacity:1; }
-.form-section input, .form-section textarea { display:block; width:100%; margin:8px 0; padding:8px; border:1px solid #ccc; border-radius:4px; }
-
-#prayerSubmit, #mentorSubmit { background:#2d9e6a; color:#fff; border:none; padding:10px 16px; border-radius:6px; cursor:pointer; }
-#prayerSubmit:active, #mentorSubmit:active { animation: pulse 0.6s; }
-
-@keyframes pulse {
-  0% { box-shadow: 0 0 0 0 rgba(45,158,106,0.7); }
-  70% { box-shadow: 0 0 0 15px rgba(45,158,106,0); }
-  100% { box-shadow: 0 0 0 0 rgba(45,158,106,0); }
-}
+.form-section { margin-top: 10px; }
+.form-section input, .form-section textarea { display:block; width:100%; margin:8px 0; padding:8px; }
 
 #formConfirm {
   position: fixed;
@@ -890,15 +885,15 @@ const PRAYER_WA = '27649842408'; // prayer number
 const MENTOR_WA = '27785260363'; // mentorship number
 const confirmBanner = document.getElementById('formConfirm');
 
-// Toggle forms with fade animation
-document.getElementById('choosePrayer').onclick = () => showForm('prayerForm');
-document.getElementById('chooseMentorship').onclick = () => showForm('mentorForm');
-
-function showForm(id){
-  document.querySelectorAll('.form-section').forEach(f => f.classList.remove('show'));
-  const form = document.getElementById(id);
-  form.classList.add('show');
-}
+// Toggle forms
+document.getElementById('choosePrayer').onclick = () => {
+  document.getElementById('prayerForm').style.display='block';
+  document.getElementById('mentorForm').style.display='none';
+};
+document.getElementById('chooseMentorship').onclick = () => {
+  document.getElementById('mentorForm').style.display='block';
+  document.getElementById('prayerForm').style.display='none';
+};
 
 // Prayer form submit
 document.getElementById('prayerSubmit').onclick = () => {
@@ -934,6 +929,7 @@ document.getElementById('mentorSubmit').onclick = () => {
   showBanner("Your mentorship application has been prepared in WhatsApp…");
   document.getElementById('mentorForm').reset();
 };
+
 // Banner helper
 function showBanner(msg){
   confirmBanner.textContent = msg;
@@ -941,5 +937,7 @@ function showBanner(msg){
   setTimeout(() => confirmBanner.classList.remove('show'), 3000);
 }
 </script>
+
+
 </body>
 </html>
