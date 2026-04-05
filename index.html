@@ -249,12 +249,169 @@
   .stagger-children.visible > *:nth-child(3){opacity:1;transform:translateY(0);transition-delay:.25s}
   .stagger-children.visible > *:nth-child(4){opacity:1;transform:translateY(0);transition-delay:.35s}
 
-  @media(max-width:900px){
-    .about-grid,.sat-grid,.form-row{grid-template-columns:1fr}
-    nav{padding:13px 18px}
+
+  /* ═══════════════════════════════════════
+     FULLY RESPONSIVE — all screen sizes
+  ═══════════════════════════════════════ */
+
+  /* ── Hamburger menu (hidden on desktop) ── */
+  .nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;z-index:1100;background:none;border:none}
+  .nav-hamburger span{display:block;width:24px;height:2px;background:var(--gold);border-radius:2px;transition:all .35s cubic-bezier(.4,0,.2,1);transform-origin:center}
+  .nav-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .nav-hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+  .nav-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+  /* Mobile slide-down menu overlay */
+  .nav-mobile-menu{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(2,12,20,.98);z-index:1050;flex-direction:column;align-items:center;justify-content:center;gap:0;backdrop-filter:blur(12px)}
+  .nav-mobile-menu.open{display:flex}
+  .nav-mobile-menu li{list-style:none;width:100%;text-align:center;border-bottom:1px solid rgba(74,172,220,.08)}
+  .nav-mobile-menu li:first-child{border-top:1px solid rgba(74,172,220,.08)}
+  .nav-mobile-menu a{font-family:'Cinzel',serif;font-size:1rem;letter-spacing:.25em;color:var(--white2);text-decoration:none;text-transform:uppercase;display:block;padding:22px 40px;transition:color .3s,background .3s}
+  .nav-mobile-menu a:hover{color:var(--gold);background:rgba(74,172,220,.06)}
+
+  /* ── TABLET (≤1024px) ── */
+  @media(max-width:1024px){
+    nav{padding:12px 28px}
+    .about-grid{gap:44px}
+    .sat-grid{gap:22px}
+    .videos-grid{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
+    .social-grid{grid-template-columns:repeat(3,1fr)}
+    #about,#saturday,#sermons,#documents,#prayer,#connect{padding-left:36px;padding-right:36px}
+    footer{padding-left:36px;padding-right:36px}
+    .join-sec{padding-left:36px;padding-right:36px}
+  }
+
+  /* ── SMALL TABLET / LARGE PHONE (≤768px) ── */
+  @media(max-width:768px){
+    /* Nav → hamburger */
+    .nav-links{display:none}
+    .nav-hamburger{display:flex}
+    nav{padding:12px 18px}
+    .nav-logo-text{font-size:.78rem}
+
+    /* Hero */
+    .hero{padding:100px 24px 60px;min-height:100svh}
     .hero-orb{display:none}
-    #about,#saturday,#sermons,#documents,#prayer,#connect,footer{padding-left:20px;padding-right:20px}
-    .join-sec{padding-left:20px;padding-right:20px}
+    .hero-logo-wrap{width:160px;height:160px}
+    .hero-logo-circle{width:144px;height:144px}
+    .hero-tagline{font-size:1rem;max-width:90%}
+    .hero-cta{flex-direction:column;align-items:center;gap:12px}
+    .btn-gold,.btn-outline{width:100%;max-width:280px;text-align:center;padding:14px 20px}
+
+    /* About */
+    .about-grid{grid-template-columns:1fr;gap:32px}
+    .about-img{aspect-ratio:4/3;max-height:340px}
+
+    /* Saturday cards */
+    .sat-grid{grid-template-columns:1fr;gap:18px}
+    .sat-card{padding:32px 26px}
+
+    /* Sermons */
+    .videos-grid{grid-template-columns:1fr}
+
+    /* Docs */
+    .docs-grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px}
+    .doc-card{padding:20px 16px}
+    .doc-actions{flex-wrap:wrap;gap:6px}
+    .doc-btn{font-size:.54rem;padding:7px 10px}
+
+    /* Prayer form */
+    .form-row{grid-template-columns:1fr}
+    .prayer-wrap{padding:0 4px}
+
+    /* Connect */
+    .social-grid{grid-template-columns:repeat(2,1fr);gap:12px}
+    .soc-card{padding:22px 12px}
+
+    /* Section padding */
+    #about,#saturday,#sermons,#documents,#prayer,#connect{padding:64px 18px}
+    footer{padding:40px 18px 28px}
+    .join-sec{padding:60px 18px}
+    .sec-center{margin-bottom:40px}
+
+    /* PDF modal */
+    .pdf-modal-inner{max-height:95vh;margin:0 8px}
+    .pdf-modal-body iframe{min-height:340px}
+
+    /* Theme toggle smaller on mobile */
+    .theme-toggle{width:42px;height:42px;font-size:1rem;bottom:16px;right:16px}
+  }
+
+  /* ── SMALL PHONE (≤480px) ── */
+  @media(max-width:480px){
+    nav{padding:10px 14px}
+    .nav-logo-img{width:38px;height:38px}
+    .nav-logo-text{font-size:.7rem;letter-spacing:.06em}
+    .nav-logo-sub{font-size:.5rem}
+
+    .hero{padding:88px 16px 48px}
+    .hero-ornament{font-size:.55rem;letter-spacing:.3em}
+    .hero-logo-wrap{width:140px;height:140px}
+    .hero-logo-circle{width:124px;height:124px}
+    .hero-tagline{font-size:.95rem}
+
+    .sec-title{font-size:clamp(1.5rem,7vw,2.2rem)}
+    .sec-lbl{font-size:.52rem;letter-spacing:.28em}
+
+    .sat-card{padding:26px 18px}
+    .sat-title{font-size:1.2rem}
+
+    .docs-grid{grid-template-columns:1fr 1fr;gap:12px}
+    .doc-card{padding:18px 12px}
+    .doc-title{font-size:.82rem}
+    .doc-actions{flex-direction:column;gap:5px}
+    .doc-btn{width:100%;justify-content:center;font-size:.52rem}
+
+    .social-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+    .soc-card{padding:18px 8px}
+    .soc-logo{width:34px;height:34px}
+    .soc-name{font-size:.6rem}
+    .soc-desc{font-size:.72rem}
+
+    #about,#saturday,#sermons,#documents,#prayer,#connect{padding:52px 14px}
+    .join-sec{padding:48px 14px}
+    footer{padding:32px 14px 22px}
+
+    .built-by-text{font-size:.55rem;letter-spacing:.15em}
+    .built-by-name{font-size:.8rem}
+    .built-by-inner{padding:8px 14px;gap:7px}
+
+    .form-submit{width:100%;padding:14px 20px;clip-path:none;border-radius:2px}
+    .pdf-modal{padding:8px}
+    .pdf-modal-body iframe{min-height:260px}
+    .pdf-modal-footer{flex-wrap:wrap;gap:8px}
+  }
+
+  /* ── VERY SMALL (≤360px) ── */
+  @media(max-width:360px){
+    .hero-logo-wrap{width:120px;height:120px}
+    .hero-logo-circle{width:106px;height:106px}
+    .hero-title{font-size:1.9rem}
+    .docs-grid{grid-template-columns:1fr}
+    .social-grid{grid-template-columns:1fr 1fr}
+    nav{padding:8px 10px}
+  }
+
+  /* ── LANDSCAPE PHONE ── */
+  @media(max-height:500px) and (orientation:landscape){
+    .hero{min-height:auto;padding:80px 40px 40px}
+    .hero-logo-wrap{width:110px;height:110px;margin:6px auto 14px}
+    .hero-logo-circle{width:96px;height:96px}
+    .hero-tagline{margin-bottom:20px;font-size:.92rem}
+    nav{padding:8px 18px}
+    .nav-logo-img{width:36px;height:36px}
+  }
+
+  /* ── WIDE / 4K ── */
+  @media(min-width:1600px){
+    nav{padding:16px 80px}
+    #about,#saturday,#sermons,#documents,#prayer,#connect{padding-left:80px;padding-right:80px}
+    footer{padding-left:80px;padding-right:80px}
+    .join-sec{padding-left:80px;padding-right:80px}
+    .about-grid{max-width:1400px}
+    .sat-grid{max-width:1300px}
+    .videos-container,.docs-grid{max-width:1400px}
+    .social-grid{max-width:1100px}
   }
 </style>
 </head>
@@ -305,7 +462,20 @@
     <li><a href="#prayer">Prayer</a></li>
     <li><a href="#connect">Connect</a></li>
   </ul>
+  <button class="nav-hamburger" id="navHamburger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- MOBILE MENU -->
+<ul class="nav-mobile-menu" id="navMobileMenu">
+  <li><a href="#about" class="mob-link">About</a></li>
+  <li><a href="#saturday" class="mob-link">Teachings</a></li>
+  <li><a href="#sermons" class="mob-link">Sermons</a></li>
+  <li><a href="#documents" class="mob-link">Notes</a></li>
+  <li><a href="#prayer" class="mob-link">Prayer</a></li>
+  <li><a href="#connect" class="mob-link">Connect</a></li>
+</ul>
 
 <!-- HERO -->
 <section class="hero">
@@ -690,6 +860,38 @@ function shareWhatsApp(file, name) {
   const text = `🔥 Teaching Note from Prophet Jay Uriel\n\n📖 ${name}\n\n📥 View/Download: ${url}`;
   window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
 }
+
+/* ── HAMBURGER MOBILE NAV ── */
+const hamburger = document.getElementById('navHamburger');
+const mobileMenu = document.getElementById('navMobileMenu');
+
+function openMobileMenu() {
+  hamburger.classList.add('open');
+  mobileMenu.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeMobileMenu() {
+  hamburger.classList.remove('open');
+  mobileMenu.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+hamburger.addEventListener('click', () => {
+  if (mobileMenu.classList.contains('open')) closeMobileMenu();
+  else openMobileMenu();
+});
+
+// Close on any mobile link click
+document.querySelectorAll('.mob-link').forEach(link => {
+  link.addEventListener('click', () => {
+    closeMobileMenu();
+  });
+});
+
+// Close on escape
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeMobileMenu();
+});
 
 /* ── PRAYER FORM → sends to WhatsApp ── */
 const PRAYER_WA = '27649842408'; // 064 9842408 in international format
