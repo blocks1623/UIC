@@ -58,7 +58,7 @@
   .sec-center{text-align:center;max-width:700px;margin:0 auto 60px}
   .sec-center .gold-line{margin:20px auto}
 
-  /* SERMONS / VIDEOS */
+  /* SERMONS / VIDEOS - Consistent Layout */
   #sermons{padding:96px 60px;background:linear-gradient(160deg,var(--dark),var(--deep));border-top:1px solid var(--sec-border)}
   .videos-container{max-width:1200px;margin:0 auto}
   .videos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:28px}
@@ -70,7 +70,7 @@
   .video-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--white);line-height:1.35;margin-bottom:8px}
   .video-link{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.15em;color:var(--gold);text-decoration:none}
 
-  /* DOCUMENTS */
+  /* DOCUMENTS - from files/ folder */
   #documents{padding:96px 60px;background:var(--deep);border-top:1px solid var(--sec-border)}
   .docs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:20px;max-width:1200px;margin:0 auto}
   .doc-card{background:linear-gradient(160deg,var(--surface),var(--surface2));border:1px solid rgba(74,172,220,.15);padding:28px 24px;display:flex;flex-direction:column;gap:10px;transition:all .3s;cursor:pointer}
@@ -89,7 +89,6 @@
 
   @media(max-width:900px){
     nav{padding:13px 18px}
-    .nav-links{display:none}
     #about,#saturday,#sermons,#documents,#prayer{padding:68px 18px}
     .about-grid{grid-template-columns:1fr}
     .videos-grid{grid-template-columns:1fr}
@@ -98,11 +97,11 @@
 </head>
 <body>
 
+<!-- NAV -->
 <nav>
   <a href="#" class="nav-logo">
     <div class="nav-logo-img">
-      <img src="photos/united-in-christ-logo.png" alt="United in Christ Logo" 
-           onerror="this.src='photos/united-in-christ-logo.png'">
+      <img src="photos/united-in-christ-logo.jpeg" alt="United in Christ Logo">
     </div>
     <div>
       <div class="nav-logo-text">United in Christ</div>
@@ -118,7 +117,7 @@
   <h1 class="hero-title">United in <span>Christ</span></h1>
   <div class="hero-logo-wrap">
     <div class="hero-logo-circle">
-      <img src="photos/united-in-christ-logo.png" alt="United in Christ Logo">
+      <img src="photos/united-in-christ-logo.jpeg" alt="United in Christ Logo">
     </div>
   </div>
   <p class="hero-tagline">"Proclaiming the Word of God with power, truth, and the spirit of prophecy"</p>
@@ -133,18 +132,28 @@
   <div class="about-grid">
     <div>
       <div class="about-frame">
-        <img class="about-img" src="photos/jay-uriel.png" alt="Prophet Jay Uriel"
-             onerror="this.outerHTML='<div style=\'padding:40px;text-align:center;background:#122B42;color:#7ECFEF\'>Place jay-uriel.png in the photos folder</div>'">
+        <img class="about-img" src="photos/jay-uriel.jpeg" alt="Prophet Jay Uriel"
+             onerror="this.outerHTML='<div style=\'padding:60px 20px;text-align:center;background:#122B42;color:#7ECFEF;font-family:Cinzel,sans-serif\'>Place jay-uriel.jpeg in the photos folder</div>'">
       </div>
     </div>
     <div>
       <div class="sec-lbl">Our Leader</div>
       <h2 class="sec-title">Prophet <span>Jay Uriel</span></h2>
       <div class="gold-line"></div>
-      <p style="font-size:1.05rem;line-height:1.7;color:var(--text-muted);margin:20px 0">
+      <p style="font-size:1.05rem;line-height:1.8;color:var(--text-muted);margin:25px 0">
         Prophet Jay Uriel is a consecrated vessel called by God — a prophetic voice and teacher of the Word raised up for this generation.
       </p>
     </div>
+  </div>
+</section>
+
+<!-- SATURDAY TEACHINGS -->
+<section id="saturday" style="padding:96px 60px;background:var(--deep);border-top:1px solid var(--sec-border)">
+  <div class="sec-center">
+    <div class="sec-lbl">Every Saturday</div>
+    <h2 class="sec-title">Saturday <span>Teachings</span></h2>
+    <div class="gold-line"></div>
+    <p class="sec-sub">Two anointed sessions every Saturday — morning and evening.</p>
   </div>
 </section>
 
@@ -168,26 +177,40 @@
           <a href="https://www.youtube.com/watch?v=MnnpCZcyYiI" target="_blank" class="video-link">Watch on YouTube →</a>
         </div>
       </div>
-      <!-- Add more video cards the same way -->
+      <div class="video-card">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/vwsWuBSVxbs" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-info">
+          <div class="video-title">The Kingdom Mindset</div>
+          <a href="https://www.youtube.com/watch?v=vwsWuBSVxbs" target="_blank" class="video-link">Watch on YouTube →</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- DOCUMENTS (files folder) -->
+<!-- DOCUMENTS -->
 <section id="documents">
   <div class="sec-center">
     <div class="sec-lbl">Written Revelation</div>
     <h2 class="sec-title">Teaching <span>Notes</span></h2>
+    <div class="gold-line"></div>
+    <p class="sec-sub">Study materials from Prophet Jay Uriel. Click to open (files from <strong>files/</strong> folder).</p>
   </div>
   <div class="docs-grid" id="docsGrid"></div>
 </section>
 
 <script>
-// Documents load from "files/" folder
-const docs = ['The Prophetic Foundation','Walking in the Spirit','Authority of the Word','Kingdom Principles'];
+// Documents load from files/ folder
+const docs = [
+  'The Prophetic Foundation', 'Walking in the Spirit', 'Authority of the Word',
+  'Kingdom Principles', 'The Fear of the Lord', 'Covenant & Promise'
+];
+
 const dGrid = document.getElementById('docsGrid');
-docs.forEach((title,i) => {
-  const num = String(i+1).padStart(2,'0');
+docs.forEach((title, i) => {
+  const num = String(i+1).padStart(2, '0');
   const file = `files/notes-${num}.pdf`;
   const d = document.createElement('div');
   d.className = 'doc-card';
@@ -195,6 +218,7 @@ docs.forEach((title,i) => {
     <div class="doc-icon">📄</div>
     <div class="doc-num">Notes ${num}</div>
     <div class="doc-title">${title}</div>
+    <div class="doc-sub">Prophet Jay Uriel</div>
     <div class="doc-action">Open Document →</div>`;
   d.onclick = () => window.open(file, '_blank');
   dGrid.appendChild(d);
