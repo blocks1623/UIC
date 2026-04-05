@@ -364,81 +364,91 @@
     </div>
   </div>
 </section>
-/* ────────────────────────────────────────
-   DOCUMENTS — Dynamic from your folder
-──────────────────────────────────────── */
+<!-- DOCUMENTS - Improved with View, Download, WhatsApp -->
+<section id="documents">
+  <div class="sec-center reveal">
+    <div class="sec-lbl">Written Revelation</div>
+    <h2 class="sec-title">Teaching <span>Notes</span></h2>
+    <div class="gold-line"></div>
+    <p class="sec-sub">Study materials from Prophet Jay Uriel. Files from the <strong>Notes/</strong> folder.</p>
+  </div>
+  <div class="docs-grid" id="docsGrid"></div>
+</section>
+
+<!-- Footer -->
+<footer style="background:#010810; padding:54px 60px 34px; text-align:center;">
+  <p style="color:var(--text-muted);">© 2024 United in Christ. All rights reserved.</p>
+</footer>
+
+<script>
+// Particles (kept)
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+let W, H, stars = [];
+function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight}
+function initStars(){stars=[];for(let i=0;i<90;i++)stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.4+.2,a:Math.random(),da:(.002+Math.random()*.006)*(Math.random()<.5?1:-1),vx:(Math.random()-.5)*.15,vy:(Math.random()-.5)*.15})}
+function drawStars(){ctx.clearRect(0,0,W,H);stars.forEach(s=>{s.a+=s.da;if(s.a<=0||s.a>=1)s.da*=-1;s.x+=s.vx;s.y+=s.vy;if(s.x<0)s.x=W;if(s.x>W)s.x=0;if(s.y<0)s.y=H;if(s.y>H)s.y=0;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(74,172,220,${s.a})`;ctx.fill()});requestAnimationFrame(drawStars)}
+resize(); initStars(); drawStars();
+
+// Theme Toggle
+const themeBtn = document.getElementById('themeToggle');
+themeBtn.addEventListener('click', () => {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  themeBtn.textContent = isDark ? '☀️' : '🌙';
+});
+
+// Documents with View / Download / WhatsApp
 const dGrid = document.getElementById('docsGrid');
 
-// Real files from your screenshot/folder
 const documents = [
-  { name: "DOMINION & ROYALTY IN CH...", filename: "DOMINION & ROYALTY IN CH...pdf" },
-  { name: "Gifts Impress But Fruit Proves....", filename: "Gifts Impress But Fruit Proves....pdf" },
-  { name: "KINGDOM SERVICE (MINISTR...", filename: "KINGDOM SERVICE (MINISTR...pdf" },
-  { name: "KINGDOM SERVICE (MINISTR...", filename: "KINGDOM SERVICE (MINISTR...pdf" }, // second one if different
+  { name: "DOMINION & ROYALTY IN CHRIST", filename: "DOMINION & ROYALTY IN CH....pdf" },
+  { name: "Gifts Impress But Fruit Proves", filename: "Gifts Impress But Fruit Proves....pdf" },
+  { name: "KINGDOM SERVICE (MINISTRY) Pt 1", filename: "KINGDOM SERVICE (MINISTR....pdf" },
+  { name: "KINGDOM SERVICE (MINISTRY) Pt 2", filename: "KINGDOM SERVICE (MINISTR....pdf" },
   { name: "New Creation Reality", filename: "New Creation Reality.pdf" },
   { name: "Righteousness", filename: "Righteousness.pdf" },
   { name: "Stillness", filename: "Stillness.pdf" },
-  { name: "THE MYSTERY OF CREATIVE ...", filename: "THE MYSTERY OF CREATIVE ....pdf" },
+  { name: "THE MYSTERY OF CREATIVE POWER", filename: "THE MYSTERY OF CREATIVE ....pdf" },
   { name: "The Godly Anointing", filename: "The Godly Anointing.pdf" },
-  { name: "The Revelation of the Inner Kin...", filename: "The Revelation of the Inner Kin....pdf" },
-  { name: "TheChristianwalk(UIC)", filename: "TheChristianwalk(UIC).pdf" }
+  { name: "The Revelation of the Inner Kingdom", filename: "The Revelation of the Inner Kin....pdf" },
+  { name: "The Christian Walk (UIC)", filename: "TheChristianwalk(UIC).pdf" }
 ];
-
-dGrid.innerHTML = ''; // Clear placeholder
 
 documents.forEach((doc, i) => {
   const card = document.createElement('div');
   card.className = 'doc-card';
-
-  // Clean up display name (remove trailing ...)
-  let displayName = doc.name.replace(/\.{3,}$/, '...');
-
   card.innerHTML = `
-    <div style="font-size:2.1rem; transition:transform .3s">📄</div>
-    <div style="font-family:'Cinzel',serif; font-size:.62rem; letter-spacing:.2em; color:var(--text-muted); margin-top:8px;">
-      Teaching Note ${String(i+1).padStart(2,'0')}
-    </div>
-    <div style="font-family:'Playfair Display',serif; font-weight:700; color:var(--white); margin:10px 0 12px; line-height:1.3;">
-      ${displayName}
-    </div>
-    
-    <div style="display:flex; gap:10px; margin-top:auto;">
-      <button onclick="viewPDF('${doc.filename}')" 
-              style="flex:1; font-family:'Cinzel',serif; font-size:.62rem; letter-spacing:.15em; padding:10px 12px; background:transparent; border:1px solid var(--gold); color:var(--gold); cursor:pointer; transition:all .3s;">
-        👁️ View
-      </button>
-      <button onclick="downloadPDF('${doc.filename}')" 
-              style="flex:1; font-family:'Cinzel',serif; font-size:.62rem; letter-spacing:.15em; padding:10px 12px; background:var(--gold); color:#020C14; border:none; cursor:pointer; transition:all .3s;">
-        ⬇️ Download
-      </button>
+    <div style="font-size:2.2rem; margin-bottom:15px">📄</div>
+    <div style="font-size:0.65rem; color:var(--text-muted);">Note ${String(i+1).padStart(2,'0')}</div>
+    <div style="font-weight:700; margin:12px 0 18px; line-height:1.3;">${doc.name}</div>
+    <div style="display:flex; gap:8px;">
+      <button onclick="viewPDF('${doc.filename}')" class="doc-btn view-btn">👁️ View</button>
+      <button onclick="downloadPDF('${doc.filename}')" class="doc-btn download-btn">⬇️ Download</button>
+      <button onclick="shareToWhatsApp('${doc.filename}', '${doc.name}')" class="doc-btn whatsapp-btn">💬 WhatsApp</button>
     </div>
   `;
-
-  // Hover effect for icon
-  card.addEventListener('mouseenter', () => {
-    card.querySelector('div').style.transform = 'scale(1.18) rotate(-8deg)';
-  });
-  card.addEventListener('mouseleave', () => {
-    card.querySelector('div').style.transform = 'scale(1) rotate(0deg)';
-  });
-
   dGrid.appendChild(card);
 });
 
-// Global functions for View & Download
 window.viewPDF = function(filename) {
-  window.open(`files/${filename}`, '_blank');
+  window.open(`Notes/${filename}`, '_blank');
 };
 
 window.downloadPDF = function(filename) {
-  const link = document.createElement('a');
-  link.href = `files/${filename}`;
-  link.download = filename;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
+  const a = document.createElement('a');
+  a.href = `Notes/${filename}`;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
 };
 
+window.shareToWhatsApp = function(filename, title) {
+  const url = `${window.location.origin}/Notes/${encodeURIComponent(filename)}`;
+  const text = `🔥 Teaching Note from Prophet Jay Uriel\n\n📖 ${title}\n\n📥 View/Download: ${url}`;
+  window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+};
 <!-- PRAYER -->
 <section id="prayer">
   <div class="prayer-wrap">
