@@ -518,22 +518,75 @@ const vidIO = new IntersectionObserver((entries)=>{
 if(videosGrid) vidIO.observe(videosGrid);
 
 /* ────────────────────────────────────────
-   DOCUMENTS
+   DOCUMENTS — Teaching Notes (from files/ folder)
 ──────────────────────────────────────── */
 const dGrid = document.getElementById('docsGrid');
+
+// Real list from your screenshot
 const docsList = [
-  'The Prophetic Foundation','Walking in the Spirit','Authority of the Word',
-  'Kingdom Principles','The Fear of the Lord','Covenant & Promise'
+  { name: "DOMINION & ROYALTY IN CH...",          file: "files/DOMINION & ROYALTY IN CH....pdf" },
+  { name: "Gifts Impress But Fruit Proves....",   file: "files/Gifts Impress But Fruit Proves....pdf" },
+  { name: "KINGDOM SERVICE (MINISTR...",         file: "files/KINGDOM SERVICE (MINISTR....pdf" },
+  { name: "KINGDOM SERVICE (MINISTR...",         file: "files/KINGDOM SERVICE (MINISTR....pdf" },
+  { name: "New Creation Reality.pdf",            file: "files/New Creation Reality.pdf" },
+  { name: "Righteousness.pdf",                   file: "files/Righteousness.pdf" },
+  { name: "Stillness.pdf",                       file: "files/Stillness.pdf" },
+  { name: "THE MYSTERY OF CREATIVE ...",         file: "files/THE MYSTERY OF CREATIVE ....pdf" },
+  { name: "The Godly Anointing.pdf",             file: "files/The Godly Anointing.pdf" },
+  { name: "The Revelation of the Inner Kin...",  file: "files/The Revelation of the Inner Kin....pdf" },
+  { name: "TheChristianwalk(UIC).pdf",           file: "files/TheChristianwalk(UIC).pdf" }
 ];
-docsList.forEach((title,i)=>{
-  const num = String(i+1).padStart(2,'0');
-  const file = `files/notes-${num}.pdf`;
+
+dGrid.innerHTML = ''; // Clear any old cards
+
+docsList.forEach((doc, i) => {
+  const num = String(i + 1).padStart(2, '0');
+  
   const card = document.createElement('div');
   card.className = 'doc-card';
-  card.innerHTML = `<div style="font-size:2rem;transition:transform .3s">📄</div><div style="font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.2em;color:var(--text-muted)">Notes ${num}</div><div style="font-family:'Playfair Display',serif;font-weight:700;color:var(--white)">${title}</div><div style="font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.12em;color:var(--gold);margin-top:4px">Open Document →</div>`;
-  card.addEventListener('mouseenter',()=>card.querySelector('div').style.transform='scale(1.15) rotate(-5deg)');
-  card.addEventListener('mouseleave',()=>card.querySelector('div').style.transform='scale(1) rotate(0deg)');
-  card.onclick = ()=>window.open(file,'_blank');
+
+  card.innerHTML = `
+    <div style="font-size:2.8rem; transition:transform .4s ease; margin-bottom:8px;">📄</div>
+    <div style="font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:0.15em; color:var(--text-muted);">
+      NOTES ${num}
+    </div>
+    <div style="font-family:'Playfair Display',serif; font-weight:700; color:var(--white); font-size:1.12rem; line-height:1.35; margin:12px 0 16px;">
+      ${doc.name}
+    </div>
+    <div style="margin-top:auto; display:flex; gap:12px;">
+      <button onclick="event.stopImmediatePropagation(); window.open('${doc.file}', '_blank');" 
+              style="flex:1; padding:11px 16px; background:var(--gold); color:#020C14; border:none; border-radius:6px; font-weight:600; font-size:0.82rem; cursor:pointer;">
+        Open
+      </button>
+      <button onclick="event.stopImmediatePropagation(); 
+                       const a=document.createElement('a'); 
+                       a.href='${doc.file}'; 
+                       a.download='${doc.name}'; 
+                       document.body.appendChild(a); 
+                       a.click(); 
+                       document.body.removeChild(a);" 
+              style="flex:1; padding:11px 16px; background:transparent; border:1.5px solid var(--gold); color:var(--gold); border-radius:6px; font-weight:600; font-size:0.82rem; cursor:pointer;">
+        Download
+      </button>
+    </div>
+  `;
+
+  // Icon hover animation
+  const icon = card.querySelector('div');
+  card.addEventListener('mouseenter', () => {
+    icon.style.transform = 'scale(1.22) rotate(-7deg)';
+  });
+  card.addEventListener('mouseleave', () => {
+    icon.style.transform = 'scale(1) rotate(0deg)';
+  });
+
+  // Click anywhere on card (except buttons) to open
+  card.addEventListener('click', (e) => {
+    if (!e.target.closest('button')) {
+      window.open(doc.file, '_blank');
+    }
+  });
+
   dGrid.appendChild(card);
 });
 
