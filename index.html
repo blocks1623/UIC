@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>United in Christ | Prophet Jay Uriel</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Cormorant+Garamond:wght@300;400;600&family=Cinzel:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
@@ -14,6 +13,17 @@
     --surface: #0D2337; --surface2: #122B42;
     --white: #EEF6FB; --white2: #D8EDF7; --text-muted: #7AAEC8;
     --nav-bg: rgba(2,12,20,0.97); --sec-border: rgba(74,172,220,0.08);
+
+    /* Fluid spacing scale */
+    --sp-xs: clamp(8px, 2vw, 16px);
+    --sp-sm: clamp(14px, 3vw, 24px);
+    --sp-md: clamp(24px, 5vw, 60px);
+    --sp-lg: clamp(48px, 8vw, 96px);
+    --sp-xl: clamp(64px, 10vw, 120px);
+
+    /* Fluid section padding */
+    --sec-px: clamp(16px, 6vw, 80px);
+    --sec-py: clamp(52px, 8vw, 110px);
   }
   [data-theme="light"] {
     --deep: #EAF4FB; --dark: #D8ECF7; --mid: #C4E2F2;
@@ -21,9 +31,12 @@
     --white: #072236; --white2: #0E3350; --text-muted: #2A6E99;
     --nav-bg: rgba(234,244,251,0.97); --sec-border: rgba(26,110,154,0.15);
   }
+
+  /* ── RESET ── */
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{background:var(--deep);color:var(--white);font-family:'Lato',sans-serif;overflow-x:hidden;transition:background .4s,color .4s}
+  img{max-width:100%;height:auto;display:block}
   #particles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.3}
 
   /* ── KEYFRAMES ── */
@@ -38,7 +51,6 @@
   @keyframes ringExpand{0%{transform:scale(.9);opacity:.7}50%{transform:scale(1.08);opacity:.3}100%{transform:scale(.9);opacity:.7}}
   @keyframes borderPulse{0%,100%{border-color:rgba(74,172,220,.18)}50%{border-color:rgba(74,172,220,.45)}}
   @keyframes iconBounce{0%,100%{transform:translateY(0)}40%{transform:translateY(-6px)}60%{transform:translateY(-3px)}}
-  @keyframes spinOnce{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
   @keyframes shimmerSlide{0%{transform:translateX(-100%) skewX(-15deg)}100%{transform:translateX(300%) skewX(-15deg)}}
   @keyframes builtByPulse{0%,100%{opacity:.7;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
   @keyframes creditBeam{0%{left:-60%}100%{left:120%}}
@@ -46,127 +58,155 @@
   @keyframes modalIn{from{opacity:0;transform:scale(.92) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
 
   /* ── THEME TOGGLE ── */
-  .theme-toggle{position:fixed;bottom:28px;right:28px;z-index:9999;background:linear-gradient(135deg,#0A1E30,#122B42);border:1.5px solid rgba(74,172,220,.55);color:#7ECFEF;width:50px;height:50px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.25rem;box-shadow:0 4px 24px rgba(10,60,100,.55);transition:all .3s;animation:fadeIn .8s 1.2s both}
+  .theme-toggle{position:fixed;bottom:clamp(14px,4vw,28px);right:clamp(14px,4vw,28px);z-index:9999;background:linear-gradient(135deg,#0A1E30,#122B42);border:1.5px solid rgba(74,172,220,.55);color:#7ECFEF;width:clamp(40px,5vw,50px);height:clamp(40px,5vw,50px);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:clamp(1rem,2.5vw,1.25rem);box-shadow:0 4px 24px rgba(10,60,100,.55);transition:all .3s;animation:fadeIn .8s 1.2s both}
   .theme-toggle:hover{transform:scale(1.12) rotate(20deg);box-shadow:0 8px 32px rgba(74,172,220,.35)}
 
   /* ── NAV ── */
-  nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:13px 56px;background:var(--nav-bg);border-bottom:1px solid rgba(74,172,220,.15);transition:all .3s;animation:navSlideDown .7s ease both}
+  nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:13px var(--sec-px);background:var(--nav-bg);border-bottom:1px solid rgba(74,172,220,.15);transition:padding .3s,box-shadow .3s;animation:navSlideDown .7s ease both}
   .nav-logo{display:flex;align-items:center;gap:13px;text-decoration:none}
-  .nav-logo-img{width:48px;height:48px;border-radius:50%;border:2px solid var(--gold);overflow:hidden;transition:transform .4s,box-shadow .4s}
+  .nav-logo-img{width:clamp(36px,5vw,48px);height:clamp(36px,5vw,48px);border-radius:50%;border:2px solid var(--gold);overflow:hidden;transition:transform .4s,box-shadow .4s;flex-shrink:0}
   .nav-logo-img:hover{transform:scale(1.08);box-shadow:0 0 18px rgba(74,172,220,.45)}
   .nav-logo-img img{width:100%;height:100%;object-fit:cover}
-  .nav-logo-text{font-family:'Cinzel',serif;font-size:.9rem;color:var(--gold);letter-spacing:.1em}
-  .nav-logo-sub{font-size:.58rem;color:var(--text-muted);letter-spacing:.2em;text-transform:uppercase}
-  .nav-links{display:flex;gap:28px;list-style:none}
-  .nav-links a{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.18em;color:var(--white2);text-decoration:none;text-transform:uppercase;transition:color .3s;position:relative}
+  .nav-logo-text{font-family:'Cinzel',serif;font-size:clamp(.7rem,2vw,.9rem);color:var(--gold);letter-spacing:.1em}
+  .nav-logo-sub{font-size:clamp(.5rem,1.5vw,.58rem);color:var(--text-muted);letter-spacing:.2em;text-transform:uppercase}
+  .nav-links{display:flex;gap:clamp(14px,2.5vw,28px);list-style:none}
+  .nav-links a{font-family:'Cinzel',serif;font-size:clamp(.58rem,1vw,.65rem);letter-spacing:.18em;color:var(--white2);text-decoration:none;text-transform:uppercase;transition:color .3s;position:relative;white-space:nowrap}
   .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--gold);transform:scaleX(0);transition:transform .35s cubic-bezier(.4,0,.2,1)}
   .nav-links a:hover{color:var(--gold)}
   .nav-links a:hover::after{transform:scaleX(1)}
 
+  /* ── HAMBURGER ── */
+  .nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;z-index:1100;background:none;border:none;flex-shrink:0}
+  .nav-hamburger span{display:block;width:24px;height:2px;background:var(--gold);border-radius:2px;transition:all .35s cubic-bezier(.4,0,.2,1);transform-origin:center}
+  .nav-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .nav-hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+  .nav-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+  /* ── MOBILE MENU ── */
+  .nav-mobile-menu{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(2,12,20,.98);z-index:1050;flex-direction:column;align-items:center;justify-content:center;gap:0;backdrop-filter:blur(12px)}
+  .nav-mobile-menu.open{display:flex}
+  .nav-mobile-menu li{list-style:none;width:100%;text-align:center;border-bottom:1px solid rgba(74,172,220,.08)}
+  .nav-mobile-menu li:first-child{border-top:1px solid rgba(74,172,220,.08)}
+  .nav-mobile-menu a{font-family:'Cinzel',serif;font-size:clamp(.9rem,4vw,1rem);letter-spacing:.25em;color:var(--white2);text-decoration:none;text-transform:uppercase;display:block;padding:22px 40px;transition:color .3s,background .3s}
+  .nav-mobile-menu a:hover{color:var(--gold);background:rgba(74,172,220,.06)}
+
   /* ── HERO ── */
-  .hero{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 40px 80px;overflow:hidden;z-index:1}
+  .hero{position:relative;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:clamp(88px,12vw,140px) clamp(16px,6vw,60px) clamp(48px,6vw,80px);overflow:hidden;z-index:1}
   .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 30%,rgba(74,172,220,.11) 0%,transparent 70%),linear-gradient(160deg,var(--deep) 0%,var(--dark) 50%,var(--deep) 100%)}
   .hero-orb{position:absolute;border-radius:50%;pointer-events:none;filter:blur(60px)}
-  .hero-orb-1{width:440px;height:440px;background:radial-gradient(circle,rgba(74,172,220,.09),transparent 70%);top:-80px;left:-120px;animation:orbFloat 14s ease-in-out infinite}
-  .hero-orb-2{width:320px;height:320px;background:radial-gradient(circle,rgba(74,172,220,.07),transparent 70%);bottom:60px;right:-60px;animation:orbFloat 18s ease-in-out infinite reverse}
-  .hero-ornament{font-size:.7rem;letter-spacing:.5em;color:var(--gold);text-transform:uppercase;font-family:'Cinzel',serif;margin-bottom:16px;animation:fadeInDown .8s .4s both}
-  .hero-title{font-family:'Cinzel',serif;font-size:clamp(2.3rem,6vw,4.8rem);font-weight:700;color:var(--white);margin-bottom:6px;text-shadow:0 0 80px rgba(74,172,220,.25);animation:fadeInDown .9s .55s both}
+  .hero-orb-1{width:clamp(200px,40vw,440px);height:clamp(200px,40vw,440px);background:radial-gradient(circle,rgba(74,172,220,.09),transparent 70%);top:-80px;left:-120px;animation:orbFloat 14s ease-in-out infinite}
+  .hero-orb-2{width:clamp(150px,30vw,320px);height:clamp(150px,30vw,320px);background:radial-gradient(circle,rgba(74,172,220,.07),transparent 70%);bottom:60px;right:-60px;animation:orbFloat 18s ease-in-out infinite reverse}
+  .hero-ornament{font-size:clamp(.52rem,1.5vw,.7rem);letter-spacing:.5em;color:var(--gold);text-transform:uppercase;font-family:'Cinzel',serif;margin-bottom:16px;animation:fadeInDown .8s .4s both}
+  .hero-title{font-family:'Cinzel',serif;font-size:clamp(2rem,7vw,4.8rem);font-weight:700;color:var(--white);margin-bottom:6px;text-shadow:0 0 80px rgba(74,172,220,.25);animation:fadeInDown .9s .55s both}
   .hero-title span{color:var(--gold);background:linear-gradient(90deg,var(--gold-dark),var(--gold-light),var(--gold),var(--gold-light),var(--gold-dark));background-size:300% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:textGlint 5s linear 2s infinite}
-  .hero-logo-wrap{position:relative;width:220px;height:220px;margin:8px auto 26px;animation:scaleIn .9s .75s both}
+  .hero-logo-wrap{position:relative;width:clamp(130px,25vw,220px);height:clamp(130px,25vw,220px);margin:8px auto 26px;animation:scaleIn .9s .75s both;flex-shrink:0}
   .hero-logo-ring{position:absolute;inset:-12px;border-radius:50%;border:1px solid rgba(74,172,220,.2);animation:ringExpand 3.5s ease-in-out infinite}
   .hero-logo-ring-2{position:absolute;inset:-24px;border-radius:50%;border:1px dashed rgba(74,172,220,.09);animation:ringExpand 3.5s ease-in-out infinite .8s}
-  .hero-logo-circle{width:198px;height:198px;border-radius:50%;border:2px solid var(--gold);margin:11px auto 0;display:flex;align-items:center;justify-content:center;background:rgba(2,12,20,.6);overflow:hidden;animation:pulseGlow 4s ease-in-out infinite;transition:transform .4s}
+  .hero-logo-circle{width:calc(100% - 22px);height:calc(100% - 22px);border-radius:50%;border:2px solid var(--gold);margin:11px auto 0;display:flex;align-items:center;justify-content:center;background:rgba(2,12,20,.6);overflow:hidden;animation:pulseGlow 4s ease-in-out infinite;transition:transform .4s}
   .hero-logo-circle:hover{transform:scale(1.04)}
   .hero-logo-circle img{width:100%;height:100%;object-fit:cover;border-radius:50%}
-  .hero-tagline{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,2vw,1.35rem);font-style:italic;color:var(--white2);max-width:500px;margin:0 auto 34px;line-height:1.7;animation:fadeInUp .9s 1s both}
-  .hero-cta{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;animation:fadeInUp .9s 1.15s both}
+  .hero-tagline{font-family:'Cormorant Garamond',serif;font-size:clamp(.92rem,2.5vw,1.35rem);font-style:italic;color:var(--white2);max-width:min(500px,90%);margin:0 auto 34px;line-height:1.7;animation:fadeInUp .9s 1s both}
+  .hero-cta{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;animation:fadeInUp .9s 1.15s both;width:100%}
 
   /* ── BUTTONS ── */
-  .btn-gold{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:#020C14;background:linear-gradient(135deg,var(--gold-light),var(--gold));border:none;padding:15px 34px;cursor:pointer;text-decoration:none;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:all .3s;position:relative;overflow:hidden;display:inline-block}
+  .btn-gold{font-family:'Cinzel',serif;font-size:clamp(.6rem,1.5vw,.68rem);letter-spacing:.2em;text-transform:uppercase;color:#020C14;background:linear-gradient(135deg,var(--gold-light),var(--gold));border:none;padding:clamp(12px,2vw,15px) clamp(20px,4vw,34px);cursor:pointer;text-decoration:none;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:all .3s;position:relative;overflow:hidden;display:inline-block;text-align:center;white-space:nowrap}
   .btn-gold::before{content:'';position:absolute;top:0;left:0;width:40%;height:100%;background:rgba(255,255,255,.22);transform:translateX(-120%) skewX(-20deg);transition:transform .5s}
   .btn-gold:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(74,172,220,.35)}
   .btn-gold:hover::before{transform:translateX(280%) skewX(-20deg)}
-  .btn-outline{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);background:transparent;border:1px solid var(--gold);padding:14px 34px;cursor:pointer;text-decoration:none;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:all .3s;position:relative;overflow:hidden;display:inline-block}
+  .btn-outline{font-family:'Cinzel',serif;font-size:clamp(.6rem,1.5vw,.68rem);letter-spacing:.2em;text-transform:uppercase;color:var(--gold);background:transparent;border:1px solid var(--gold);padding:clamp(11px,2vw,14px) clamp(20px,4vw,34px);cursor:pointer;text-decoration:none;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:all .3s;position:relative;overflow:hidden;display:inline-block;text-align:center;white-space:nowrap}
   .btn-outline::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--gold-light),var(--gold));opacity:0;transition:opacity .3s}
   .btn-outline:hover{color:#020C14;transform:translateY(-3px);box-shadow:0 12px 28px rgba(74,172,220,.25)}
   .btn-outline:hover::before{opacity:1}
   .btn-outline span{position:relative;z-index:1}
 
   /* ── SHARED SECTION ── */
-  section{position:relative;z-index:1}
-  .sec-lbl{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.4em;color:var(--gold);text-transform:uppercase;margin-bottom:11px;opacity:.85}
+  section{position:relative;z-index:1;padding:var(--sec-py) var(--sec-px)}
+  .sec-lbl{font-family:'Cinzel',serif;font-size:clamp(.52rem,1.2vw,.6rem);letter-spacing:.4em;color:var(--gold);text-transform:uppercase;margin-bottom:11px;opacity:.85}
   .sec-lbl::before{content:'— '}
   .sec-lbl::after{content:' —'}
-  .sec-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.9rem);font-weight:900;color:var(--white);line-height:1.15;margin-bottom:16px}
+  .sec-title{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,5vw,2.9rem);font-weight:900;color:var(--white);line-height:1.15;margin-bottom:16px}
   .sec-title span{color:var(--gold)}
   .gold-line{width:0;height:2px;background:linear-gradient(to right,var(--gold),transparent);margin:20px 0;transition:width .8s ease}
   .gold-line.animated{width:55px}
   .sec-center .gold-line{margin:20px auto}
-  .sec-center{text-align:center;max-width:700px;margin:0 auto 60px}
+  .sec-center{text-align:center;max-width:700px;margin:0 auto clamp(32px,5vw,60px)}
 
   /* ── ABOUT ── */
-  #about{padding:108px 60px;background:linear-gradient(160deg,var(--deep) 0%,var(--dark) 100%);border-top:1px solid var(--sec-border)}
-  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:76px;max-width:1200px;margin:0 auto;align-items:center}
-  .about-img{width:100%;aspect-ratio:3/4;object-fit:cover;border:1px solid rgba(74,172,220,.3);transition:transform .6s ease,box-shadow .6s ease}
-  .about-img:hover{transform:scale(1.025);border-color:rgba(74,172,220,.65);box-shadow:0 28px 64px rgba(0,0,0,.5),0 0 40px rgba(74,172,220,.12)}
-  .about-img-wrap{position:relative;overflow:hidden}
-  .about-img-wrap::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(74,172,220,.08),transparent);transition:left .7s ease;pointer-events:none}
-  .about-img-wrap:hover::after{left:160%}
+  #about{background:linear-gradient(160deg,var(--deep) 0%,var(--dark) 100%);border-top:1px solid var(--sec-border)}
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,6vw,80px);max-width:1200px;margin:0 auto;align-items:center}
+  .about-img-wrap{position:relative}
+  .about-img{width:100%;border-radius:16px;box-shadow:0 30px 70px rgba(0,0,0,.6);transition:transform .5s ease,box-shadow .5s ease}
+  .about-img:hover{transform:scale(1.025);box-shadow:0 36px 80px rgba(0,0,0,.7)}
+  .about-img-border{position:absolute;inset:-20px;border:1px solid rgba(74,172,220,.25);border-radius:20px;z-index:-1}
+  .about-img-ring{position:absolute;inset:-12px;border:2px solid rgba(74,172,220,.15);border-radius:24px;z-index:-2;animation:ringExpand 6s ease-in-out infinite}
+  .about-quote{margin-bottom:38px;padding:clamp(14px,3vw,22px) clamp(16px,3vw,28px);background:rgba(74,172,220,.06);border-left:4px solid var(--gold);font-style:italic;color:var(--text-muted);font-size:clamp(.85rem,1.5vw,1rem)}
 
   /* ── SATURDAY ── */
-  #saturday{padding:96px 60px;background:var(--deep);border-top:1px solid var(--sec-border)}
-  .sat-grid{display:grid;grid-template-columns:1fr 1fr;gap:34px;max-width:1100px;margin:0 auto}
-  .sat-card{background:linear-gradient(160deg,var(--surface),var(--surface2));border:1px solid rgba(74,172,220,.18);padding:46px 40px;position:relative;overflow:hidden;transition:transform .35s ease,border-color .35s,box-shadow .35s;animation:borderPulse 4s ease-in-out infinite}
-  .sat-card::before{content:'';position:absolute;top:0;left:-80%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(74,172,220,.05),transparent);transition:left .7s ease}
-  .sat-card:hover{transform:translateY(-8px);border-color:rgba(74,172,220,.55);box-shadow:0 24px 60px rgba(0,0,0,.45)}
-  .sat-card:hover::before{left:160%}
-  .sat-n{font-family:'Playfair Display',serif;font-size:5rem;font-weight:900;color:rgba(74,172,220,.07);position:absolute;top:14px;right:24px}
-  .sat-icon{font-size:2rem;margin-bottom:14px;display:inline-block}
-  .sat-card:hover .sat-icon{animation:iconBounce .6s ease}
-  .sat-day{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.32em;color:var(--gold);text-transform:uppercase;margin-bottom:9px}
-  .sat-title{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--white);margin-bottom:12px;font-weight:700}
-  .sat-desc{font-size:.88rem;color:var(--text-muted);line-height:1.8;margin-bottom:20px}
-  .sat-time{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.12em;color:var(--gold)}
+  #saturday{background:linear-gradient(160deg,var(--dark) 0%,var(--deep) 100%);border-top:1px solid var(--sec-border)}
+  .sat-outer{max-width:1150px;margin:0 auto}
+  .sat-img-wrap{position:relative;border-radius:20px 20px 0 0;overflow:hidden;border:1px solid rgba(74,172,220,.25);border-bottom:none}
+  .sat-img-wrap img{width:100%;display:block;max-height:520px;object-fit:cover;object-position:center top}
+  .sat-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(2,12,20,.5) 0%,transparent 60%)}
+  .sat-badge{position:absolute;top:clamp(12px,3vw,28px);right:clamp(12px,3vw,28px);background:rgba(2,12,20,.85);border:1px solid var(--gold);border-radius:50px;padding:clamp(5px,1vw,8px) clamp(12px,2.5vw,22px);font-family:'Cinzel',serif;font-size:clamp(.6rem,1.2vw,.75rem);letter-spacing:.08em;color:var(--gold)}
+  .sat-info{background:linear-gradient(135deg,var(--surface),var(--surface2));border:1px solid rgba(74,172,220,.25);border-top:none;border-radius:0 0 20px 20px;padding:clamp(18px,3vw,28px) clamp(20px,4vw,40px);display:flex;flex-wrap:wrap;align-items:center;gap:clamp(14px,3vw,24px);box-shadow:0 20px 50px rgba(0,0,0,.5)}
+  .sat-info-time .day-label{font-family:'Cinzel',serif;font-size:clamp(.65rem,1.5vw,.95rem);letter-spacing:.1em;color:var(--gold)}
+  .sat-info-time .time-val{font-size:clamp(1.1rem,3vw,1.65rem);font-weight:700;margin-top:4px;color:var(--white)}
+  .sat-divider{width:1px;height:50px;background:rgba(74,172,220,.3);flex-shrink:0}
+  .sat-info-venue{flex:1;min-width:120px}
+  .sat-info-venue .venue-label{font-family:'Cinzel',serif;font-size:clamp(.65rem,1.2vw,.85rem);color:var(--text-muted)}
+  .sat-info-venue .venue-val{font-size:clamp(.9rem,2vw,1.15rem);font-weight:600;color:var(--white)}
+
+  /* ── ANNOUNCEMENTS ── */
+  #announcements{background:linear-gradient(160deg,var(--dark),var(--deep));border-top:1px solid var(--sec-border)}
+  .announce-grid{max-width:1200px;margin:clamp(32px,5vw,60px) auto 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(380px,100%),1fr));gap:clamp(20px,4vw,32px)}
+  .announce-col-header{display:flex;align-items:center;gap:12px;margin-bottom:24px}
+  .announce-col-icon{font-size:clamp(1.4rem,3vw,1.8rem)}
+  .announce-box{background:var(--surface);border:1px solid rgba(74,172,220,.25);border-radius:12px;padding:clamp(18px,3vw,24px);overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.5)}
+  .announce-img{width:100%;height:auto;border-radius:8px;margin-bottom:20px;border:1px solid rgba(74,172,220,.3)}
+  .announce-meta{display:flex;gap:12px;align-items:center;background:rgba(74,172,220,.08);padding:clamp(10px,2vw,14px) clamp(12px,2vw,18px);border-radius:8px;border:1px solid rgba(74,172,220,.2);flex-wrap:wrap}
+  .announce-meta-item{display:flex;flex-direction:column;gap:2px;min-width:0}
+  .announce-meta-label{color:var(--text-muted);font-size:clamp(.72rem,1.2vw,.8rem)}
+  .announce-meta-val{color:var(--white);font-weight:700;font-size:clamp(.85rem,1.5vw,1rem);white-space:nowrap}
+  .announce-meta-val.gold{color:var(--gold);font-size:clamp(1rem,2vw,1.25rem)}
+  .meta-sep{width:1px;height:38px;background:rgba(74,172,220,.3);flex-shrink:0;align-self:center}
+
+  /* ── TESTIMONIALS ── */
+  .testimonial-card{background:var(--surface);border:1px solid rgba(74,172,220,.18);border-radius:12px;padding:clamp(20px,3vw,28px) clamp(18px,3vw,26px);margin-bottom:18px;position:relative}
+  .testimonial-card:last-child{margin-bottom:0}
+  .testimonial-quote-mark{font-size:2.8rem;line-height:1;color:rgba(74,172,220,.12);position:absolute;top:18px;left:26px}
+  .testimonial-text{color:var(--white2);font-style:italic;line-height:1.75;font-size:clamp(.88rem,1.5vw,1.02rem);margin-bottom:18px}
+  .testimonial-author{display:flex;align-items:center;gap:14px}
+  .testimonial-avatar{width:46px;height:46px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;color:#020C14;font-weight:bold;font-size:1.05rem;flex-shrink:0}
+  .testimonial-name{font-weight:700;color:var(--white);font-size:clamp(.88rem,1.5vw,1rem)}
+  .testimonial-loc{font-size:clamp(.74rem,1.2vw,.82rem);color:var(--text-muted)}
 
   /* ── SERMONS ── */
-  #sermons{padding:96px 60px;background:linear-gradient(160deg,var(--dark),var(--deep));border-top:1px solid var(--sec-border)}
+  #sermons{background:linear-gradient(160deg,var(--dark),var(--deep));border-top:1px solid var(--sec-border)}
   .videos-container{max-width:1200px;margin:0 auto}
-  .videos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:28px}
-  .video-card{background:var(--surface);border:1px solid rgba(74,172,220,.15);border-radius:8px;overflow:hidden;transition:transform .35s ease,border-color .35s,box-shadow .35s;opacity:0;transform:translateY(40px) scale(.97);transition:opacity .6s ease,transform .6s ease,border-color .35s,box-shadow .35s}
-  .videos-grid.staggered .video-card{opacity:1;transform:none}
-  .videos-grid.staggered .video-card:nth-child(1){transition-delay:.04s}
-  .videos-grid.staggered .video-card:nth-child(2){transition-delay:.1s}
-  .videos-grid.staggered .video-card:nth-child(3){transition-delay:.16s}
-  .videos-grid.staggered .video-card:nth-child(4){transition-delay:.22s}
-  .videos-grid.staggered .video-card:nth-child(5){transition-delay:.28s}
-  .videos-grid.staggered .video-card:nth-child(6){transition-delay:.34s}
-  .videos-grid.staggered .video-card:nth-child(7){transition-delay:.4s}
-  .videos-grid.staggered .video-card:nth-child(8){transition-delay:.46s}
-  .videos-grid.staggered .video-card:nth-child(9){transition-delay:.52s}
-  .videos-grid.staggered .video-card:nth-child(10){transition-delay:.58s}
-  .videos-grid.staggered .video-card:nth-child(11){transition-delay:.64s}
+  .videos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr));gap:clamp(14px,2.5vw,28px)}
+  .video-card{background:var(--surface);border:1px solid rgba(74,172,220,.15);border-radius:8px;overflow:hidden;transition:transform .35s ease,border-color .35s,box-shadow .35s}
   .video-card:hover{transform:translateY(-8px)!important;border-color:var(--gold);box-shadow:0 24px 56px rgba(0,0,0,.55)}
   .video-wrapper{position:relative;padding-top:56.25%;background:#000}
   .video-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none}
-  .video-info{padding:20px 22px}
-  .video-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--white);line-height:1.35;margin-bottom:8px;transition:color .3s}
+  .video-info{padding:clamp(14px,2vw,20px) clamp(14px,2vw,22px)}
+  .video-title{font-family:'Playfair Display',serif;font-size:clamp(.92rem,1.5vw,1.05rem);font-weight:700;color:var(--white);line-height:1.35;margin-bottom:8px;transition:color .3s}
   .video-card:hover .video-title{color:var(--gold-light)}
-  .video-link{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.15em;color:var(--gold);text-decoration:none;display:inline-flex;align-items:center;gap:4px;transition:gap .3s}
+  .video-link{font-family:'Cinzel',serif;font-size:clamp(.58rem,1vw,.65rem);letter-spacing:.15em;color:var(--gold);text-decoration:none;display:inline-flex;align-items:center;gap:4px;transition:gap .3s}
   .video-link:hover{gap:10px}
 
   /* ── DOCUMENTS ── */
-  #documents{padding:96px 60px;background:var(--deep);border-top:1px solid var(--sec-border)}
-  .docs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;max-width:1200px;margin:0 auto}
-  .doc-card{background:linear-gradient(160deg,var(--surface),var(--surface2));border:1px solid rgba(74,172,220,.15);padding:28px 24px;display:flex;flex-direction:column;gap:10px;transition:transform .3s ease,border-color .3s,box-shadow .3s;position:relative;overflow:hidden}
+  #documents{background:var(--deep);border-top:1px solid var(--sec-border)}
+  .docs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(220px,100%),1fr));gap:clamp(12px,2vw,20px);max-width:1200px;margin:0 auto}
+  .doc-card{background:linear-gradient(160deg,var(--surface),var(--surface2));border:1px solid rgba(74,172,220,.15);padding:clamp(18px,3vw,28px) clamp(14px,2vw,24px);display:flex;flex-direction:column;gap:10px;transition:transform .3s ease,border-color .3s,box-shadow .3s;position:relative;overflow:hidden}
   .doc-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,transparent,var(--gold),transparent);transform:scaleX(0);transition:transform .4s ease}
   .doc-card:hover{transform:translateY(-6px);border-color:var(--gold);box-shadow:0 16px 40px rgba(0,0,0,.4)}
   .doc-card:hover::before{transform:scaleX(1)}
-  .doc-icon{font-size:2rem;transition:transform .3s}
+  .doc-icon{font-size:clamp(1.5rem,3vw,2rem);transition:transform .3s}
   .doc-card:hover .doc-icon{transform:scale(1.15) rotate(-5deg)}
-  .doc-num{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.2em;color:var(--text-muted)}
-  .doc-title{font-family:'Playfair Display',serif;font-weight:700;color:var(--white);line-height:1.35;font-size:.95rem}
+  .doc-num{font-family:'Cinzel',serif;font-size:clamp(.54rem,1vw,.6rem);letter-spacing:.2em;color:var(--text-muted)}
+  .doc-title{font-family:'Playfair Display',serif;font-weight:700;color:var(--white);line-height:1.35;font-size:clamp(.82rem,1.5vw,.95rem)}
   .doc-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:6px}
-  .doc-btn{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;border:none;padding:8px 12px;cursor:pointer;transition:all .25s;position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+  .doc-btn{font-family:'Cinzel',serif;font-size:clamp(.52rem,1vw,.58rem);letter-spacing:.12em;text-transform:uppercase;border:none;padding:clamp(6px,1vw,8px) clamp(8px,1.5vw,12px);cursor:pointer;transition:all .25s;position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
   .doc-btn::after{content:'';position:absolute;top:0;left:-60%;width:40%;height:100%;background:rgba(255,255,255,.18);transform:skewX(-20deg);transition:left .4s}
   .doc-btn:hover::after{left:120%}
   .view-btn{background:rgba(74,172,220,.15);color:var(--gold-light);border:1px solid rgba(74,172,220,.3)}
@@ -176,66 +216,58 @@
   .whatsapp-btn{background:rgba(37,211,102,.1);color:#25d366;border:1px solid rgba(37,211,102,.2)}
   .whatsapp-btn:hover{background:rgba(37,211,102,.2);transform:translateY(-2px)}
 
-  /* ── PDF VIEWER MODAL ── */
-  .pdf-modal{display:none;position:fixed;inset:0;z-index:9000;background:rgba(2,12,20,.92);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:20px}
+  /* ── PDF MODAL ── */
+  .pdf-modal{display:none;position:fixed;inset:0;z-index:9000;background:rgba(2,12,20,.92);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:clamp(8px,2vw,20px)}
   .pdf-modal.open{display:flex;animation:modalIn .35s ease}
-  .pdf-modal-inner{background:var(--surface);border:1px solid rgba(74,172,220,.3);width:100%;max-width:900px;max-height:90vh;border-radius:4px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,.7)}
+  .pdf-modal-inner{background:var(--surface);border:1px solid rgba(74,172,220,.3);width:100%;max-width:900px;max-height:90svh;border-radius:4px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,.7)}
   .pdf-modal-header{display:flex;align-items:center;justify-content:space-between;padding:16px 22px;border-bottom:1px solid rgba(74,172,220,.15);background:rgba(2,12,20,.5)}
   .pdf-modal-title{font-family:'Cinzel',serif;font-size:.75rem;letter-spacing:.15em;color:var(--gold)}
   .pdf-modal-close{background:none;border:none;color:var(--text-muted);font-size:1.4rem;cursor:pointer;transition:color .2s,transform .2s;line-height:1}
   .pdf-modal-close:hover{color:var(--white);transform:rotate(90deg)}
-  .pdf-modal-body{flex:1;overflow:hidden;position:relative;min-height:500px;background:#111}
-  .pdf-modal-body iframe{width:100%;height:100%;border:none;min-height:500px}
-  .pdf-modal-footer{display:flex;gap:12px;padding:14px 22px;border-top:1px solid rgba(74,172,220,.1);background:rgba(2,12,20,.4)}
-  .pdf-unavailable{display:flex;flex-direction:column;align-items:center;justify-content:center;height:400px;gap:14px;color:var(--text-muted);font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-style:italic}
+  .pdf-modal-body{flex:1;overflow:hidden;position:relative;min-height:clamp(260px,50svh,500px);background:#111}
+  .pdf-modal-body iframe{width:100%;height:100%;border:none;min-height:inherit}
+  .pdf-modal-footer{display:flex;gap:12px;flex-wrap:wrap;padding:14px 22px;border-top:1px solid rgba(74,172,220,.1);background:rgba(2,12,20,.4)}
 
   /* ── PRAYER ── */
-  #prayer{padding:96px 60px;background:linear-gradient(160deg,var(--dark),var(--deep));border-top:1px solid var(--sec-border)}
+  #prayer{background:linear-gradient(160deg,var(--dark),var(--deep));border-top:1px solid var(--sec-border)}
   .prayer-wrap{max-width:680px;margin:0 auto}
   .prayer-form{display:flex;flex-direction:column;gap:17px;margin-top:38px}
   .form-row{display:grid;grid-template-columns:1fr 1fr;gap:17px}
-  .form-input,.form-textarea{background:var(--surface);border:1px solid rgba(74,172,220,.2);padding:13px 17px;color:var(--white);font-size:.9rem;outline:none;width:100%;transition:border-color .3s,box-shadow .3s,transform .2s;font-family:'Lato',sans-serif}
+  .form-input,.form-textarea{background:var(--surface);border:1px solid rgba(74,172,220,.2);padding:13px 17px;color:var(--white);font-size:clamp(.82rem,1.5vw,.9rem);outline:none;width:100%;transition:border-color .3s,box-shadow .3s,transform .2s;font-family:'Lato',sans-serif}
   .form-input:focus,.form-textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(74,172,220,.1);transform:translateY(-1px)}
-  .form-submit{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:#020C14;background:linear-gradient(135deg,var(--gold-light),var(--gold));border:none;padding:16px 38px;cursor:pointer;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:all .3s;position:relative;overflow:hidden}
+  .form-submit{font-family:'Cinzel',serif;font-size:clamp(.62rem,1.2vw,.7rem);letter-spacing:.2em;text-transform:uppercase;color:#020C14;background:linear-gradient(135deg,var(--gold-light),var(--gold));border:none;padding:clamp(13px,2vw,16px) 38px;cursor:pointer;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:all .3s;position:relative;overflow:hidden;width:100%}
   .form-submit::before{content:'';position:absolute;top:0;left:-60%;width:40%;height:100%;background:rgba(255,255,255,.25);transform:skewX(-20deg);transition:left .5s}
   .form-submit:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(74,172,220,.3)}
   .form-submit:hover::before{left:160%}
 
-  /* ── CONNECT / SOCIAL ── */
-  #connect{padding:96px 60px;background:var(--deep);border-top:1px solid var(--sec-border)}
-  .social-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:17px;max-width:880px;margin:0 auto}
-  .soc-card{background:var(--surface);border:1px solid rgba(74,172,220,.12);padding:30px 18px;text-align:center;transition:transform .3s ease,border-color .3s,box-shadow .3s;position:relative;overflow:hidden;text-decoration:none;display:block;cursor:pointer}
+  /* ── CONNECT ── */
+  #connect{background:var(--deep);border-top:1px solid var(--sec-border)}
+  .social-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(160px,calc(50% - 10px)),1fr));gap:clamp(10px,2vw,17px);max-width:880px;margin:0 auto}
+  .soc-card{background:var(--surface);border:1px solid rgba(74,172,220,.12);padding:clamp(18px,3vw,30px) clamp(10px,2vw,18px);text-align:center;transition:transform .3s ease,border-color .3s,box-shadow .3s;position:relative;overflow:hidden;text-decoration:none;display:block;cursor:pointer}
   .soc-card::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 100%,rgba(74,172,220,.08),transparent 60%);opacity:0;transition:opacity .35s;pointer-events:none}
   .soc-card:hover{transform:translateY(-7px);border-color:var(--gold);box-shadow:0 18px 44px rgba(0,0,0,.4)}
   .soc-card:hover::after{opacity:1}
-  .soc-logo{width:44px;height:44px;margin:0 auto 14px;display:flex;align-items:center;justify-content:center}
+  .soc-logo{width:clamp(32px,5vw,44px);height:clamp(32px,5vw,44px);margin:0 auto clamp(10px,2vw,14px);display:flex;align-items:center;justify-content:center}
   .soc-logo img{width:100%;height:100%;object-fit:contain;filter:brightness(0) invert(1);opacity:.8;transition:opacity .3s,transform .3s}
   .soc-card:hover .soc-logo img{opacity:1;transform:scale(1.1)}
-  .soc-name{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.1em;color:var(--gold);margin-bottom:6px}
-  .soc-desc{font-size:.82rem;color:var(--text-muted)}
-
-  /* YouTube specific red */
-  .soc-card.yt .soc-logo svg{filter:none}
-  .soc-card.fb .soc-logo svg{filter:none}
-  .soc-card.wa .soc-logo svg{filter:none}
-  .soc-card.tk .soc-logo svg{filter:none}
-  .soc-card.tk:hover{border-color:#69C9D0}
-  .soc-card.tk .soc-name{color:#69C9D0}
+  .soc-name{font-family:'Cinzel',serif;font-size:clamp(.6rem,1.2vw,.7rem);letter-spacing:.1em;color:var(--gold);margin-bottom:6px}
+  .soc-desc{font-size:clamp(.72rem,1.2vw,.82rem);color:var(--text-muted)}
 
   /* ── JOIN ── */
-  .join-sec{padding:86px 60px;background:var(--dark);border-top:1px solid var(--sec-border);text-align:center}
+  .join-sec{padding:var(--sec-py) var(--sec-px);background:var(--dark);border-top:1px solid var(--sec-border);text-align:center}
 
   /* ── FOOTER ── */
-  footer{background:#010810;border-top:1px solid rgba(74,172,220,.12);padding:54px 60px 34px}
+  footer{background:#010810;border-top:1px solid rgba(74,172,220,.12);padding:clamp(32px,6vw,54px) var(--sec-px) clamp(22px,4vw,34px)}
+  .footer-inner{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:32px;max-width:1200px;margin:0 auto}
 
-  /* ── BUILT BY BONNY BADGE ── */
+  /* ── BUILT BY ── */
   .built-by{display:flex;align-items:center;justify-content:center;gap:0;margin-top:36px;padding-top:28px;border-top:1px solid rgba(74,172,220,.08);position:relative;overflow:hidden}
   .built-by-beam{position:absolute;top:0;left:-60%;width:40%;height:1px;background:linear-gradient(to right,transparent,rgba(74,172,220,.6),transparent);animation:creditBeam 4s ease-in-out infinite}
   .built-by-inner{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,rgba(10,30,48,.9),rgba(18,43,66,.9));border:1px solid rgba(74,172,220,.22);padding:10px 22px;position:relative;overflow:hidden;animation:builtByPulse 3s ease-in-out infinite}
   .built-by-inner::before{content:'';position:absolute;top:0;left:-80%;width:50%;height:100%;background:linear-gradient(90deg,transparent,rgba(74,172,220,.07),transparent);animation:shimmerSlide 3.5s ease-in-out infinite}
   .built-by-cross{font-size:1rem;animation:floatCross 4s ease-in-out infinite;color:var(--gold)}
-  .built-by-text{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.25em;color:var(--text-muted);text-transform:uppercase}
-  .built-by-name{font-family:'Playfair Display',serif;font-size:.9rem;font-weight:700;font-style:italic;background:linear-gradient(90deg,var(--gold-dark),var(--gold-light),var(--gold));background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:textGlint 4s linear infinite}
+  .built-by-text{font-family:'Cinzel',serif;font-size:clamp(.52rem,1vw,.65rem);letter-spacing:.25em;color:var(--text-muted);text-transform:uppercase}
+  .built-by-name{font-family:'Playfair Display',serif;font-size:clamp(.8rem,1.5vw,.9rem);font-weight:700;font-style:italic;background:linear-gradient(90deg,var(--gold-dark),var(--gold-light),var(--gold));background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:textGlint 4s linear infinite}
 
   /* ── REVEAL ── */
   .reveal{opacity:0;transform:translateY(34px);transition:opacity .75s cubic-bezier(.4,0,.2,1),transform .75s cubic-bezier(.4,0,.2,1)}
@@ -249,170 +281,72 @@
   .stagger-children.visible > *:nth-child(2){opacity:1;transform:translateY(0);transition-delay:.15s}
   .stagger-children.visible > *:nth-child(3){opacity:1;transform:translateY(0);transition-delay:.25s}
   .stagger-children.visible > *:nth-child(4){opacity:1;transform:translateY(0);transition-delay:.35s}
+  .stagger-children.visible > *:nth-child(5){opacity:1;transform:translateY(0);transition-delay:.45s}
 
+  /* ════════════════════════════════
+     RESPONSIVE BREAKPOINTS
+  ════════════════════════════════ */
 
-  /* ═══════════════════════════════════════
-     FULLY RESPONSIVE — all screen sizes
-  ═══════════════════════════════════════ */
-
-  /* ── Hamburger menu (hidden on desktop) ── */
-  .nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;z-index:1100;background:none;border:none}
-  .nav-hamburger span{display:block;width:24px;height:2px;background:var(--gold);border-radius:2px;transition:all .35s cubic-bezier(.4,0,.2,1);transform-origin:center}
-  .nav-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-  .nav-hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
-  .nav-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-
-  /* Mobile slide-down menu overlay */
-  .nav-mobile-menu{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(2,12,20,.98);z-index:1050;flex-direction:column;align-items:center;justify-content:center;gap:0;backdrop-filter:blur(12px)}
-  .nav-mobile-menu.open{display:flex}
-  .nav-mobile-menu li{list-style:none;width:100%;text-align:center;border-bottom:1px solid rgba(74,172,220,.08)}
-  .nav-mobile-menu li:first-child{border-top:1px solid rgba(74,172,220,.08)}
-  .nav-mobile-menu a{font-family:'Cinzel',serif;font-size:1rem;letter-spacing:.25em;color:var(--white2);text-decoration:none;text-transform:uppercase;display:block;padding:22px 40px;transition:color .3s,background .3s}
-  .nav-mobile-menu a:hover{color:var(--gold);background:rgba(74,172,220,.06)}
-
-  /* ── TABLET (≤1024px) ── */
-  @media(max-width:1024px){
-    nav{padding:12px 28px}
-    .about-grid{gap:44px}
-    .sat-grid{gap:22px}
-    .videos-grid{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
-    .social-grid{grid-template-columns:repeat(3,1fr)}
-    #about,#saturday,#sermons,#documents,#prayer,#connect{padding-left:36px;padding-right:36px}
-    footer{padding-left:36px;padding-right:36px}
-    .join-sec{padding-left:36px;padding-right:36px}
+  /* ── Hide hamburger on desktop ── */
+  @media(min-width:769px){
+    .nav-hamburger{display:none}
   }
 
-  /* ── SMALL TABLET / LARGE PHONE (≤768px) ── */
+  /* ── TABLET + SMALL DESKTOP (≤900px) ── */
+  @media(max-width:900px){
+    .about-grid{grid-template-columns:1fr;gap:32px}
+    .about-img{max-height:420px;object-fit:cover}
+    .about-img-border,.about-img-ring{display:none}
+  }
+
+  /* ── TABLET (≤768px) ── */
   @media(max-width:768px){
-    /* Nav → hamburger */
     .nav-links{display:none}
     .nav-hamburger{display:flex}
-    nav{padding:12px 18px}
-    .nav-logo-text{font-size:.78rem}
 
-    /* Hero */
-    .hero{padding:100px 24px 60px;min-height:100svh}
-    .hero-orb{display:none}
-    .hero-logo-wrap{width:160px;height:160px}
-    .hero-logo-circle{width:144px;height:144px}
-    .hero-tagline{font-size:1rem;max-width:90%}
-    .hero-cta{flex-direction:column;align-items:center;gap:12px}
-    .btn-gold,.btn-outline{width:100%;max-width:280px;text-align:center;padding:14px 20px}
+    .hero-cta{flex-direction:column;align-items:center}
+    .btn-gold,.btn-outline{max-width:280px;width:100%}
 
-    /* About */
-    .about-grid{grid-template-columns:1fr;gap:32px}
-    .about-img{aspect-ratio:4/3;max-height:340px}
-
-    /* Saturday cards */
-    .sat-grid{grid-template-columns:1fr;gap:18px}
-    .sat-card{padding:32px 26px}
-
-    /* Sermons */
-    .videos-grid{grid-template-columns:1fr}
-
-    /* Docs */
-    .docs-grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px}
-    .doc-card{padding:20px 16px}
-    .doc-actions{flex-wrap:wrap;gap:6px}
-    .doc-btn{font-size:.54rem;padding:7px 10px}
-
-    /* Prayer form */
     .form-row{grid-template-columns:1fr}
-    .prayer-wrap{padding:0 4px}
 
-    /* Connect */
-    .social-grid{grid-template-columns:repeat(2,1fr);gap:12px}
-    .soc-card{padding:22px 12px}
+    .sat-info{flex-direction:column;align-items:flex-start;gap:12px}
+    .sat-divider{display:none}
+    .sat-badge{display:none}
 
-    /* Section padding */
-    #about,#saturday,#sermons,#documents,#prayer,#connect{padding:64px 18px}
-    footer{padding:40px 18px 28px}
-    .join-sec{padding:60px 18px}
-    .sec-center{margin-bottom:40px}
+    .announce-meta{flex-direction:column;align-items:flex-start;gap:10px}
+    .meta-sep{display:none}
 
-    /* PDF modal */
-    .pdf-modal-inner{max-height:95vh;margin:0 8px}
-    .pdf-modal-body iframe{min-height:340px}
-
-    /* Theme toggle smaller on mobile */
-    .theme-toggle{width:42px;height:42px;font-size:1rem;bottom:16px;right:16px}
+    .footer-inner{flex-direction:column;align-items:flex-start;gap:16px}
+    .footer-inner > div:last-child{text-align:left}
   }
 
   /* ── SMALL PHONE (≤480px) ── */
   @media(max-width:480px){
-    nav{padding:10px 14px}
-    .nav-logo-img{width:38px;height:38px}
-    .nav-logo-text{font-size:.7rem;letter-spacing:.06em}
-    .nav-logo-sub{font-size:.5rem}
-
-    .hero{padding:88px 16px 48px}
-    .hero-ornament{font-size:.55rem;letter-spacing:.3em}
-    .hero-logo-wrap{width:140px;height:140px}
-    .hero-logo-circle{width:124px;height:124px}
-    .hero-tagline{font-size:.95rem}
-
-    .sec-title{font-size:clamp(1.5rem,7vw,2.2rem)}
-    .sec-lbl{font-size:.52rem;letter-spacing:.28em}
-
-    .sat-card{padding:26px 18px}
-    .sat-title{font-size:1.2rem}
-
-    .docs-grid{grid-template-columns:1fr 1fr;gap:12px}
-    .doc-card{padding:18px 12px}
-    .doc-title{font-size:.82rem}
+    .docs-grid{grid-template-columns:1fr 1fr}
     .doc-actions{flex-direction:column;gap:5px}
-    .doc-btn{width:100%;justify-content:center;font-size:.52rem}
-
-    .social-grid{grid-template-columns:repeat(2,1fr);gap:10px}
-    .soc-card{padding:18px 8px}
-    .soc-logo{width:34px;height:34px}
-    .soc-name{font-size:.6rem}
-    .soc-desc{font-size:.72rem}
-
-    #about,#saturday,#sermons,#documents,#prayer,#connect{padding:52px 14px}
-    .join-sec{padding:48px 14px}
-    footer{padding:32px 14px 22px}
-
-    .built-by-text{font-size:.55rem;letter-spacing:.15em}
-    .built-by-name{font-size:.8rem}
-    .built-by-inner{padding:8px 14px;gap:7px}
-
-    .form-submit{width:100%;padding:14px 20px;clip-path:none;border-radius:2px}
-    .pdf-modal{padding:8px}
-    .pdf-modal-body iframe{min-height:260px}
-    .pdf-modal-footer{flex-wrap:wrap;gap:8px}
+    .doc-btn{width:100%;justify-content:center}
+    .social-grid{grid-template-columns:1fr 1fr}
   }
 
   /* ── VERY SMALL (≤360px) ── */
   @media(max-width:360px){
-    .hero-logo-wrap{width:120px;height:120px}
-    .hero-logo-circle{width:106px;height:106px}
-    .hero-title{font-size:1.9rem}
     .docs-grid{grid-template-columns:1fr}
     .social-grid{grid-template-columns:1fr 1fr}
-    nav{padding:8px 10px}
+    .hero-title{font-size:1.75rem}
   }
 
   /* ── LANDSCAPE PHONE ── */
   @media(max-height:500px) and (orientation:landscape){
-    .hero{min-height:auto;padding:80px 40px 40px}
-    .hero-logo-wrap{width:110px;height:110px;margin:6px auto 14px}
-    .hero-logo-circle{width:96px;height:96px}
-    .hero-tagline{margin-bottom:20px;font-size:.92rem}
-    nav{padding:8px 18px}
-    .nav-logo-img{width:36px;height:36px}
+    .hero{min-height:auto;padding:80px clamp(24px,8vw,60px) 40px}
+    .hero-logo-wrap{width:100px;height:100px;margin:4px auto 14px}
+    .hero-tagline{font-size:.9rem;margin-bottom:20px}
   }
 
   /* ── WIDE / 4K ── */
   @media(min-width:1600px){
-    nav{padding:16px 80px}
-    #about,#saturday,#sermons,#documents,#prayer,#connect{padding-left:80px;padding-right:80px}
-    footer{padding-left:80px;padding-right:80px}
-    .join-sec{padding-left:80px;padding-right:80px}
-    .about-grid{max-width:1400px}
-    .sat-grid{max-width:1300px}
-    .videos-container,.docs-grid{max-width:1400px}
-    .social-grid{max-width:1100px}
+    :root{--sec-px: 80px}
+    .about-grid,.videos-container,.docs-grid,.social-grid{max-width:1400px}
+    .sat-img-wrap,.announce-grid{max-width:1300px}
   }
 </style>
 </head>
@@ -426,16 +360,15 @@
     <div class="pdf-modal-header">
       <div class="pdf-modal-title" id="pdfModalTitle">Teaching Note</div>
       <div style="display:flex;align-items:center;gap:10px">
-        <button id="pdfModalOpenTab" style="font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;background:rgba(74,172,220,.15);color:var(--gold-light);border:1px solid rgba(74,172,220,.3);padding:7px 13px;cursor:pointer;transition:background .2s" title="Open in new tab">⬡ New Tab</button>
+        <button id="pdfModalOpenTab" style="font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;background:rgba(74,172,220,.15);color:var(--gold-light);border:1px solid rgba(74,172,220,.3);padding:7px 13px;cursor:pointer;transition:background .2s">⬡ New Tab</button>
         <button class="pdf-modal-close" id="pdfModalClose">✕</button>
       </div>
     </div>
     <div class="pdf-modal-body" id="pdfModalBody" style="position:relative">
       <div id="pdfLoadingMsg" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:var(--text-muted);font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;z-index:1;pointer-events:none">
-        <div style="font-size:2rem">📄</div>
-        Loading document…
+        <div style="font-size:2rem">📄</div>Loading document…
       </div>
-      <iframe id="pdfModalIframe" src="" title="PDF Viewer" style="position:relative;z-index:2;width:100%;height:100%;min-height:500px;border:none" onload="document.getElementById('pdfLoadingMsg').style.display='none'"></iframe>
+      <iframe id="pdfModalIframe" src="" title="PDF Viewer" style="position:relative;z-index:2;width:100%;height:100%;border:none" onload="document.getElementById('pdfLoadingMsg').style.display='none'"></iframe>
     </div>
     <div class="pdf-modal-footer">
       <button class="doc-btn download-btn" id="pdfModalDownload" style="font-size:.65rem;padding:9px 16px">⬇ Download PDF</button>
@@ -448,7 +381,7 @@
 <nav id="navbar">
   <a href="#" class="nav-logo">
     <div class="nav-logo-img">
-      <img src="photos/united-in-christ-logo.png" alt="United in Christ" onerror="this.src='photos/united-in-christ-logo.png'">
+      <img src="photos/united-in-christ-logo.png" alt="United in Christ">
     </div>
     <div>
       <div class="nav-logo-text">United in Christ</div>
@@ -489,7 +422,7 @@
     <div class="hero-logo-ring"></div>
     <div class="hero-logo-ring-2"></div>
     <div class="hero-logo-circle">
-      <img src="photos/united-in-christ-logo.png" alt="Logo" onerror="this.src='photos/united-in-christ-logo.png'">
+      <img src="photos/united-in-christ-logo.png" alt="Logo">
     </div>
   </div>
   <p class="hero-tagline">"Proclaiming the Word of God with power, truth, and the spirit of prophecy"</p>
@@ -498,455 +431,221 @@
     <a href="#prayer" class="btn-outline"><span>Submit Prayer</span></a>
   </div>
 </section>
-<!-- ABOUT - IMPROVED -->
-<section id="about" style="padding: 120px 60px; background: linear-gradient(160deg, var(--deep) 0%, var(--dark) 100%); border-top: 1px solid var(--sec-border);">
-  <div class="about-grid" style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;">
-    
-    <!-- Left: Image -->
-    <div class="reveal-left about-img-wrap" style="position: relative;">
-      <div style="position: absolute; inset: -20px; border: 1px solid rgba(74,172,220,0.25); border-radius: 20px; z-index: -1;"></div>
-      <img 
-        class="about-img" 
-        src="photos/jay-uriel.jpeg" 
-        alt="Prophet Jay Uriel" 
-        onerror="this.src='photos/jay-uriel.png';this.onerror=null;"
-        style="width: 100%; height: auto; border-radius: 16px; box-shadow: 0 30px 70px rgba(0,0,0,0.6); transition: transform 0.5s ease;"
-      >
-      <!-- Subtle glow ring -->
-      <div style="position: absolute; inset: -12px; border: 2px solid rgba(74,172,220,0.15); border-radius: 24px; z-index: -2; animation: ringExpand 6s ease-in-out infinite;"></div>
-    </div>
 
-    <!-- Right: Content -->
-    <div class="reveal-right">
-      <div class="sec-lbl">Our Leader & Founder</div>
-      <h2 class="sec-title" style="font-size: 2.8rem;">Prophet <span>Jay Uriel</span></h2>
-      <div class="gold-line" style="width: 70px;"></div>
-      
-      <p style="margin: 32px 0 40px; font-size: 1.08rem; line-height: 1.85; color: var(--white2);">
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid reveal">
+    <div class="about-img-wrap">
+      <div class="about-img-border"></div>
+      <img class="about-img" src="photos/jay-uriel.jpeg" alt="Prophet Jay Uriel" onerror="this.src='photos/jay-uriel.png';this.onerror=null;">
+      <div class="about-img-ring"></div>
+    </div>
+    <div>
+      <div class="sec-lbl">Our Leader &amp; Founder</div>
+      <h2 class="sec-title" style="font-size:clamp(1.8rem,5vw,2.8rem)">Prophet <span>Jay Uriel</span></h2>
+      <div class="gold-line" style="width:70px"></div>
+      <p style="margin:clamp(18px,3vw,32px) 0 clamp(18px,3vw,40px);font-size:clamp(.9rem,1.5vw,1.08rem);line-height:1.85;color:var(--white2)">
         Prophet Jay Uriel is a consecrated vessel called by God — a bold prophetic voice raised for this generation. 
         With deep revelation, anointed teaching, and the genuine gift of prophecy, he ministers the fullness of Christ 
         with power, clarity, and compassion.
       </p>
-
-      <div style="margin-bottom: 38px; padding: 22px 28px; background: rgba(74,172,220,0.06); border-left: 4px solid var(--gold); font-style: italic; color: var(--text-muted);">
-        “The Spirit of the Lord is upon me to proclaim liberty, healing, and the knowledge of Christ.”
+      <div class="about-quote">
+        "The Spirit of the Lord is upon me to proclaim liberty, healing, and the knowledge of Christ."
       </div>
-
-      <a href="#saturday" class="btn-gold" style="padding: 17px 42px; font-size: 0.72rem;">
-        JOIN US THIS SATURDAY
-      </a>
+      <a href="#saturday" class="btn-gold" style="padding:17px 42px">JOIN US THIS SATURDAY</a>
     </div>
   </div>
 </section>
-  
-<!-- SATURDAY TEACHINGS - BEAUTIFUL WRAPPER -->
-<section id="saturday" style="padding: 110px 60px; background: linear-gradient(160deg, var(--dark) 0%, var(--deep) 100%); border-top: 1px solid var(--sec-border);">
-  
+
+<!-- SATURDAY TEACHINGS -->
+<section id="saturday">
   <div class="sec-center reveal">
     <div class="sec-lbl">Every Saturday</div>
     <h2 class="sec-title">Saturday <span>Teachings</span></h2>
     <div class="gold-line"></div>
-    <p style="color:var(--text-muted); max-width: 680px; margin: 0 auto 50px; font-size: 1.05rem; line-height: 1.75;">
-      Join us every Saturday for powerful anointed teachings with Prophet Jay Uriel. 
-      Come expecting an encounter with God.
+    <p style="color:var(--text-muted);max-width:680px;margin:0 auto clamp(28px,4vw,50px);font-size:clamp(.9rem,1.5vw,1.05rem);line-height:1.75">
+      Join us every Saturday for powerful anointed teachings with Prophet Jay Uriel. Come expecting an encounter with God.
     </p>
   </div>
-
-  <!-- Beautiful Image Wrapper -->
-  <div style="max-width: 1150px; margin: 0 auto;">
-    <div style="position: relative; border-radius: 20px; overflow: hidden; box-shadow: 0 35px 90px rgba(0, 0, 0, 0.75); border: 1px solid rgba(74,172,220,0.25);">
-      
-      <img 
-        src="photos/IMG_4616.jpg" 
-        alt="Saturday Teachings - United in Christ"
-        style="width: 100%; height: auto; display: block; transition: transform 0.6s ease;"
-      >
-      
-      <!-- Elegant Overlay -->
-      <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(2,12,20,0.85) 0%, rgba(2,12,20,0.4) 50%, transparent 80%);"></div>
-      
-      <!-- Bottom Info Bar -->
-      <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 32px 40px; display: flex; flex-wrap: wrap; align-items: center; gap: 25px; color: var(--white);">
-        <div>
-          <div style="font-family:'Cinzel',serif; font-size: 0.95rem; letter-spacing: 0.1em; color: var(--gold);">EVERY SATURDAY</div>
-          <div style="font-size: 1.65rem; font-weight: 700; margin-top: 4px;">8:00 AM</div>
-        </div>
-        
-        <div style="width: 1px; height: 50px; background: rgba(74,172,220,0.3);"></div>
-        
-        <div style="flex: 1; min-width: 220px;">
-          <div style="font-family:'Cinzel',serif; font-size: 0.85rem; color: var(--text-muted);">VENUE</div>
-          <div style="font-size: 1.15rem; font-weight: 600;">El Roi Chambers</div>
-        </div>
-
-        <a href="#prayer" class="btn-gold" style="padding: 16px 36px; font-size: 0.73rem; white-space: nowrap;">
-          I WANT TO ATTEND
-        </a>
+  <div class="sat-img-wrap reveal">
+    <img src="photos/IMG_4616.jpg" alt="Saturday Teachings - United in Christ">
+    <div class="sat-overlay"></div>
+    <div class="sat-info">
+      <div class="sat-info-time">
+        <div class="day-label">EVERY SATURDAY</div>
+        <div class="time-val">8:00 AM</div>
       </div>
-
-      <!-- Top Right Badge -->
-      <div style="position: absolute; top: 28px; right: 28px; background: rgba(2,12,20,0.85); border: 1px solid var(--gold); border-radius: 50px; padding: 8px 22px; font-family:'Cinzel',serif; font-size: 0.75rem; letter-spacing: 0.08em; color: var(--gold);">
-        UNITED IN CHRIST
+      <div class="sat-divider"></div>
+      <div class="sat-info-venue">
+        <div class="venue-label">VENUE</div>
+        <div class="venue-val">El Roi Chambers</div>
       </div>
+      <a href="#prayer" class="btn-gold" style="white-space:nowrap;padding:clamp(12px,2vw,16px) clamp(18px,3vw,36px)">I WANT TO ATTEND</a>
     </div>
+    <div class="sat-badge">UNITED IN CHRIST</div>
   </div>
 </section>
 
-
 <!-- ANNOUNCEMENTS & TESTIMONIALS -->
-<section id="announcements" style="padding:96px 60px; background:linear-gradient(160deg,var(--dark),var(--deep)); border-top:1px solid var(--sec-border);">
+<section id="announcements">
   <div class="sec-center reveal">
     <div class="sec-lbl">Church Family</div>
-    <h2 class="sec-title">Announcements & <span>Testimonials</span></h2>
+    <h2 class="sec-title">Announcements &amp; <span>Testimonials</span></h2>
     <div class="gold-line"></div>
-    <p class="sec-sub" style="color:var(--text-muted); max-width:620px; margin:0 auto;">
+    <p style="color:var(--text-muted);max-width:620px;margin:0 auto;font-size:clamp(.88rem,1.5vw,1rem)">
       Stay updated with what's happening in the ministry and be encouraged by powerful testimonies from our family.
     </p>
   </div>
 
-  <div class="announce-test-grid" style="max-width:1200px; margin:60px auto 0; display:grid; grid-template-columns:repeat(auto-fit, minmax(380px, 1fr)); gap:32px;">
-
-    <!-- Announcements Column -->
-    <div class="announce-column reveal-left">
-      <div style="display:flex; align-items:center; gap:12px; margin-bottom:24px;">
-        <div style="font-size:1.8rem;">📢</div>
+  <div class="announce-grid">
+    <!-- Announcements -->
+    <div class="reveal-left">
+      <div class="announce-col-header">
+        <div class="announce-col-icon">📢</div>
         <div>
-          <div class="sec-lbl" style="margin:0; font-size:0.75rem;">SPECIAL BROADCAST</div>
-          <h3 style="font-family:'Playfair Display',serif; font-size:1.65rem; color:var(--white); margin:0;">Word of Life & The Prophetic</h3>
+          <div class="sec-lbl" style="margin:0;font-size:.75rem">SPECIAL BROADCAST</div>
+          <h3 style="font-family:'Playfair Display',serif;font-size:clamp(1.3rem,3vw,1.65rem);color:var(--white);margin:0">Word of Life &amp; The Prophetic</h3>
         </div>
       </div>
-
-      <div style="background:var(--surface); border:1px solid rgba(74,172,220,.25); border-radius:12px; padding:24px; overflow:hidden; box-shadow:0 20px 50px rgba(0,0,0,.5);">
-        
-        <!-- Announcement Image -->
-        <img src="announcements/image.jpg" 
-             alt="Word of Life and The Prophetic - United in Christ" 
-             style="width:100%; height:auto; border-radius:8px; margin-bottom:20px; border:1px solid rgba(74,172,220,.3);">
-
-        <div style="padding:0 8px;">
-          <div style="font-family:'Cinzel',serif; font-size:0.85rem; letter-spacing:0.08em; color:var(--gold); margin-bottom:8px;">
-            COMING SOON
-          </div>
-          <div style="font-size:1.1rem; line-height:1.4; color:var(--white); font-weight:600; margin-bottom:16px;">
-            Host: Prophet Jay Uriel
-          </div>
-          
-          <div style="display:flex; gap:12px; align-items:center; background:rgba(74,172,220,.08); padding:14px 18px; border-radius:8px; border:1px solid rgba(74,172,220,.2);">
-            <div>
-              <div style="color:var(--text-muted); font-size:0.8rem;">Platform</div>
-              <div style="color:var(--white); font-weight:700;">Google Meet</div>
+      <div class="announce-box">
+        <img class="announce-img" src="announcements/image.jpg" alt="Word of Life and The Prophetic - United in Christ">
+        <div style="padding:0 clamp(4px,1vw,8px)">
+          <div style="font-family:'Cinzel',serif;font-size:.85rem;letter-spacing:.08em;color:var(--gold);margin-bottom:8px">COMING SOON</div>
+          <div style="font-size:clamp(.95rem,1.8vw,1.1rem);line-height:1.4;color:var(--white);font-weight:600;margin-bottom:16px">Host: Prophet Jay Uriel</div>
+          <div class="announce-meta">
+            <div class="announce-meta-item">
+              <span class="announce-meta-label">Platform</span>
+              <span class="announce-meta-val">Google Meet</span>
             </div>
-            <div style="width:1px; height:38px; background:rgba(74,172,220,.3);"></div>
-            <div>
-              <div style="color:var(--text-muted); font-size:0.8rem;">Time</div>
-              <div style="color:var(--gold); font-size:1.25rem; font-weight:700;">8:00 PM</div>
+            <div class="meta-sep"></div>
+            <div class="announce-meta-item">
+              <span class="announce-meta-label">Time</span>
+              <span class="announce-meta-val gold">8:00 PM</span>
             </div>
-            <div style="width:1px; height:38px; background:rgba(74,172,220,.3);"></div>
-            <div>
-              <div style="color:var(--text-muted); font-size:0.8rem;">Location</div>
-              <div style="color:var(--white);">El Roi Chambers</div>
+            <div class="meta-sep"></div>
+            <div class="announce-meta-item">
+              <span class="announce-meta-label">Location</span>
+              <span class="announce-meta-val">El Roi Chambers</span>
             </div>
           </div>
-
-          <a href="https://wa.me/27649842408?text=I'm%20joining%20the%20Word%20of%20Life%20%26%20The%20Prophetic%20session%20tonight!" 
-             target="_blank" 
-             class="btn-gold" 
-             style="display:block; text-align:center; margin-top:22px; font-size:0.68rem; padding:14px 32px;">
-            JOIN VIA WHATSAPP
-          </a>
+          <a href="https://wa.me/27649842408?text=I'm%20joining%20the%20Word%20of%20Life%20%26%20The%20Prophetic%20session%20tonight!" target="_blank" class="btn-gold" style="display:block;text-align:center;margin-top:22px;font-size:.68rem;padding:14px 32px">JOIN VIA WHATSAPP</a>
         </div>
       </div>
     </div>
 
-    <!-- Testimonials Column - Now with 4 Testimonials -->
-    <div class="testimonials-column reveal-right">
-      <div style="display:flex; align-items:center; gap:12px; margin-bottom:24px;">
-        <div style="font-size:1.8rem;">🙌</div>
+    <!-- Testimonials -->
+    <div class="reveal-right">
+      <div class="announce-col-header">
+        <div class="announce-col-icon">🙌</div>
         <div>
-          <div class="sec-lbl" style="margin:0; font-size:0.75rem;">LIVES CHANGED</div>
-          <h3 style="font-family:'Playfair Display',serif; font-size:1.65rem; color:var(--white); margin:0;">Testimonials</h3>
+          <div class="sec-lbl" style="margin:0;font-size:.75rem">LIVES CHANGED</div>
+          <h3 style="font-family:'Playfair Display',serif;font-size:clamp(1.3rem,3vw,1.65rem);color:var(--white);margin:0">Testimonials</h3>
         </div>
       </div>
 
-      <!-- Testimonial 1 -->
-      <div class="testimonial-card" style="background:var(--surface); border:1px solid rgba(74,172,220,.18); border-radius:12px; padding:28px 26px; margin-bottom:18px; position:relative;">
-        <div style="font-size:2.8rem; line-height:1; color:rgba(74,172,220,.12); position:absolute; top:18px; left:26px;">“</div>
-        <p style="color:var(--white2); font-style:italic; line-height:1.75; font-size:1.02rem; margin-bottom:18px;">
-          "Since joining the UIC,my prayer life has changed and the teachings and mentorship under the man of God has enlightened my understanding and i now understand my authority in Christ better."
-        </p>
-        <div style="display:flex; align-items:center; gap:14px;">
-          <div style="width:46px; height:46px; border-radius:50%; background:var(--gold); display:flex; align-items:center; justify-content:center; color:#020C14; font-weight:bold; font-size:1.05rem;">Y</div>
-          <div>
-            <div style="font-weight:700; color:var(--white);">Yolande Mokgosi </div>
-            <div style="font-size:0.82rem; color:var(--text-muted);">Gauteng</div>
-          </div>
+      <div class="testimonial-card">
+        <div class="testimonial-quote-mark">"</div>
+        <p class="testimonial-text">"Since joining the UIC, my prayer life has changed and the teachings and mentorship under the man of God has enlightened my understanding and I now understand my authority in Christ better."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">Y</div>
+          <div><div class="testimonial-name">Yolande Mokgosi</div><div class="testimonial-loc">Gauteng</div></div>
         </div>
       </div>
 
-      <!-- Testimonial 2 -->
-      <div class="testimonial-card" style="background:var(--surface); border:1px solid rgba(74,172,220,.18); border-radius:12px; padding:28px 26px; margin-bottom:18px; position:relative;">
-        <div style="font-size:2.8rem; line-height:1; color:rgba(74,172,220,.12); position:absolute; top:18px; left:26px;">“</div>
-        <p style="color:var(--white2); font-style:italic; line-height:1.75; font-size:1.02rem; margin-bottom:18px;">
-          "Hello my name is Moyahabo Machethe from Mokopane ever since I joined UIC my life completely changed for the better used to be comfortable with sin walked away left everything i am blessed with twins and now I am at peace i am spiritual growing everyday thought it was going to be hard but this group just made me at easy and helped me develop spiritually and mentally Amen Glory be to God ,called also when my little sister was sick man of God prayed for her now she is completely healed even went back to school do well too Thank God for this group 🙏"
-        </p>
-        <div style="display:flex; align-items:center; gap:14px;">
-          <div style="width:46px; height:46px; border-radius:50%; background:var(--gold); display:flex; align-items:center; justify-content:center; color:#020C14; font-weight:bold; font-size:1.05rem;">M</div>
-          <div>
-            <div style="font-weight:700; color:var(--white);">Moyahabo Machethe</div>
-            <div style="font-size:0.82rem; color:var(--text-muted);">Mokopane</div>
-          </div>
+      <div class="testimonial-card">
+        <div class="testimonial-quote-mark">"</div>
+        <p class="testimonial-text">"Ever since I joined United in Christ my life completely changed for the better — I walked away from sin, I'm blessed with twins, and I'm at peace. The man of God prayed for my sister and she is completely healed. Glory be to God!"</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">M</div>
+          <div><div class="testimonial-name">Moyahabo Machethe</div><div class="testimonial-loc">Mokopane</div></div>
         </div>
       </div>
 
-      <!-- Testimonial 3 -->
-      <div class="testimonial-card" style="background:var(--surface); border:1px solid rgba(74,172,220,.18); border-radius:12px; padding:28px 26px; margin-bottom:18px; position:relative;">
-        <div style="font-size:2.8rem; line-height:1; color:rgba(74,172,220,.12); position:absolute; top:18px; left:26px;">“</div>
-        <p style="color:var(--white2); font-style:italic; line-height:1.75; font-size:1.02rem; margin-bottom:18px;">
-          "Ever since I joined United in Christ, I've seen my faith grow and my spiritual life transform from theoretical Christianity to practical, lived-out faith. I've learned not just how to pray, but how to truly communicate with God. It shifted my focus from just knowing about Jesus to knowing Him personally, and experiencing His love and guidance in my daily life."
-        </p>
-        <div style="display:flex; align-items:center; gap:14px;">
-          <div style="width:46px; height:46px; border-radius:50%; background:var(--gold); display:flex; align-items:center; justify-content:center; color:#020C14; font-weight:bold; font-size:1.05rem;">L</div>
-          <div>
-            <div style="font-weight:700; color:var(--white);">Lala immaculate N.</div>
-            <div style="font-size:0.82rem; color:var(--text-muted);">phalaborwa</div>
-          </div>
+      <div class="testimonial-card">
+        <div class="testimonial-quote-mark">"</div>
+        <p class="testimonial-text">"My faith has grown and my spiritual life transformed from theoretical Christianity to practical, lived-out faith. I've learned how to truly communicate with God and experience His love daily."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">L</div>
+          <div><div class="testimonial-name">Lala Immaculate N.</div><div class="testimonial-loc">Phalaborwa</div></div>
         </div>
       </div>
 
-      <!-- Testimonial 4 -->
-      <div class="testimonial-card" style="background:var(--surface); border:1px solid rgba(74,172,220,.18); border-radius:12px; padding:28px 26px; position:relative;">
-        <div style="font-size:2.8rem; line-height:1; color:rgba(74,172,220,.12); position:absolute; top:18px; left:26px;">“</div>
-        <p style="color:var(--white2); font-style:italic; line-height:1.75; font-size:1.02rem; margin-bottom:18px;">
-          "I thank God for my friend introducing me to this fellowship , it is true when they say surround yourself with the wise and you’ll become wise , fellowshipping with the people in this group has made me want to become more like Christ in my walk, seek young people on fire for God and having a leader who is passionate Christ and his disciples has helped me stay in check with my identity in Christ , I truly Thank God to be influenced by this group that wants to see Jesus glorified and not their own agenda!!"
-        </p>
-        <div style="display:flex; align-items:center; gap:14px;">
-          <div style="width:46px; height:46px; border-radius:50%; background:var(--gold); display:flex; align-items:center; justify-content:center; color:#020C14; font-weight:bold; font-size:1.05rem;">V</div>
-          <div>
-            <div style="font-weight:700; color:var(--white);">Vukona Nukeri </div>
-            <div style="font-size:0.82rem; color:var(--text-muted);">polokwane</div>
-          </div>
+      <div class="testimonial-card">
+        <div class="testimonial-quote-mark">"</div>
+        <p class="testimonial-text">"I thank God for this fellowship — fellowshipping with these people has made me want to become more like Christ. Having a leader passionate about Christ has helped me stay in check with my identity in Him!"</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">V</div>
+          <div><div class="testimonial-name">Vukona Nukeri</div><div class="testimonial-loc">Polokwane</div></div>
         </div>
       </div>
-
     </div>
-
   </div>
 </section>
 
-
-<!-- ABOUT, SATURDAY, ANNOUNCEMENTS sections remain the same as your last file - omitted here for brevity but keep them as they are in your current file -->
-
-<!-- SERMONS - ALL VIDEOS INCLUDED -->
+<!-- SERMONS -->
 <section id="sermons">
   <div class="sec-center reveal">
     <div class="sec-lbl">Anointed Messages</div>
-    <h2 class="sec-title">Sermons & <span>Preachings</span></h2>
+    <h2 class="sec-title">Sermons &amp; <span>Preachings</span></h2>
     <div class="gold-line"></div>
-    <p class="sec-sub" style="color:var(--text-muted)">
-      Watch and receive from the prophetic messages of Prophet Jay Uriel.<br>
-      <strong>Full sermons + powerful Shorts</strong>
-    </p>
+    <p style="color:var(--text-muted);font-size:clamp(.88rem,1.5vw,1rem)">Watch and receive from the prophetic messages of Prophet Jay Uriel.<br><strong>Full sermons + powerful Shorts</strong></p>
   </div>
-
   <div class="videos-container">
     <div class="videos-grid" id="videosGrid">
-
-      <!-- Original videos you had -->
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/0TS902WHcVc" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-info"><div class="video-title">Recent Sermon</div><a href="https://youtu.be/0TS902WHcVc" target="_blank" class="video-link">Watch on YouTube →</a></div>
-      </div>
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/36V_GmO3050" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-info"><div class="video-title">Recent Sermon</div><a href="https://youtu.be/36V_GmO3050" target="_blank" class="video-link">Watch on YouTube →</a></div>
-      </div>
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/MnnpCZcyYiI" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-info"><div class="video-title">The Power of Faith in Christ</div><a href="https://youtu.be/MnnpCZcyYiI" target="_blank" class="video-link">Watch on YouTube →</a></div>
-      </div>
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/yb0ykMTb_dE" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-info"><div class="video-title">Recent Sermon</div><a href="https://youtu.be/yb0ykMTb_dE" target="_blank" class="video-link">Watch on YouTube →</a></div>
-      </div>
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/RvP9Mha5bTA" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-info"><div class="video-title">Recent Sermon</div><a href="https://youtu.be/RvP9Mha5bTA" target="_blank" class="video-link">Watch on YouTube →</a></div>
-      </div>
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/_AZxY5wJ7Pk" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-info"><div class="video-title">Recent Sermon</div><a href="https://youtu.be/_AZxY5wJ7Pk" target="_blank" class="video-link">Watch on YouTube →</a></div>
-      </div>
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/S-IFCaO4A4s" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-info"><div class="video-title">Walking in God's Grace</div><a href="https://youtu.be/S-IFCaO4A4s" target="_blank" class="video-link">Watch on YouTube →</a></div>
-      </div>
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/y7glFO4EkNk" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-info"><div class="video-title">Recent Sermon</div><a href="https://youtu.be/y7glFO4EkNk" target="_blank" class="video-link">Watch on YouTube →</a></div>
-      </div>
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/LkaIPh6m6pc" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-info"><div class="video-title">Recent Sermon</div><a href="https://youtu.be/LkaIPh6m6pc" target="_blank" class="video-link">Watch on YouTube →</a></div>
-      </div>
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/vwsWuBSVxbs" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-info"><div class="video-title">The Kingdom Mindset</div><a href="https://youtu.be/vwsWuBSVxbs" target="_blank" class="video-link">Watch on YouTube →</a></div>
-      </div>
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/ezxL__tQr8A" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-info"><div class="video-title">Recent Sermon</div><a href="https://youtu.be/ezxL__tQr8A" target="_blank" class="video-link">Watch on YouTube →</a></div>
-      </div>
-
-      <!-- New videos you sent -->
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/hEkVmrYH1qo" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-info"><div class="video-title">New Sermon</div><a href="https://youtu.be/hEkVmrYH1qo" target="_blank" class="video-link">Watch on YouTube →</a></div>
-      </div>
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/LkaIPh6m6pc" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-info"><div class="video-title">Recent Sermon</div><a href="https://youtu.be/LkaIPh6m6pc" target="_blank" class="video-link">Watch on YouTube →</a></div>
-      </div>
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/WVEzMYhRbGg" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-info"><div class="video-title">New Sermon</div><a href="https://youtu.be/WVEzMYhRbGg" target="_blank" class="video-link">Watch on YouTube →</a></div>
-      </div>
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/kEj4c_ayeDY" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-info"><div class="video-title">New Sermon</div><a href="https://youtu.be/kEj4c_ayeDY" target="_blank" class="video-link">Watch on YouTube →</a></div>
-      </div>
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/n1gOAHFANn4" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-info"><div class="video-title">New Sermon</div><a href="https://youtu.be/n1gOAHFANn4" target="_blank" class="video-link">Watch on YouTube →</a></div>
-      </div>
-
-      <!-- All Shorts you sent -->
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/cxNfd6Hv_mY" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-info"><div class="video-title">Prophetic Short</div><a href="https://youtube.com/shorts/cxNfd6Hv_mY" target="_blank" class="video-link">Watch on YouTube →</a></div>
-      </div>
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/53iDdjlSwNo" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/53iDdjlSwNo" target="_blank" class="video-link">Watch on YouTube →</a></div>
-      </div>
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/Xu4jocaFM0o" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/Xu4jocaFM0o" target="_blank" class="video-link">Watch on YouTube →</a></div>
-      </div>
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/XDoobxFlqzs" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/XDoobxFlqzs" target="_blank" class="video-link">Watch on YouTube →</a></div>
-      </div>
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/En2_4YOxrVw" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/En2_4YOxrVw" target="_blank" class="video-link">Watch on YouTube →</a></div>
-      </div>
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/WDrH3-Dtpto" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/WDrH3-Dtpto" target="_blank" class="video-link">Watch on YouTube →</a></div>
-      </div>
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/2EOVwlxiUwE" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/2EOVwlxiUwE" target="_blank" class="video-link">Watch on YouTube →</a></div>
-      </div>
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/pOIojhQPk18" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/pOIojhQPk18" target="_blank" class="video-link">Watch on YouTube →</a></div>
-      </div>
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/6IrDC-YlNEs" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/6IrDC-YlNEs" target="_blank" class="video-link">Watch on YouTube →</a></div>
-      </div>
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/vPBM6grfixs" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/vPBM6grfixs" target="_blank" class="video-link">Watch on YouTube →</a></div>
-      </div>
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/Wg-hVdQgc3E" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/Wg-hVdQgc3E" target="_blank" class="video-link">Watch on YouTube →</a></div>
-      </div>
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/cibFZGWUfd8" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/cibFZGWUfd8" target="_blank" class="video-link">Watch on YouTube →</a></div>
-      </div>
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/rfMnBltV3yI" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/rfMnBltV3yI" target="_blank" class="video-link">Watch on YouTube →</a></div>
-      </div>
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/DUuek5Gw-Vk" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/DUuek5Gw-Vk" target="_blank" class="video-link">Watch on YouTube →</a></div>
-      </div>
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/nk6PxjyQmZ8" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/nk6PxjyQmZ8" target="_blank" class="video-link">Watch on YouTube →</a></div>
-      </div>
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/90Kld0S63W8" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/90Kld0S63W8" target="_blank" class="video-link">Watch on YouTube →</a></div>
-      </div>
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/SlTpWuFmrCA" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/SlTpWuFmrCA" target="_blank" class="video-link">Watch on YouTube →</a></div>
-      </div>
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/lW0qJhO5ndU" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/lW0qJhO5ndU" target="_blank" class="video-link">Watch on YouTube →</a></div>
-      </div>
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/hkPPlXCecsE" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/hkPPlXCecsE" target="_blank" class="video-link">Watch on YouTube →</a></div>
-      </div>
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/c9pgcEJ2hio" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/c9pgcEJ2hio" target="_blank" class="video-link">Watch on YouTube →</a></div>
-      </div>
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/hQrsI7cl0GY" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/hQrsI7cl0GY" target="_blank" class="video-link">Watch on YouTube →</a></div>
-      </div>
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/yNykB7oRYGI" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/yNykB7oRYGI" target="_blank" class="video-link">Watch on YouTube →</a></div>
-      </div>
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/UfRlNhGwzzs" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/UfRlNhGwzzs" target="_blank" class="video-link">Watch on YouTube →</a></div>
-      </div>
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/ahqOtvzMmy0" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/ahqOtvzMmy0" target="_blank" class="video-link">Watch on YouTube →</a></div>
-      </div>
-      <div class="video-card">
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/vLLWPQvj7Sg" allowfullscreen loading="lazy"></iframe></div>
-        <div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/vLLWPQvj7Sg" target="_blank" class="video-link">Watch on YouTube →</a></div>
-      </div>
-
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/0TS902WHcVc" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Recent Sermon</div><a href="https://youtu.be/0TS902WHcVc" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/36V_GmO3050" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Recent Sermon</div><a href="https://youtu.be/36V_GmO3050" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/MnnpCZcyYiI" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">The Power of Faith in Christ</div><a href="https://youtu.be/MnnpCZcyYiI" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/yb0ykMTb_dE" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Recent Sermon</div><a href="https://youtu.be/yb0ykMTb_dE" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/RvP9Mha5bTA" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Recent Sermon</div><a href="https://youtu.be/RvP9Mha5bTA" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/_AZxY5wJ7Pk" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Recent Sermon</div><a href="https://youtu.be/_AZxY5wJ7Pk" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/S-IFCaO4A4s" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Walking in God's Grace</div><a href="https://youtu.be/S-IFCaO4A4s" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/y7glFO4EkNk" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Recent Sermon</div><a href="https://youtu.be/y7glFO4EkNk" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/LkaIPh6m6pc" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Recent Sermon</div><a href="https://youtu.be/LkaIPh6m6pc" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/vwsWuBSVxbs" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">The Kingdom Mindset</div><a href="https://youtu.be/vwsWuBSVxbs" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/ezxL__tQr8A" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Recent Sermon</div><a href="https://youtu.be/ezxL__tQr8A" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/hEkVmrYH1qo" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">New Sermon</div><a href="https://youtu.be/hEkVmrYH1qo" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/WVEzMYhRbGg" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">New Sermon</div><a href="https://youtu.be/WVEzMYhRbGg" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/kEj4c_ayeDY" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">New Sermon</div><a href="https://youtu.be/kEj4c_ayeDY" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/n1gOAHFANn4" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">New Sermon</div><a href="https://youtu.be/n1gOAHFANn4" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/cxNfd6Hv_mY" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Prophetic Short</div><a href="https://youtube.com/shorts/cxNfd6Hv_mY" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/53iDdjlSwNo" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/53iDdjlSwNo" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/Xu4jocaFM0o" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/Xu4jocaFM0o" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/XDoobxFlqzs" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/XDoobxFlqzs" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/En2_4YOxrVw" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/En2_4YOxrVw" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/WDrH3-Dtpto" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/WDrH3-Dtpto" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/2EOVwlxiUwE" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/2EOVwlxiUwE" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/pOIojhQPk18" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/pOIojhQPk18" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/6IrDC-YlNEs" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/6IrDC-YlNEs" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/vPBM6grfixs" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/vPBM6grfixs" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/Wg-hVdQgc3E" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/Wg-hVdQgc3E" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/cibFZGWUfd8" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/cibFZGWUfd8" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/rfMnBltV3yI" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/rfMnBltV3yI" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/DUuek5Gw-Vk" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/DUuek5Gw-Vk" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/nk6PxjyQmZ8" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/nk6PxjyQmZ8" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/90Kld0S63W8" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/90Kld0S63W8" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/SlTpWuFmrCA" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/SlTpWuFmrCA" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/lW0qJhO5ndU" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/lW0qJhO5ndU" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/hkPPlXCecsE" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/hkPPlXCecsE" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/c9pgcEJ2hio" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/c9pgcEJ2hio" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/hQrsI7cl0GY" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/hQrsI7cl0GY" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/yNykB7oRYGI" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/yNykB7oRYGI" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/UfRlNhGwzzs" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/UfRlNhGwzzs" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/ahqOtvzMmy0" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/ahqOtvzMmy0" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/vLLWPQvj7Sg" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Short</div><a href="https://youtube.com/shorts/vLLWPQvj7Sg" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
     </div>
   </div>
-
-  <div style="text-align:center; margin-top:60px;">
-    <a href="https://www.youtube.com/@jayuriel" target="_blank" class="btn-gold" style="font-size:0.75rem; padding:16px 42px;">VIEW ALL SERMONS & SHORTS ON YOUTUBE →</a>
+  <div style="text-align:center;margin-top:clamp(32px,5vw,60px)">
+    <a href="https://www.youtube.com/@jayuriel" target="_blank" class="btn-gold" style="font-size:.75rem;padding:16px 42px">VIEW ALL SERMONS &amp; SHORTS ON YOUTUBE →</a>
   </div>
 </section>
 
-<!-- The rest of your page (documents, prayer, connect, join, footer) remains exactly the same as in your last file. Keep them below this section. -->
-
-<script>
-/* Your existing script (particles, theme, observers, nav, documents, hamburger, prayer) - paste your original script here */
-</script>
-</body>
-</html>
-
-
-
-  
-<!-- DOCUMENTS / NOTES -->
+<!-- DOCUMENTS -->
 <section id="documents">
   <div class="sec-center reveal">
     <div class="sec-lbl">Written Revelation</div>
     <h2 class="sec-title">Teaching <span>Notes</span></h2>
     <div class="gold-line"></div>
-    <p class="sec-sub" style="color:var(--text-muted)">Study materials from Prophet Jay Uriel. View online or download to study at your pace.</p>
+    <p style="color:var(--text-muted);font-size:clamp(.88rem,1.5vw,1rem)">Study materials from Prophet Jay Uriel. View online or download to study at your pace.</p>
   </div>
   <div class="docs-grid" id="docsGrid"></div>
 </section>
@@ -958,7 +657,7 @@
       <div class="sec-lbl">Come Before God</div>
       <h2 class="sec-title">Submit a <span>Prayer Request</span></h2>
       <div class="gold-line"></div>
-      <p class="sec-sub" style="color:var(--text-muted)">We stand in agreement with you. Share your request and our team will pray for you.</p>
+      <p style="color:var(--text-muted);font-size:clamp(.88rem,1.5vw,1rem)">We stand in agreement with you. Share your request and our team will pray for you.</p>
     </div>
     <div class="prayer-form reveal">
       <div class="form-row">
@@ -976,57 +675,31 @@
 <section id="connect">
   <div class="sec-center reveal">
     <div class="sec-lbl">Stay Connected</div>
-    <h2 class="sec-title">Follow & <span>Connect</span></h2>
+    <h2 class="sec-title">Follow &amp; <span>Connect</span></h2>
     <div class="gold-line"></div>
-    <p class="sec-sub" style="color:var(--text-muted)">Join us on social media and stay updated with the latest teachings.</p>
+    <p style="color:var(--text-muted);font-size:clamp(.88rem,1.5vw,1rem)">Join us on social media and stay updated with the latest teachings.</p>
   </div>
   <div class="social-grid stagger-children">
-
-    <!-- Facebook -->
     <a href="https://www.facebook.com/josiasuriel28" target="_blank" class="soc-card fb">
-      <div class="soc-logo">
-        <svg viewBox="0 0 24 24" width="42" height="42" fill="#1877F2"><path d="M24 12.07C24 5.41 18.63 0 12 0S0 5.41 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.04V9.41c0-3.02 1.8-4.7 4.54-4.7 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.95.93-1.95 1.88v2.27h3.32l-.53 3.49h-2.79V24C19.61 23.1 24 18.1 24 12.07z"/></svg>
-      </div>
-      <div class="soc-name">Facebook</div>
-      <div class="soc-desc">@josiasuriel28</div>
+      <div class="soc-logo"><svg viewBox="0 0 24 24" width="42" height="42" fill="#1877F2"><path d="M24 12.07C24 5.41 18.63 0 12 0S0 5.41 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.04V9.41c0-3.02 1.8-4.7 4.54-4.7 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.95.93-1.95 1.88v2.27h3.32l-.53 3.49h-2.79V24C19.61 23.1 24 18.1 24 12.07z"/></svg></div>
+      <div class="soc-name">Facebook</div><div class="soc-desc">@josiasuriel28</div>
     </a>
-
-    <!-- YouTube — Music channel -->
     <a href="https://youtube.com/@UJaymusic?si=NVlrgSRfXU7l_x1v" target="_blank" class="soc-card yt">
-      <div class="soc-logo">
-        <svg viewBox="0 0 24 24" width="42" height="42" fill="#FF0000"><path d="M23.5 6.2a3.01 3.01 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.5A3.01 3.01 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3.01 3.01 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3.01 3.01 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.8 15.5V8.5l6.3 3.5-6.3 3.5z"/></svg>
-      </div>
-      <div class="soc-name">YouTube Music</div>
-      <div class="soc-desc">@UJaymusic</div>
+      <div class="soc-logo"><svg viewBox="0 0 24 24" width="42" height="42" fill="#FF0000"><path d="M23.5 6.2a3.01 3.01 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.5A3.01 3.01 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3.01 3.01 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3.01 3.01 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.8 15.5V8.5l6.3 3.5-6.3 3.5z"/></svg></div>
+      <div class="soc-name">YouTube Music</div><div class="soc-desc">@UJaymusic</div>
     </a>
-
-    <!-- YouTube — Ministry channel -->
     <a href="https://youtube.com/@jayuriel?si=xzvvfhL49ksk0J77" target="_blank" class="soc-card yt">
-      <div class="soc-logo">
-        <svg viewBox="0 0 24 24" width="42" height="42" fill="#FF0000"><path d="M23.5 6.2a3.01 3.01 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.5A3.01 3.01 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3.01 3.01 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3.01 3.01 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.8 15.5V8.5l6.3 3.5-6.3 3.5z"/></svg>
-      </div>
-      <div class="soc-name">YouTube Ministry</div>
-      <div class="soc-desc">@jayuriel</div>
+      <div class="soc-logo"><svg viewBox="0 0 24 24" width="42" height="42" fill="#FF0000"><path d="M23.5 6.2a3.01 3.01 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.5A3.01 3.01 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3.01 3.01 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3.01 3.01 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.8 15.5V8.5l6.3 3.5-6.3 3.5z"/></svg></div>
+      <div class="soc-name">YouTube Ministry</div><div class="soc-desc">@jayuriel</div>
     </a>
-
-    <!-- TikTok -->
     <a href="http://tiktok.com/@jayuriel28?_t=8o1cEvqxSz7&_r=1" target="_blank" class="soc-card tk">
-      <div class="soc-logo">
-        <svg viewBox="0 0 24 24" width="42" height="42" fill="currentColor" style="color:#fff"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.74a4.85 4.85 0 0 1-1.01-.05z"/></svg>
-      </div>
-      <div class="soc-name">TikTok</div>
-      <div class="soc-desc">@jayuriel28</div>
+      <div class="soc-logo"><svg viewBox="0 0 24 24" width="42" height="42" fill="currentColor" style="color:#fff"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.74a4.85 4.85 0 0 1-1.01-.05z"/></svg></div>
+      <div class="soc-name">TikTok</div><div class="soc-desc">@jayuriel28</div>
     </a>
-
-    <!-- WhatsApp -->
     <a href="https://wa.me/27649842408" target="_blank" class="soc-card wa">
-      <div class="soc-logo">
-        <svg viewBox="0 0 24 24" width="42" height="42" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
-      </div>
-      <div class="soc-name">WhatsApp</div>
-      <div class="soc-desc">0649842408</div>
+      <div class="soc-logo"><svg viewBox="0 0 24 24" width="42" height="42" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg></div>
+      <div class="soc-name">WhatsApp</div><div class="soc-desc">0649842408</div>
     </a>
-
   </div>
 </section>
 
@@ -1035,23 +708,21 @@
   <div class="sec-lbl">Be Part of the Family</div>
   <h2 class="sec-title" style="max-width:560px;margin:0 auto 16px">Join Us <span>This Saturday</span></h2>
   <div class="gold-line" style="margin:16px auto 24px"></div>
-  <p style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--text-muted);font-size:1.1rem;max-width:480px;margin:0 auto 32px;line-height:1.7">Come as you are. Leave transformed. Every Saturday, we gather to encounter the living God.</p>
+  <p style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--text-muted);font-size:clamp(.95rem,1.8vw,1.1rem);max-width:480px;margin:0 auto 32px;line-height:1.7">Come as you are. Leave transformed. Every Saturday, we gather to encounter the living God.</p>
   <a href="#prayer" class="btn-gold">Connect With Us</a>
 </div>
 
 <!-- FOOTER -->
 <footer>
-  <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:32px;max-width:1200px;margin:0 auto">
+  <div class="footer-inner">
     <div>
-      <div style="font-family:'Cinzel',serif;color:var(--gold);font-size:.85rem;letter-spacing:.12em;margin-bottom:8px">United in Christ</div>
-      <div style="font-size:.8rem;color:var(--text-muted)">Prophet Jay Uriel Ministry</div>
+      <div style="font-family:'Cinzel',serif;color:var(--gold);font-size:clamp(.75rem,1.5vw,.85rem);letter-spacing:.12em;margin-bottom:8px">United in Christ</div>
+      <div style="font-size:clamp(.7rem,1.2vw,.8rem);color:var(--text-muted)">Prophet Jay Uriel Ministry</div>
     </div>
-    <div style="font-size:.78rem;color:var(--text-muted);text-align:right">
+    <div style="font-size:clamp(.7rem,1.2vw,.78rem);color:var(--text-muted)">
       <div>© 2024 United in Christ. All rights reserved.</div>
     </div>
   </div>
-
-  <!-- BUILT BY BONNY -->
   <div class="built-by">
     <div class="built-by-beam"></div>
     <div class="built-by-inner">
@@ -1092,150 +763,89 @@ const io = new IntersectionObserver(entries=>{
       io.unobserve(e.target);
     }
   });
-},{threshold:.12});
+},{threshold:.1});
 document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el=>io.observe(el));
 
 const staggerIO = new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');staggerIO.unobserve(e.target)}});
-},{threshold:.08});
+},{threshold:.06});
 document.querySelectorAll('.stagger-children').forEach(el=>staggerIO.observe(el));
 
 const glIO = new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('animated');glIO.unobserve(e.target)}});
-},{threshold:.5});
+},{threshold:.4});
 document.querySelectorAll('.gold-line').forEach(gl=>glIO.observe(gl));
 
-const vidIO = new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('staggered');vidIO.unobserve(e.target)}});
-},{threshold:.05});
-const vg = document.getElementById('videosGrid');
-if(vg) vidIO.observe(vg);
+
 
 /* ── NAV SCROLL ── */
 const navbar = document.getElementById('navbar');
 window.addEventListener('scroll',()=>{
-  if(window.scrollY>40){
-    navbar.style.boxShadow='0 6px 28px rgba(0,0,0,.45)';
-    navbar.style.padding='10px 56px';
-  } else {
-    navbar.style.boxShadow='none';
-    navbar.style.padding='13px 56px';
-  }
-});
-/* ── DOCUMENTS / NOTES ── */
-const documents = [
-  { name: "Dominion & Royalty in Christ", viewUrl: "https://drive.google.com/file/d/1RehRpaL6Yv2MmSr4zfxo9QCC3tKmDq3c/view?usp=drivesdk" },
-  { name: "Gifts Impress But Fruit Proves", viewUrl: "https://drive.google.com/file/d/19E-XcK4mRD-KgfpbTlQDCLvOqpr5wJiX/view?usp=drivesdk" },
-  { name: "Kingdom Service (Ministry) Pt 1", viewUrl: "https://drive.google.com/file/d/13zRAHkv8aygwHnUCIdzrbpxShhtDN4PA/view?usp=drivesdk" },
-  { name: "Kingdom Service (Ministry) Pt 2", viewUrl: "https://drive.google.com/file/d/1kuhbzAuftVih5WszZb5Tv3rH0Rvniiwq/view?usp=drivesdk" },
-  { name: "New Creation Reality", viewUrl: "https://drive.google.com/file/d/1y2sif6rLXgrQzuGA4d4AYaPCgoegtVe_/view?usp=drivesdk" },
-  { name: "Righteousness", viewUrl: "https://drive.google.com/file/d/1M3QorBT5ijy_nFHZcmuDn8qu-52m4Hnn/view?usp=drivesdk" },
-  { name: "Stillness", viewUrl: "https://drive.google.com/file/d/11h_pPNgf9bJNQLdBnYozE11FcEUfTP9D/view?usp=drivesdk" },
-  { name: "The Mystery of Creative Power", viewUrl: "https://drive.google.com/file/d/1rVCx1v2Wv9bAHen_WQoINkCU5lAxBT4I/view?usp=drivesdk" },
-  { name: "The Godly Anointing", viewUrl: "https://drive.google.com/file/d/11RVAKxQ91d7PpkoIRcNL-wCCkD8O6yH8/view?usp=drivesdk" },
-  { name: "The Revelation of the Inner Kingdom", viewUrl: "https://drive.google.com/file/d/1UjNiIJLxQs1NWeq1CPewLfphEqVTUuaA/view?usp=drivesdk" },
-  { name: "The Christian Walk (UIC)", viewUrl: "https://drive.google.com/file/d/1IXS0XzpkYtvjGRMA4cGj_lpRBWtj1ePl/view?usp=drivesdk" }
-];
+  const scrolled = window.scrollY > 40;
+  navbar.style.boxShadow = scrolled ? '0 6px 28px rgba(0,0,0,.45)' : 'none';
+},{ passive: true });
 
+/* ── DOCUMENTS ── */
+const documents = [
+  { name:"Dominion & Royalty in Christ", viewUrl:"https://drive.google.com/file/d/1RehRpaL6Yv2MmSr4zfxo9QCC3tKmDq3c/view?usp=drivesdk"},
+  { name:"Gifts Impress But Fruit Proves", viewUrl:"https://drive.google.com/file/d/19E-XcK4mRD-KgfpbTlQDCLvOqpr5wJiX/view?usp=drivesdk"},
+  { name:"Kingdom Service (Ministry) Pt 1", viewUrl:"https://drive.google.com/file/d/13zRAHkv8aygwHnUCIdzrbpxShhtDN4PA/view?usp=drivesdk"},
+  { name:"Kingdom Service (Ministry) Pt 2", viewUrl:"https://drive.google.com/file/d/1kuhbzAuftVih5WszZb5Tv3rH0Rvniiwq/view?usp=drivesdk"},
+  { name:"New Creation Reality", viewUrl:"https://drive.google.com/file/d/1y2sif6rLXgrQzuGA4d4AYaPCgoegtVe_/view?usp=drivesdk"},
+  { name:"Righteousness", viewUrl:"https://drive.google.com/file/d/1M3QorBT5ijy_nFHZcmuDn8qu-52m4Hnn/view?usp=drivesdk"},
+  { name:"Stillness", viewUrl:"https://drive.google.com/file/d/11h_pPNgf9bJNQLdBnYozE11FcEUfTP9D/view?usp=drivesdk"},
+  { name:"The Mystery of Creative Power", viewUrl:"https://drive.google.com/file/d/1rVCx1v2Wv9bAHen_WQoINkCU5lAxBT4I/view?usp=drivesdk"},
+  { name:"The Godly Anointing", viewUrl:"https://drive.google.com/file/d/11RVAKxQ91d7PpkoIRcNL-wCCkD8O6yH8/view?usp=drivesdk"},
+  { name:"The Revelation of the Inner Kingdom", viewUrl:"https://drive.google.com/file/d/1UjNiIJLxQs1NWeq1CPewLfphEqVTUuaA/view?usp=drivesdk"},
+  { name:"The Christian Walk (UIC)", viewUrl:"https://drive.google.com/file/d/1IXS0XzpkYtvjGRMA4cGj_lpRBWtj1ePl/view?usp=drivesdk"}
+];
 const dGrid = document.getElementById('docsGrid');
-documents.forEach((doc, i) => {
+documents.forEach((doc,i)=>{
   const num = String(i+1).padStart(2,'0');
   const card = document.createElement('div');
-  card.className = 'doc-card reveal';
-  card.innerHTML = `
-    <div class="doc-icon">📄</div>
-    <div class="doc-num">Note ${num}</div>
-    <div class="doc-title">${doc.name}</div>
-    <div class="doc-actions">
-      <button class="doc-btn view-btn">View</button>
-      <button class="doc-btn whatsapp-btn">Share</button>
-    </div>
-  `;
-
-  // View button → open link directly
-  card.querySelector('.view-btn').addEventListener('click', () => {
-    window.open(doc.viewUrl, '_blank');
+  card.className='doc-card reveal';
+  card.innerHTML=`<div class="doc-icon">📄</div><div class="doc-num">Note ${num}</div><div class="doc-title">${doc.name}</div><div class="doc-actions"><button class="doc-btn view-btn">View</button><button class="doc-btn whatsapp-btn">Share</button></div>`;
+  card.querySelector('.view-btn').addEventListener('click',()=>window.open(doc.viewUrl,'_blank'));
+  card.querySelector('.whatsapp-btn').addEventListener('click',()=>{
+    const text=`🔥 Teaching Note from Prophet Jay Uriel\n\n📖 ${doc.name}\n\n📥 View Online: ${doc.viewUrl}`;
+    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`,'_blank');
   });
-
-  // Share button → WhatsApp
-  card.querySelector('.whatsapp-btn').addEventListener('click', () => {
-    const text = `🔥 Teaching Note from Prophet Jay Uriel\n\n📖 ${doc.name}\n\n📥 View Online: ${doc.viewUrl}`;
-    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
-  });
-
   dGrid.appendChild(card);
   io.observe(card);
 });
 
-  
-/* ── HAMBURGER MOBILE NAV ── */
+/* ── HAMBURGER ── */
 const hamburger = document.getElementById('navHamburger');
 const mobileMenu = document.getElementById('navMobileMenu');
+function openMobileMenu(){hamburger.classList.add('open');mobileMenu.classList.add('open');document.body.style.overflow='hidden'}
+function closeMobileMenu(){hamburger.classList.remove('open');mobileMenu.classList.remove('open');document.body.style.overflow=''}
+hamburger.addEventListener('click',()=>mobileMenu.classList.contains('open')?closeMobileMenu():openMobileMenu());
+document.querySelectorAll('.mob-link').forEach(l=>l.addEventListener('click',closeMobileMenu));
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMobileMenu()});
 
-function openMobileMenu() {
-  hamburger.classList.add('open');
-  mobileMenu.classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-function closeMobileMenu() {
-  hamburger.classList.remove('open');
-  mobileMenu.classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-hamburger.addEventListener('click', () => {
-  if (mobileMenu.classList.contains('open')) closeMobileMenu();
-  else openMobileMenu();
-});
-
-// Close on any mobile link click
-document.querySelectorAll('.mob-link').forEach(link => {
-  link.addEventListener('click', () => {
-    closeMobileMenu();
-  });
-});
-
-// Close on escape
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') closeMobileMenu();
-});
-/* ── PRAYER FORM → sends to WhatsApp ── */
-const PRAYER_WA = '27649842408'; // 064 9842408 in international format
-const prayerSubmit = document.getElementById('prayerSubmit');
+/* ── PRAYER FORM ── */
+const PRAYER_WA='27649842408';
+const prayerSubmit=document.getElementById('prayerSubmit');
 if(prayerSubmit){
-  prayerSubmit.addEventListener('click', () => {
-    const name    = document.getElementById('pName').value.trim();
-    const email   = document.getElementById('pEmail').value.trim();
-    const subject = document.getElementById('pSubject').value.trim();
-    const msg     = document.getElementById('pMessage').value.trim();
-    if(!name || !msg){ alert('Please fill in your name and prayer request.'); return; }
-
-    // Build the WhatsApp message
-    const waText = `🙏 *Prayer Request — United in Christ*\n\n` +
-      `*Name:* ${name}\n` +
-      (email   ? `*Email:* ${email}\n` : '') +
-      (subject ? `*Subject:* ${subject}\n` : '') +
-      `\n*Prayer Request:*\n${msg}`;
-
-    // Open WhatsApp with pre-filled message
-    window.open(`https://wa.me/${PRAYER_WA}?text=${encodeURIComponent(waText)}`, '_blank');
-
-    // Visual feedback
-    prayerSubmit.textContent = '✓ Opening WhatsApp…';
-    prayerSubmit.style.background = 'linear-gradient(135deg,#2d9e6a,#1a7a50)';
-    prayerSubmit.disabled = true;
-    setTimeout(() => {
-      prayerSubmit.textContent = 'Send Prayer Request';
-      prayerSubmit.style.background = '';
-      prayerSubmit.disabled = false;
-      document.getElementById('pName').value='';
-      document.getElementById('pEmail').value='';
-      document.getElementById('pSubject').value='';
-      document.getElementById('pMessage').value='';
-    }, 3500);
+  prayerSubmit.addEventListener('click',()=>{
+    const name=document.getElementById('pName').value.trim();
+    const email=document.getElementById('pEmail').value.trim();
+    const subject=document.getElementById('pSubject').value.trim();
+    const msg=document.getElementById('pMessage').value.trim();
+    if(!name||!msg){alert('Please fill in your name and prayer request.');return;}
+    const waText=`🙏 *Prayer Request — United in Christ*\n\n*Name:* ${name}\n`+(email?`*Email:* ${email}\n`:'')+(subject?`*Subject:* ${subject}\n`:'')+`\n*Prayer Request:*\n${msg}`;
+    window.open(`https://wa.me/${PRAYER_WA}?text=${encodeURIComponent(waText)}`,'_blank');
+    prayerSubmit.textContent='✓ Opening WhatsApp…';
+    prayerSubmit.style.background='linear-gradient(135deg,#2d9e6a,#1a7a50)';
+    prayerSubmit.disabled=true;
+    setTimeout(()=>{
+      prayerSubmit.textContent='Send Prayer Request';
+      prayerSubmit.style.background='';
+      prayerSubmit.disabled=false;
+      ['pName','pEmail','pSubject','pMessage'].forEach(id=>document.getElementById(id).value='');
+    },3500);
   });
 }
 </script>
-
 </body>
 </html>
