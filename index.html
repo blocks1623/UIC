@@ -25,33 +25,28 @@
   body{background:var(--deep);color:var(--white);font-family:'Lato',sans-serif;overflow-x:hidden;transition:background .4s,color .4s}
   #particles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.3}
 
-  /* ── KEYFRAME ANIMATIONS ── */
+  /* ── KEYFRAMES ── */
   @keyframes fadeInDown{from{opacity:0;transform:translateY(-30px)}to{opacity:1;transform:translateY(0)}}
   @keyframes fadeInUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
   @keyframes fadeIn{from{opacity:0}to{opacity:1}}
   @keyframes scaleIn{from{opacity:0;transform:scale(0.88)}to{opacity:1;transform:scale(1)}}
-  @keyframes slideInLeft{from{opacity:0;transform:translateX(-50px)}to{opacity:1;transform:translateX(0)}}
-  @keyframes slideInRight{from{opacity:0;transform:translateX(50px)}to{opacity:1;transform:translateX(0)}}
-  @keyframes rotateSlow{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-  @keyframes pulseGlow{0%,100%{box-shadow:0 0 18px rgba(74,172,220,.25),0 0 0 0 rgba(74,172,220,.12)}50%{box-shadow:0 0 38px rgba(74,172,220,.5),0 0 0 14px rgba(74,172,220,0)}}
-  @keyframes shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
-  @keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-  @keyframes beamSweep{0%{transform:translateX(-100%) skewX(-20deg)}100%{transform:translateX(300%) skewX(-20deg)}}
-  @keyframes goldLineDraw{from{width:0}to{width:55px}}
-  @keyframes goldLineCenterDraw{from{width:0;margin-left:auto;margin-right:auto}to{width:55px;margin-left:auto;margin-right:auto}}
+  @keyframes pulseGlow{0%,100%{box-shadow:0 0 18px rgba(74,172,220,.25)}50%{box-shadow:0 0 38px rgba(74,172,220,.5)}}
+  @keyframes textGlint{0%,90%,100%{background-position:200% center}45%{background-position:-200% center}}
   @keyframes navSlideDown{from{opacity:0;transform:translateY(-100%)}to{opacity:1;transform:translateY(0)}}
   @keyframes orbFloat{0%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-20px) scale(1.05)}66%{transform:translate(-20px,15px) scale(.97)}100%{transform:translate(0,0) scale(1)}}
-  @keyframes textGlint{0%,90%,100%{background-position:200% center}45%{background-position:-200% center}}
-  @keyframes cardEntrance{from{opacity:0;transform:translateY(50px) scale(.95)}to{opacity:1;transform:translateY(0) scale(1)}}
+  @keyframes ringExpand{0%{transform:scale(.9);opacity:.7}50%{transform:scale(1.08);opacity:.3}100%{transform:scale(.9);opacity:.7}}
   @keyframes borderPulse{0%,100%{border-color:rgba(74,172,220,.18)}50%{border-color:rgba(74,172,220,.45)}}
   @keyframes iconBounce{0%,100%{transform:translateY(0)}40%{transform:translateY(-6px)}60%{transform:translateY(-3px)}}
   @keyframes spinOnce{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-  @keyframes ringExpand{0%{transform:scale(.9);opacity:.7}50%{transform:scale(1.08);opacity:.3}100%{transform:scale(.9);opacity:.7}}
+  @keyframes shimmerSlide{0%{transform:translateX(-100%) skewX(-15deg)}100%{transform:translateX(300%) skewX(-15deg)}}
+  @keyframes builtByPulse{0%,100%{opacity:.7;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  @keyframes creditBeam{0%{left:-60%}100%{left:120%}}
+  @keyframes floatCross{0%,100%{transform:translateY(0) rotate(0deg)}33%{transform:translateY(-8px) rotate(3deg)}66%{transform:translateY(-4px) rotate(-2deg)}}
+  @keyframes modalIn{from{opacity:0;transform:scale(.92) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
 
   /* ── THEME TOGGLE ── */
   .theme-toggle{position:fixed;bottom:28px;right:28px;z-index:9999;background:linear-gradient(135deg,#0A1E30,#122B42);border:1.5px solid rgba(74,172,220,.55);color:#7ECFEF;width:50px;height:50px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.25rem;box-shadow:0 4px 24px rgba(10,60,100,.55);transition:all .3s;animation:fadeIn .8s 1.2s both}
   .theme-toggle:hover{transform:scale(1.12) rotate(20deg);box-shadow:0 8px 32px rgba(74,172,220,.35)}
-  .theme-toggle:active{animation:spinOnce .4s ease}
 
   /* ── NAV ── */
   nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:13px 56px;background:var(--nav-bg);border-bottom:1px solid rgba(74,172,220,.15);transition:all .3s;animation:navSlideDown .7s ease both}
@@ -62,13 +57,6 @@
   .nav-logo-text{font-family:'Cinzel',serif;font-size:.9rem;color:var(--gold);letter-spacing:.1em}
   .nav-logo-sub{font-size:.58rem;color:var(--text-muted);letter-spacing:.2em;text-transform:uppercase}
   .nav-links{display:flex;gap:28px;list-style:none}
-  .nav-links li{animation:fadeInDown .5s both}
-  .nav-links li:nth-child(1){animation-delay:.1s}
-  .nav-links li:nth-child(2){animation-delay:.18s}
-  .nav-links li:nth-child(3){animation-delay:.26s}
-  .nav-links li:nth-child(4){animation-delay:.34s}
-  .nav-links li:nth-child(5){animation-delay:.42s}
-  .nav-links li:nth-child(6){animation-delay:.5s}
   .nav-links a{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.18em;color:var(--white2);text-decoration:none;text-transform:uppercase;transition:color .3s;position:relative}
   .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--gold);transform:scaleX(0);transition:transform .35s cubic-bezier(.4,0,.2,1)}
   .nav-links a:hover{color:var(--gold)}
@@ -77,66 +65,49 @@
   /* ── HERO ── */
   .hero{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 40px 80px;overflow:hidden;z-index:1}
   .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 30%,rgba(74,172,220,.11) 0%,transparent 70%),linear-gradient(160deg,var(--deep) 0%,var(--dark) 50%,var(--deep) 100%)}
-
-  /* Floating orbs behind hero */
   .hero-orb{position:absolute;border-radius:50%;pointer-events:none;filter:blur(60px)}
   .hero-orb-1{width:440px;height:440px;background:radial-gradient(circle,rgba(74,172,220,.09),transparent 70%);top:-80px;left:-120px;animation:orbFloat 14s ease-in-out infinite}
   .hero-orb-2{width:320px;height:320px;background:radial-gradient(circle,rgba(74,172,220,.07),transparent 70%);bottom:60px;right:-60px;animation:orbFloat 18s ease-in-out infinite reverse}
-  .hero-orb-3{width:200px;height:200px;background:radial-gradient(circle,rgba(126,207,239,.06),transparent 70%);top:50%;left:10%;animation:orbFloat 22s ease-in-out infinite 3s}
-
   .hero-ornament{font-size:.7rem;letter-spacing:.5em;color:var(--gold);text-transform:uppercase;font-family:'Cinzel',serif;margin-bottom:16px;animation:fadeInDown .8s .4s both}
   .hero-title{font-family:'Cinzel',serif;font-size:clamp(2.3rem,6vw,4.8rem);font-weight:700;color:var(--white);margin-bottom:6px;text-shadow:0 0 80px rgba(74,172,220,.25);animation:fadeInDown .9s .55s both}
-  .hero-title span{
-    color:var(--gold);
-    background:linear-gradient(90deg,var(--gold-dark),var(--gold-light),var(--gold),var(--gold-light),var(--gold-dark));
-    background-size:300% auto;
-    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-    animation:textGlint 5s linear 2s infinite
-  }
-
-  /* Logo ring animation */
+  .hero-title span{color:var(--gold);background:linear-gradient(90deg,var(--gold-dark),var(--gold-light),var(--gold),var(--gold-light),var(--gold-dark));background-size:300% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:textGlint 5s linear 2s infinite}
   .hero-logo-wrap{position:relative;width:220px;height:220px;margin:8px auto 26px;animation:scaleIn .9s .75s both}
   .hero-logo-ring{position:absolute;inset:-12px;border-radius:50%;border:1px solid rgba(74,172,220,.2);animation:ringExpand 3.5s ease-in-out infinite}
   .hero-logo-ring-2{position:absolute;inset:-24px;border-radius:50%;border:1px dashed rgba(74,172,220,.09);animation:ringExpand 3.5s ease-in-out infinite .8s}
   .hero-logo-circle{width:198px;height:198px;border-radius:50%;border:2px solid var(--gold);margin:11px auto 0;display:flex;align-items:center;justify-content:center;background:rgba(2,12,20,.6);overflow:hidden;animation:pulseGlow 4s ease-in-out infinite;transition:transform .4s}
   .hero-logo-circle:hover{transform:scale(1.04)}
   .hero-logo-circle img{width:100%;height:100%;object-fit:cover;border-radius:50%}
-
   .hero-tagline{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,2vw,1.35rem);font-style:italic;color:var(--white2);max-width:500px;margin:0 auto 34px;line-height:1.7;animation:fadeInUp .9s 1s both}
   .hero-cta{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;animation:fadeInUp .9s 1.15s both}
 
-  .btn-gold{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:#020C14;background:linear-gradient(135deg,var(--gold-light),var(--gold));border:none;padding:15px 34px;cursor:pointer;text-decoration:none;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:all .3s;position:relative;overflow:hidden}
+  /* ── BUTTONS ── */
+  .btn-gold{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:#020C14;background:linear-gradient(135deg,var(--gold-light),var(--gold));border:none;padding:15px 34px;cursor:pointer;text-decoration:none;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:all .3s;position:relative;overflow:hidden;display:inline-block}
   .btn-gold::before{content:'';position:absolute;top:0;left:0;width:40%;height:100%;background:rgba(255,255,255,.22);transform:translateX(-120%) skewX(-20deg);transition:transform .5s}
   .btn-gold:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(74,172,220,.35)}
   .btn-gold:hover::before{transform:translateX(280%) skewX(-20deg)}
-
-  .btn-outline{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);background:transparent;border:1px solid var(--gold);padding:14px 34px;cursor:pointer;text-decoration:none;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:all .3s;position:relative;overflow:hidden}
+  .btn-outline{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);background:transparent;border:1px solid var(--gold);padding:14px 34px;cursor:pointer;text-decoration:none;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:all .3s;position:relative;overflow:hidden;display:inline-block}
   .btn-outline::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--gold-light),var(--gold));opacity:0;transition:opacity .3s}
   .btn-outline:hover{color:#020C14;transform:translateY(-3px);box-shadow:0 12px 28px rgba(74,172,220,.25)}
   .btn-outline:hover::before{opacity:1}
   .btn-outline span{position:relative;z-index:1}
 
-  /* ── SHARED SECTION STYLES ── */
+  /* ── SHARED SECTION ── */
   section{position:relative;z-index:1}
   .sec-lbl{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.4em;color:var(--gold);text-transform:uppercase;margin-bottom:11px;opacity:.85}
   .sec-lbl::before{content:'— '}
   .sec-lbl::after{content:' —'}
   .sec-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.9rem);font-weight:900;color:var(--white);line-height:1.15;margin-bottom:16px}
   .sec-title span{color:var(--gold)}
-
   .gold-line{width:0;height:2px;background:linear-gradient(to right,var(--gold),transparent);margin:20px 0;transition:width .8s ease}
   .gold-line.animated{width:55px}
   .sec-center .gold-line{margin:20px auto}
-
   .sec-center{text-align:center;max-width:700px;margin:0 auto 60px}
 
   /* ── ABOUT ── */
   #about{padding:108px 60px;background:linear-gradient(160deg,var(--deep) 0%,var(--dark) 100%);border-top:1px solid var(--sec-border)}
   .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:76px;max-width:1200px;margin:0 auto;align-items:center}
-  .about-img{width:100%;aspect-ratio:3/4;object-fit:cover;border:1px solid rgba(74,172,220,.3);transition:transform .6s ease,box-shadow .6s ease,border-color .4s}
+  .about-img{width:100%;aspect-ratio:3/4;object-fit:cover;border:1px solid rgba(74,172,220,.3);transition:transform .6s ease,box-shadow .6s ease}
   .about-img:hover{transform:scale(1.025);border-color:rgba(74,172,220,.65);box-shadow:0 28px 64px rgba(0,0,0,.5),0 0 40px rgba(74,172,220,.12)}
-
-  /* Image shimmer overlay on hover */
   .about-img-wrap{position:relative;overflow:hidden}
   .about-img-wrap::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(74,172,220,.08),transparent);transition:left .7s ease;pointer-events:none}
   .about-img-wrap:hover::after{left:160%}
@@ -146,12 +117,10 @@
   .sat-grid{display:grid;grid-template-columns:1fr 1fr;gap:34px;max-width:1100px;margin:0 auto}
   .sat-card{background:linear-gradient(160deg,var(--surface),var(--surface2));border:1px solid rgba(74,172,220,.18);padding:46px 40px;position:relative;overflow:hidden;transition:transform .35s ease,border-color .35s,box-shadow .35s;animation:borderPulse 4s ease-in-out infinite}
   .sat-card::before{content:'';position:absolute;top:0;left:-80%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(74,172,220,.05),transparent);transition:left .7s ease}
-  .sat-card:hover{transform:translateY(-8px);border-color:rgba(74,172,220,.55);box-shadow:0 24px 60px rgba(0,0,0,.45),inset 0 1px 0 rgba(74,172,220,.15)}
+  .sat-card:hover{transform:translateY(-8px);border-color:rgba(74,172,220,.55);box-shadow:0 24px 60px rgba(0,0,0,.45)}
   .sat-card:hover::before{left:160%}
-  .sat-card:nth-child(2){animation-delay:2s}
-  .sat-n{font-family:'Playfair Display',serif;font-size:5rem;font-weight:900;color:rgba(74,172,220,.07);position:absolute;top:14px;right:24px;transition:color .4s}
-  .sat-card:hover .sat-n{color:rgba(74,172,220,.13)}
-  .sat-icon{font-size:2rem;margin-bottom:14px;display:inline-block;transition:transform .3s}
+  .sat-n{font-family:'Playfair Display',serif;font-size:5rem;font-weight:900;color:rgba(74,172,220,.07);position:absolute;top:14px;right:24px}
+  .sat-icon{font-size:2rem;margin-bottom:14px;display:inline-block}
   .sat-card:hover .sat-icon{animation:iconBounce .6s ease}
   .sat-day{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.32em;color:var(--gold);text-transform:uppercase;margin-bottom:9px}
   .sat-title{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--white);margin-bottom:12px;font-weight:700}
@@ -162,49 +131,94 @@
   #sermons{padding:96px 60px;background:linear-gradient(160deg,var(--dark),var(--deep));border-top:1px solid var(--sec-border)}
   .videos-container{max-width:1200px;margin:0 auto}
   .videos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:28px}
-
-  .video-card{background:var(--surface);border:1px solid rgba(74,172,220,.15);border-radius:8px;overflow:hidden;transition:transform .35s ease,border-color .35s,box-shadow .35s;position:relative}
-  .video-card::after{content:'';position:absolute;inset:0;border-radius:8px;box-shadow:inset 0 0 0 1px rgba(74,172,220,0);transition:box-shadow .35s;pointer-events:none}
-  .video-card:hover{transform:translateY(-8px);border-color:var(--gold);box-shadow:0 24px 56px rgba(0,0,0,.55),0 0 0 1px rgba(74,172,220,.2)}
-  .video-card:hover::after{box-shadow:inset 0 0 0 1px rgba(74,172,220,.15)}
-
-  .video-wrapper{position:relative;padding-top:56.25%;background:#000;overflow:hidden}
-  .video-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none;transition:transform .4s ease}
-  .video-card:hover .video-wrapper iframe{transform:scale(1.02)}
-
+  .video-card{background:var(--surface);border:1px solid rgba(74,172,220,.15);border-radius:8px;overflow:hidden;transition:transform .35s ease,border-color .35s,box-shadow .35s;opacity:0;transform:translateY(40px) scale(.97);transition:opacity .6s ease,transform .6s ease,border-color .35s,box-shadow .35s}
+  .videos-grid.staggered .video-card{opacity:1;transform:none}
+  .videos-grid.staggered .video-card:nth-child(1){transition-delay:.04s}
+  .videos-grid.staggered .video-card:nth-child(2){transition-delay:.1s}
+  .videos-grid.staggered .video-card:nth-child(3){transition-delay:.16s}
+  .videos-grid.staggered .video-card:nth-child(4){transition-delay:.22s}
+  .videos-grid.staggered .video-card:nth-child(5){transition-delay:.28s}
+  .videos-grid.staggered .video-card:nth-child(6){transition-delay:.34s}
+  .videos-grid.staggered .video-card:nth-child(7){transition-delay:.4s}
+  .videos-grid.staggered .video-card:nth-child(8){transition-delay:.46s}
+  .videos-grid.staggered .video-card:nth-child(9){transition-delay:.52s}
+  .videos-grid.staggered .video-card:nth-child(10){transition-delay:.58s}
+  .videos-grid.staggered .video-card:nth-child(11){transition-delay:.64s}
+  .video-card:hover{transform:translateY(-8px)!important;border-color:var(--gold);box-shadow:0 24px 56px rgba(0,0,0,.55)}
+  .video-wrapper{position:relative;padding-top:56.25%;background:#000}
+  .video-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none}
   .video-info{padding:20px 22px}
   .video-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--white);line-height:1.35;margin-bottom:8px;transition:color .3s}
   .video-card:hover .video-title{color:var(--gold-light)}
-  .video-link{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.15em;color:var(--gold);text-decoration:none;display:inline-flex;align-items:center;gap:4px;transition:gap .3s,opacity .3s}
-  .video-link:hover{gap:10px;opacity:.85}
+  .video-link{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.15em;color:var(--gold);text-decoration:none;display:inline-flex;align-items:center;gap:4px;transition:gap .3s}
+  .video-link:hover{gap:10px}
 
   /* ── DOCUMENTS ── */
   #documents{padding:96px 60px;background:var(--deep);border-top:1px solid var(--sec-border)}
-  .docs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:20px;max-width:1200px;margin:0 auto}
-  .doc-card{background:linear-gradient(160deg,var(--surface),var(--surface2));border:1px solid rgba(74,172,220,.15);padding:28px 24px;display:flex;flex-direction:column;gap:10px;transition:transform .3s ease,border-color .3s,box-shadow .3s;cursor:pointer;position:relative;overflow:hidden}
+  .docs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;max-width:1200px;margin:0 auto}
+  .doc-card{background:linear-gradient(160deg,var(--surface),var(--surface2));border:1px solid rgba(74,172,220,.15);padding:28px 24px;display:flex;flex-direction:column;gap:10px;transition:transform .3s ease,border-color .3s,box-shadow .3s;position:relative;overflow:hidden}
   .doc-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,transparent,var(--gold),transparent);transform:scaleX(0);transition:transform .4s ease}
   .doc-card:hover{transform:translateY(-6px);border-color:var(--gold);box-shadow:0 16px 40px rgba(0,0,0,.4)}
   .doc-card:hover::before{transform:scaleX(1)}
+  .doc-icon{font-size:2rem;transition:transform .3s}
+  .doc-card:hover .doc-icon{transform:scale(1.15) rotate(-5deg)}
+  .doc-num{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.2em;color:var(--text-muted)}
+  .doc-title{font-family:'Playfair Display',serif;font-weight:700;color:var(--white);line-height:1.35;font-size:.95rem}
+  .doc-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:6px}
+  .doc-btn{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;border:none;padding:8px 12px;cursor:pointer;transition:all .25s;position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+  .doc-btn::after{content:'';position:absolute;top:0;left:-60%;width:40%;height:100%;background:rgba(255,255,255,.18);transform:skewX(-20deg);transition:left .4s}
+  .doc-btn:hover::after{left:120%}
+  .view-btn{background:rgba(74,172,220,.15);color:var(--gold-light);border:1px solid rgba(74,172,220,.3)}
+  .view-btn:hover{background:rgba(74,172,220,.28);transform:translateY(-2px)}
+  .download-btn{background:rgba(74,172,220,.08);color:var(--text-muted);border:1px solid rgba(74,172,220,.15)}
+  .download-btn:hover{background:rgba(74,172,220,.2);color:var(--gold-light);transform:translateY(-2px)}
+  .whatsapp-btn{background:rgba(37,211,102,.1);color:#25d366;border:1px solid rgba(37,211,102,.2)}
+  .whatsapp-btn:hover{background:rgba(37,211,102,.2);transform:translateY(-2px)}
+
+  /* ── PDF VIEWER MODAL ── */
+  .pdf-modal{display:none;position:fixed;inset:0;z-index:9000;background:rgba(2,12,20,.92);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:20px}
+  .pdf-modal.open{display:flex;animation:modalIn .35s ease}
+  .pdf-modal-inner{background:var(--surface);border:1px solid rgba(74,172,220,.3);width:100%;max-width:900px;max-height:90vh;border-radius:4px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,.7)}
+  .pdf-modal-header{display:flex;align-items:center;justify-content:space-between;padding:16px 22px;border-bottom:1px solid rgba(74,172,220,.15);background:rgba(2,12,20,.5)}
+  .pdf-modal-title{font-family:'Cinzel',serif;font-size:.75rem;letter-spacing:.15em;color:var(--gold)}
+  .pdf-modal-close{background:none;border:none;color:var(--text-muted);font-size:1.4rem;cursor:pointer;transition:color .2s,transform .2s;line-height:1}
+  .pdf-modal-close:hover{color:var(--white);transform:rotate(90deg)}
+  .pdf-modal-body{flex:1;overflow:hidden;position:relative;min-height:500px;background:#111}
+  .pdf-modal-body iframe{width:100%;height:100%;border:none;min-height:500px}
+  .pdf-modal-footer{display:flex;gap:12px;padding:14px 22px;border-top:1px solid rgba(74,172,220,.1);background:rgba(2,12,20,.4)}
+  .pdf-unavailable{display:flex;flex-direction:column;align-items:center;justify-content:center;height:400px;gap:14px;color:var(--text-muted);font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-style:italic}
 
   /* ── PRAYER ── */
   #prayer{padding:96px 60px;background:linear-gradient(160deg,var(--dark),var(--deep));border-top:1px solid var(--sec-border)}
   .prayer-wrap{max-width:680px;margin:0 auto}
   .prayer-form{display:flex;flex-direction:column;gap:17px;margin-top:38px}
   .form-row{display:grid;grid-template-columns:1fr 1fr;gap:17px}
-  .form-input,.form-textarea{background:var(--surface);border:1px solid rgba(74,172,220,.2);padding:13px 17px;color:var(--white);font-size:.9rem;outline:none;width:100%;transition:border-color .3s,box-shadow .3s,transform .2s}
+  .form-input,.form-textarea{background:var(--surface);border:1px solid rgba(74,172,220,.2);padding:13px 17px;color:var(--white);font-size:.9rem;outline:none;width:100%;transition:border-color .3s,box-shadow .3s,transform .2s;font-family:'Lato',sans-serif}
   .form-input:focus,.form-textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(74,172,220,.1);transform:translateY(-1px)}
   .form-submit{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:#020C14;background:linear-gradient(135deg,var(--gold-light),var(--gold));border:none;padding:16px 38px;cursor:pointer;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:all .3s;position:relative;overflow:hidden}
   .form-submit::before{content:'';position:absolute;top:0;left:-60%;width:40%;height:100%;background:rgba(255,255,255,.25);transform:skewX(-20deg);transition:left .5s}
   .form-submit:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(74,172,220,.3)}
   .form-submit:hover::before{left:160%}
 
-  /* ── CONNECT ── */
+  /* ── CONNECT / SOCIAL ── */
   #connect{padding:96px 60px;background:var(--deep);border-top:1px solid var(--sec-border)}
-  .social-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:17px;max-width:880px;margin:0 auto}
-  .soc-card{background:var(--surface);border:1px solid rgba(74,172,220,.12);padding:30px 18px;text-align:center;transition:transform .3s ease,border-color .3s,box-shadow .3s;position:relative;overflow:hidden}
+  .social-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:17px;max-width:880px;margin:0 auto}
+  .soc-card{background:var(--surface);border:1px solid rgba(74,172,220,.12);padding:30px 18px;text-align:center;transition:transform .3s ease,border-color .3s,box-shadow .3s;position:relative;overflow:hidden;text-decoration:none;display:block;cursor:pointer}
   .soc-card::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 100%,rgba(74,172,220,.08),transparent 60%);opacity:0;transition:opacity .35s}
   .soc-card:hover{transform:translateY(-7px);border-color:var(--gold);box-shadow:0 18px 44px rgba(0,0,0,.4)}
   .soc-card:hover::after{opacity:1}
+  .soc-logo{width:44px;height:44px;margin:0 auto 14px;display:flex;align-items:center;justify-content:center}
+  .soc-logo img{width:100%;height:100%;object-fit:contain;filter:brightness(0) invert(1);opacity:.8;transition:opacity .3s,transform .3s}
+  .soc-card:hover .soc-logo img{opacity:1;transform:scale(1.1)}
+  .soc-name{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.1em;color:var(--gold);margin-bottom:6px}
+  .soc-desc{font-size:.82rem;color:var(--text-muted)}
+
+  /* YouTube specific red */
+  .soc-card.yt .soc-logo img{filter:none;opacity:.9}
+  .soc-card.yt:hover .soc-logo img{opacity:1}
+  .soc-card.fb .soc-logo img{filter:none;opacity:.9}
+  .soc-card.ig .soc-logo img{filter:none;opacity:.9}
+  .soc-card.wa .soc-logo img{filter:none;opacity:.9}
 
   /* ── JOIN ── */
   .join-sec{padding:86px 60px;background:var(--dark);border-top:1px solid var(--sec-border);text-align:center}
@@ -212,45 +226,34 @@
   /* ── FOOTER ── */
   footer{background:#010810;border-top:1px solid rgba(74,172,220,.12);padding:54px 60px 34px}
 
-  /* ── REVEAL ANIMATION ── */
+  /* ── BUILT BY BONNY BADGE ── */
+  .built-by{display:flex;align-items:center;justify-content:center;gap:0;margin-top:36px;padding-top:28px;border-top:1px solid rgba(74,172,220,.08);position:relative;overflow:hidden}
+  .built-by-beam{position:absolute;top:0;left:-60%;width:40%;height:1px;background:linear-gradient(to right,transparent,rgba(74,172,220,.6),transparent);animation:creditBeam 4s ease-in-out infinite}
+  .built-by-inner{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,rgba(10,30,48,.9),rgba(18,43,66,.9));border:1px solid rgba(74,172,220,.22);padding:10px 22px;position:relative;overflow:hidden;animation:builtByPulse 3s ease-in-out infinite}
+  .built-by-inner::before{content:'';position:absolute;top:0;left:-80%;width:50%;height:100%;background:linear-gradient(90deg,transparent,rgba(74,172,220,.07),transparent);animation:shimmerSlide 3.5s ease-in-out infinite}
+  .built-by-cross{font-size:1rem;animation:floatCross 4s ease-in-out infinite;color:var(--gold)}
+  .built-by-text{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.25em;color:var(--text-muted);text-transform:uppercase}
+  .built-by-name{font-family:'Playfair Display',serif;font-size:.9rem;font-weight:700;font-style:italic;background:linear-gradient(90deg,var(--gold-dark),var(--gold-light),var(--gold));background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:textGlint 4s linear infinite}
+
+  /* ── REVEAL ── */
   .reveal{opacity:0;transform:translateY(34px);transition:opacity .75s cubic-bezier(.4,0,.2,1),transform .75s cubic-bezier(.4,0,.2,1)}
   .reveal.visible{opacity:1;transform:translateY(0)}
   .reveal-left{opacity:0;transform:translateX(-44px);transition:opacity .75s cubic-bezier(.4,0,.2,1),transform .75s cubic-bezier(.4,0,.2,1)}
   .reveal-left.visible{opacity:1;transform:translateX(0)}
   .reveal-right{opacity:0;transform:translateX(44px);transition:opacity .75s cubic-bezier(.4,0,.2,1),transform .75s cubic-bezier(.4,0,.2,1)}
   .reveal-right.visible{opacity:1;transform:translateX(0)}
-
-  /* Stagger children inside a revealed parent */
   .stagger-children > *{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
   .stagger-children.visible > *:nth-child(1){opacity:1;transform:translateY(0);transition-delay:.05s}
   .stagger-children.visible > *:nth-child(2){opacity:1;transform:translateY(0);transition-delay:.15s}
   .stagger-children.visible > *:nth-child(3){opacity:1;transform:translateY(0);transition-delay:.25s}
   .stagger-children.visible > *:nth-child(4){opacity:1;transform:translateY(0);transition-delay:.35s}
-  .stagger-children.visible > *:nth-child(5){opacity:1;transform:translateY(0);transition-delay:.45s}
-  .stagger-children.visible > *:nth-child(6){opacity:1;transform:translateY(0);transition-delay:.55s}
-
-  /* Stagger videos specifically */
-  .videos-grid .video-card{opacity:0;transform:translateY(40px) scale(.97);transition:opacity .6s ease,transform .6s ease,border-color .35s,box-shadow .35s}
-  .videos-grid.staggered .video-card:nth-child(1){opacity:1;transform:none;transition-delay:.04s}
-  .videos-grid.staggered .video-card:nth-child(2){opacity:1;transform:none;transition-delay:.1s}
-  .videos-grid.staggered .video-card:nth-child(3){opacity:1;transform:none;transition-delay:.16s}
-  .videos-grid.staggered .video-card:nth-child(4){opacity:1;transform:none;transition-delay:.22s}
-  .videos-grid.staggered .video-card:nth-child(5){opacity:1;transform:none;transition-delay:.28s}
-  .videos-grid.staggered .video-card:nth-child(6){opacity:1;transform:none;transition-delay:.34s}
-  .videos-grid.staggered .video-card:nth-child(7){opacity:1;transform:none;transition-delay:.4s}
-  .videos-grid.staggered .video-card:nth-child(8){opacity:1;transform:none;transition-delay:.46s}
-  .videos-grid.staggered .video-card:nth-child(9){opacity:1;transform:none;transition-delay:.52s}
-  .videos-grid.staggered .video-card:nth-child(10){opacity:1;transform:none;transition-delay:.58s}
-  .videos-grid.staggered .video-card:nth-child(11){opacity:1;transform:none;transition-delay:.64s}
-
-  /* Hover ripple on buttons */
-  .btn-gold,.btn-outline,.form-submit{-webkit-tap-highlight-color:transparent}
 
   @media(max-width:900px){
-    .about-grid{grid-template-columns:1fr}
-    .sat-grid{grid-template-columns:1fr}
+    .about-grid,.sat-grid,.form-row{grid-template-columns:1fr}
     nav{padding:13px 18px}
     .hero-orb{display:none}
+    #about,#saturday,#sermons,#documents,#prayer,#connect,footer{padding-left:20px;padding-right:20px}
+    .join-sec{padding-left:20px;padding-right:20px}
   }
 </style>
 </head>
@@ -258,10 +261,29 @@
 <canvas id="particles"></canvas>
 <button class="theme-toggle" id="themeToggle" title="Toggle light/dark">🌙</button>
 
+<!-- PDF VIEWER MODAL -->
+<div class="pdf-modal" id="pdfModal">
+  <div class="pdf-modal-inner">
+    <div class="pdf-modal-header">
+      <div class="pdf-modal-title" id="pdfModalTitle">Teaching Note</div>
+      <button class="pdf-modal-close" id="pdfModalClose">✕</button>
+    </div>
+    <div class="pdf-modal-body" id="pdfModalBody">
+      <iframe id="pdfModalIframe" src="" title="PDF Viewer"></iframe>
+    </div>
+    <div class="pdf-modal-footer">
+      <button class="doc-btn download-btn" id="pdfModalDownload" style="font-size:.65rem;padding:9px 16px">⬇ Download PDF</button>
+      <button class="doc-btn whatsapp-btn" id="pdfModalWhatsapp" style="font-size:.65rem;padding:9px 16px">💬 Share on WhatsApp</button>
+    </div>
+  </div>
+</div>
+
 <!-- NAV -->
 <nav id="navbar">
   <a href="#" class="nav-logo">
-    <div class="nav-logo-img"><img src="photos/united-in-christ-logo.jpeg" alt="United in Christ" onerror="this.src='photos/united-in-christ-logo.png'"></div>
+    <div class="nav-logo-img">
+      <img src="photos/united-in-christ-logo.jpeg" alt="United in Christ" onerror="this.src='photos/united-in-christ-logo.png'">
+    </div>
     <div>
       <div class="nav-logo-text">United in Christ</div>
       <div class="nav-logo-sub">Prophet Jay Uriel</div>
@@ -282,13 +304,14 @@
   <div class="hero-bg"></div>
   <div class="hero-orb hero-orb-1"></div>
   <div class="hero-orb hero-orb-2"></div>
-  <div class="hero-orb hero-orb-3"></div>
   <div class="hero-ornament">Ministry of the Word</div>
   <h1 class="hero-title">United in <span>Christ</span></h1>
   <div class="hero-logo-wrap">
     <div class="hero-logo-ring"></div>
     <div class="hero-logo-ring-2"></div>
-    <div class="hero-logo-circle"><img src="photos/united-in-christ-logo.jpeg" alt="Logo" onerror="this.src='photos/united-in-christ-logo.png'"></div>
+    <div class="hero-logo-circle">
+      <img src="photos/united-in-christ-logo.jpeg" alt="Logo" onerror="this.src='photos/united-in-christ-logo.png'">
+    </div>
   </div>
   <p class="hero-tagline">"Proclaiming the Word of God with power, truth, and the spirit of prophecy"</p>
   <div class="hero-cta">
@@ -307,7 +330,8 @@
       <div class="sec-lbl">Our Leader</div>
       <h2 class="sec-title">Prophet <span>Jay Uriel</span></h2>
       <div class="gold-line"></div>
-      <p class="about-text" style="margin:20px 0;font-size:1.02rem;line-height:1.8">Prophet Jay Uriel is a consecrated vessel called by God — a prophetic voice and teacher of the Word raised up for this generation.</p>
+      <p style="margin:20px 0;font-size:1.02rem;line-height:1.8;color:var(--white2)">Prophet Jay Uriel is a consecrated vessel called by God — a prophetic voice and teacher of the Word raised up for this generation. Through deep revelation, anointed teaching, and the prophetic gift, he ministers the fullness of Christ to hungry hearts every week.</p>
+      <a href="#saturday" class="btn-gold" style="margin-top:16px;font-size:.65rem">Join Us This Saturday</a>
     </div>
   </div>
 </section>
@@ -318,7 +342,7 @@
     <div class="sec-lbl">Every Saturday</div>
     <h2 class="sec-title">Saturday <span>Teachings</span></h2>
     <div class="gold-line"></div>
-    <p class="sec-sub">Two anointed sessions every Saturday — morning and evening.</p>
+    <p class="sec-sub" style="color:var(--text-muted)">Two anointed sessions every Saturday — morning and evening.</p>
   </div>
   <div class="sat-grid">
     <div class="sat-card reveal">
@@ -346,7 +370,7 @@
     <div class="sec-lbl">Anointed Messages</div>
     <h2 class="sec-title">Sermons & <span>Preachings</span></h2>
     <div class="gold-line"></div>
-    <p class="sec-sub">Watch and receive from the prophetic messages of Prophet Jay Uriel.</p>
+    <p class="sec-sub" style="color:var(--text-muted)">Watch and receive from the prophetic messages of Prophet Jay Uriel.</p>
   </div>
   <div class="videos-container">
     <div class="videos-grid" id="videosGrid">
@@ -364,91 +388,18 @@
     </div>
   </div>
 </section>
-<!-- DOCUMENTS - Improved with View, Download, WhatsApp -->
+
+<!-- DOCUMENTS / NOTES -->
 <section id="documents">
   <div class="sec-center reveal">
     <div class="sec-lbl">Written Revelation</div>
     <h2 class="sec-title">Teaching <span>Notes</span></h2>
     <div class="gold-line"></div>
-    <p class="sec-sub">Study materials from Prophet Jay Uriel. Files from the <strong>Notes/</strong> folder.</p>
+    <p class="sec-sub" style="color:var(--text-muted)">Study materials from Prophet Jay Uriel. View online or download to study at your pace.</p>
   </div>
   <div class="docs-grid" id="docsGrid"></div>
 </section>
 
-<!-- Footer -->
-<footer style="background:#010810; padding:54px 60px 34px; text-align:center;">
-  <p style="color:var(--text-muted);">© 2024 United in Christ. All rights reserved.</p>
-</footer>
-
-<script>
-// Particles (kept)
-const canvas = document.getElementById('particles');
-const ctx = canvas.getContext('2d');
-let W, H, stars = [];
-function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight}
-function initStars(){stars=[];for(let i=0;i<90;i++)stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.4+.2,a:Math.random(),da:(.002+Math.random()*.006)*(Math.random()<.5?1:-1),vx:(Math.random()-.5)*.15,vy:(Math.random()-.5)*.15})}
-function drawStars(){ctx.clearRect(0,0,W,H);stars.forEach(s=>{s.a+=s.da;if(s.a<=0||s.a>=1)s.da*=-1;s.x+=s.vx;s.y+=s.vy;if(s.x<0)s.x=W;if(s.x>W)s.x=0;if(s.y<0)s.y=H;if(s.y>H)s.y=0;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(74,172,220,${s.a})`;ctx.fill()});requestAnimationFrame(drawStars)}
-resize(); initStars(); drawStars();
-
-// Theme Toggle
-const themeBtn = document.getElementById('themeToggle');
-themeBtn.addEventListener('click', () => {
-  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-  document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
-  themeBtn.textContent = isDark ? '☀️' : '🌙';
-});
-
-// Documents with View / Download / WhatsApp
-const dGrid = document.getElementById('docsGrid');
-
-const documents = [
-  { name: "DOMINION & ROYALTY IN CHRIST", filename: "DOMINION & ROYALTY IN CH....pdf" },
-  { name: "Gifts Impress But Fruit Proves", filename: "Gifts Impress But Fruit Proves....pdf" },
-  { name: "KINGDOM SERVICE (MINISTRY) Pt 1", filename: "KINGDOM SERVICE (MINISTR....pdf" },
-  { name: "KINGDOM SERVICE (MINISTRY) Pt 2", filename: "KINGDOM SERVICE (MINISTR....pdf" },
-  { name: "New Creation Reality", filename: "New Creation Reality.pdf" },
-  { name: "Righteousness", filename: "Righteousness.pdf" },
-  { name: "Stillness", filename: "Stillness.pdf" },
-  { name: "THE MYSTERY OF CREATIVE POWER", filename: "THE MYSTERY OF CREATIVE ....pdf" },
-  { name: "The Godly Anointing", filename: "The Godly Anointing.pdf" },
-  { name: "The Revelation of the Inner Kingdom", filename: "The Revelation of the Inner Kin....pdf" },
-  { name: "The Christian Walk (UIC)", filename: "TheChristianwalk(UIC).pdf" }
-];
-
-documents.forEach((doc, i) => {
-  const card = document.createElement('div');
-  card.className = 'doc-card';
-  card.innerHTML = `
-    <div style="font-size:2.2rem; margin-bottom:15px">📄</div>
-    <div style="font-size:0.65rem; color:var(--text-muted);">Note ${String(i+1).padStart(2,'0')}</div>
-    <div style="font-weight:700; margin:12px 0 18px; line-height:1.3;">${doc.name}</div>
-    <div style="display:flex; gap:8px;">
-      <button onclick="viewPDF('${doc.filename}')" class="doc-btn view-btn">👁️ View</button>
-      <button onclick="downloadPDF('${doc.filename}')" class="doc-btn download-btn">⬇️ Download</button>
-      <button onclick="shareToWhatsApp('${doc.filename}', '${doc.name}')" class="doc-btn whatsapp-btn">💬 WhatsApp</button>
-    </div>
-  `;
-  dGrid.appendChild(card);
-});
-
-window.viewPDF = function(filename) {
-  window.open(`Notes/${filename}`, '_blank');
-};
-
-window.downloadPDF = function(filename) {
-  const a = document.createElement('a');
-  a.href = `Notes/${filename}`;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-};
-
-window.shareToWhatsApp = function(filename, title) {
-  const url = `${window.location.origin}/Notes/${encodeURIComponent(filename)}`;
-  const text = `🔥 Teaching Note from Prophet Jay Uriel\n\n📖 ${title}\n\n📥 View/Download: ${url}`;
-  window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
-};
 <!-- PRAYER -->
 <section id="prayer">
   <div class="prayer-wrap">
@@ -456,16 +407,16 @@ window.shareToWhatsApp = function(filename, title) {
       <div class="sec-lbl">Come Before God</div>
       <h2 class="sec-title">Submit a <span>Prayer Request</span></h2>
       <div class="gold-line"></div>
-      <p class="sec-sub">We stand in agreement with you. Share your request and our team will pray for you.</p>
+      <p class="sec-sub" style="color:var(--text-muted)">We stand in agreement with you. Share your request and our team will pray for you.</p>
     </div>
     <div class="prayer-form reveal">
       <div class="form-row">
-        <input class="form-input" type="text" placeholder="Your Name">
-        <input class="form-input" type="email" placeholder="Your Email">
+        <input class="form-input" type="text" placeholder="Your Name" id="pName">
+        <input class="form-input" type="email" placeholder="Your Email" id="pEmail">
       </div>
-      <input class="form-input" type="text" placeholder="Subject">
-      <textarea class="form-textarea" rows="6" placeholder="Share your prayer request here..."></textarea>
-      <button class="form-submit">Send Prayer Request</button>
+      <input class="form-input" type="text" placeholder="Subject" id="pSubject">
+      <textarea class="form-textarea" rows="6" placeholder="Share your prayer request here..." id="pMessage"></textarea>
+      <button class="form-submit" id="prayerSubmit">Send Prayer Request</button>
     </div>
   </div>
 </section>
@@ -476,29 +427,41 @@ window.shareToWhatsApp = function(filename, title) {
     <div class="sec-lbl">Stay Connected</div>
     <h2 class="sec-title">Follow & <span>Connect</span></h2>
     <div class="gold-line"></div>
-    <p class="sec-sub">Join us on social media and stay updated with the latest teachings and announcements.</p>
+    <p class="sec-sub" style="color:var(--text-muted)">Join us on social media and stay updated with the latest teachings.</p>
   </div>
   <div class="social-grid stagger-children">
-    <div class="soc-card">
-      <div style="font-size:2rem;margin-bottom:12px">▶️</div>
-      <div style="font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.1em;color:var(--gold);margin-bottom:6px">YouTube</div>
-      <div style="font-size:.82rem;color:var(--text-muted)">Watch our sermons</div>
-    </div>
-    <div class="soc-card">
-      <div style="font-size:2rem;margin-bottom:12px">📘</div>
-      <div style="font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.1em;color:var(--gold);margin-bottom:6px">Facebook</div>
-      <div style="font-size:.82rem;color:var(--text-muted)">Join our community</div>
-    </div>
-    <div class="soc-card">
-      <div style="font-size:2rem;margin-bottom:12px">📸</div>
-      <div style="font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.1em;color:var(--gold);margin-bottom:6px">Instagram</div>
-      <div style="font-size:.82rem;color:var(--text-muted)">Daily inspiration</div>
-    </div>
-    <div class="soc-card">
-      <div style="font-size:2rem;margin-bottom:12px">💬</div>
-      <div style="font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.1em;color:var(--gold);margin-bottom:6px">WhatsApp</div>
-      <div style="font-size:.82rem;color:var(--text-muted)">Join our group</div>
-    </div>
+    <!-- YouTube -->
+    <a href="https://www.youtube.com/@UnitedInChrist" target="_blank" class="soc-card yt">
+      <div class="soc-logo">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg" alt="YouTube" onerror="this.style.display='none';this.parentNode.innerHTML='<svg viewBox=\'0 0 24 24\' fill=\'#FF0000\' width=\'40\' height=\'40\'><path d=\'M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.8 15.5V8.5l6.3 3.5-6.3 3.5z\'/></svg>'">
+      </div>
+      <div class="soc-name">YouTube</div>
+      <div class="soc-desc">Watch our sermons</div>
+    </a>
+    <!-- Facebook -->
+    <a href="https://www.facebook.com/UnitedInChristMinistry" target="_blank" class="soc-card fb">
+      <div class="soc-logo">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook" onerror="this.style.display='none';this.parentNode.innerHTML='<svg viewBox=\'0 0 24 24\' fill=\'#1877F2\' width=\'40\' height=\'40\'><path d=\'M24 12.07C24 5.41 18.63 0 12 0S0 5.41 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.04V9.41c0-3.02 1.8-4.7 4.54-4.7 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.95.93-1.95 1.88v2.27h3.32l-.53 3.49h-2.79V24C19.61 23.1 24 18.1 24 12.07z\'/></svg>'">
+      </div>
+      <div class="soc-name">Facebook</div>
+      <div class="soc-desc">Join our community</div>
+    </a>
+    <!-- Instagram -->
+    <a href="https://www.instagram.com/unitedinchrst" target="_blank" class="soc-card ig">
+      <div class="soc-logo">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" onerror="this.style.display='none';this.parentNode.innerHTML='<svg viewBox=\'0 0 24 24\' width=\'40\' height=\'40\'><defs><radialGradient id=\'ig\' cx=\'30%\' cy=\'107%\' r=\'150%\'><stop offset=\'0%\' stop-color=\'#fdf497\'/><stop offset=\'5%\' stop-color=\'#fdf497\'/><stop offset=\'45%\' stop-color=\'#fd5949\'/><stop offset=\'60%\' stop-color=\'#d6249f\'/><stop offset=\'90%\' stop-color=\'#285AEB\'/></radialGradient></defs><path fill=\'url(#ig)\' d=\'M12 2.163c3.2 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z\'/></svg>'">
+      </div>
+      <div class="soc-name">Instagram</div>
+      <div class="soc-desc">Daily inspiration</div>
+    </a>
+    <!-- WhatsApp -->
+    <a href="https://wa.me/27000000000" target="_blank" class="soc-card wa">
+      <div class="soc-logo">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" onerror="this.style.display='none';this.parentNode.innerHTML='<svg viewBox=\'0 0 24 24\' fill=\'#25D366\' width=\'40\' height=\'40\'><path d=\'M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z\'/></svg>'">
+      </div>
+      <div class="soc-name">WhatsApp</div>
+      <div class="soc-desc">Join our group</div>
+    </a>
   </div>
 </section>
 
@@ -523,12 +486,21 @@ window.shareToWhatsApp = function(filename, title) {
       <div style="margin-top:6px">© 2024 United in Christ. All rights reserved.</div>
     </div>
   </div>
+
+  <!-- BUILT BY BONNY -->
+  <div class="built-by">
+    <div class="built-by-beam"></div>
+    <div class="built-by-inner">
+      <span class="built-by-cross">✝</span>
+      <span class="built-by-text">Built with love by</span>
+      <span class="built-by-name">Bonny</span>
+      <span class="built-by-cross" style="animation-delay:.8s">✝</span>
+    </div>
+  </div>
 </footer>
 
 <script>
-/* ────────────────────────────────────────
-   PARTICLES
-──────────────────────────────────────── */
+/* ── PARTICLES ── */
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
 let W, H, stars = [];
@@ -538,81 +510,44 @@ function drawStars(){ctx.clearRect(0,0,W,H);stars.forEach(s=>{s.a+=s.da;if(s.a<=
 window.addEventListener('resize',()=>{resize();initStars()});
 resize();initStars();drawStars();
 
-/* ────────────────────────────────────────
-   THEME TOGGLE
-──────────────────────────────────────── */
+/* ── THEME TOGGLE ── */
 const themeBtn = document.getElementById('themeToggle');
-const html = document.documentElement;
 let isDark = true;
 themeBtn.addEventListener('click',()=>{
   isDark=!isDark;
-  html.setAttribute('data-theme',isDark?'dark':'light');
+  document.documentElement.setAttribute('data-theme',isDark?'dark':'light');
   themeBtn.textContent=isDark?'🌙':'☀️';
 });
 
-/* ────────────────────────────────────────
-   INTERSECTION OBSERVER — REVEAL
-──────────────────────────────────────── */
-const revealEls = document.querySelectorAll('.reveal,.reveal-left,.reveal-right');
-const staggerEls = document.querySelectorAll('.stagger-children');
-const goldLines = document.querySelectorAll('.gold-line');
-const videosGrid = document.getElementById('videosGrid');
-
-const io = new IntersectionObserver((entries)=>{
+/* ── INTERSECTION OBSERVER ── */
+const io = new IntersectionObserver(entries=>{
   entries.forEach(e=>{
     if(e.isIntersecting){
       e.target.classList.add('visible');
-      // Animate gold lines inside
       e.target.querySelectorAll('.gold-line').forEach(l=>l.classList.add('animated'));
       io.unobserve(e.target);
     }
   });
 },{threshold:.12});
+document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el=>io.observe(el));
 
-revealEls.forEach(el=>io.observe(el));
-
-const staggerIO = new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){e.target.classList.add('visible');staggerIO.unobserve(e.target)}
-  });
+const staggerIO = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');staggerIO.unobserve(e.target)}});
 },{threshold:.08});
-staggerEls.forEach(el=>staggerIO.observe(el));
+document.querySelectorAll('.stagger-children').forEach(el=>staggerIO.observe(el));
 
-// Gold lines at section level
-const glIO = new IntersectionObserver((entries)=>{
+const glIO = new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('animated');glIO.unobserve(e.target)}});
 },{threshold:.5});
-goldLines.forEach(gl=>glIO.observe(gl));
+document.querySelectorAll('.gold-line').forEach(gl=>glIO.observe(gl));
 
-// Videos stagger
-const vidIO = new IntersectionObserver((entries)=>{
+const vidIO = new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('staggered');vidIO.unobserve(e.target)}});
 },{threshold:.05});
-if(videosGrid) vidIO.observe(videosGrid);
+const vg = document.getElementById('videosGrid');
+if(vg) vidIO.observe(vg);
 
-/* ────────────────────────────────────────
-   DOCUMENTS
-──────────────────────────────────────── */
-const dGrid = document.getElementById('docsGrid');
-const docsList = [
-  'The Prophetic Foundation','Walking in the Spirit','Authority of the Word',
-  'Kingdom Principles','The Fear of the Lord','Covenant & Promise'
-];
-docsList.forEach((title,i)=>{
-  const num = String(i+1).padStart(2,'0');
-  const file = `files/notes-${num}.pdf`;
-  const card = document.createElement('div');
-  card.className = 'doc-card';
-  card.innerHTML = `<div style="font-size:2rem;transition:transform .3s">📄</div><div style="font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.2em;color:var(--text-muted)">Notes ${num}</div><div style="font-family:'Playfair Display',serif;font-weight:700;color:var(--white)">${title}</div><div style="font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.12em;color:var(--gold);margin-top:4px">Open Document →</div>`;
-  card.addEventListener('mouseenter',()=>card.querySelector('div').style.transform='scale(1.15) rotate(-5deg)');
-  card.addEventListener('mouseleave',()=>card.querySelector('div').style.transform='scale(1) rotate(0deg)');
-  card.onclick = ()=>window.open(file,'_blank');
-  dGrid.appendChild(card);
-});
-
-/* ────────────────────────────────────────
-   NAV SCROLL SHADOW
-──────────────────────────────────────── */
+/* ── NAV SCROLL ── */
 const navbar = document.getElementById('navbar');
 window.addEventListener('scroll',()=>{
   if(window.scrollY>40){
@@ -624,18 +559,125 @@ window.addEventListener('scroll',()=>{
   }
 });
 
-/* ────────────────────────────────────────
-   PRAYER FORM SUBMIT FEEDBACK
-──────────────────────────────────────── */
-const submitBtn = document.querySelector('.form-submit');
-if(submitBtn){
-  submitBtn.addEventListener('click',()=>{
-    submitBtn.textContent='✓ Prayer Sent';
-    submitBtn.style.background='linear-gradient(135deg,#2d9e6a,#1a7a50)';
-    setTimeout(()=>{
-      submitBtn.textContent='Send Prayer Request';
-      submitBtn.style.background='';
-    },3000);
+/* ── DOCUMENTS / NOTES ── */
+const documents = [
+  { name: "Dominion & Royalty in Christ",       file: "DOMINION & ROYALTY IN CH....pdf" },
+  { name: "Gifts Impress But Fruit Proves",      file: "Gifts Impress But Fruit Proves....pdf" },
+  { name: "Kingdom Service (Ministry) Pt 1",     file: "KINGDOM SERVICE (MINISTR....pdf" },
+  { name: "Kingdom Service (Ministry) Pt 2",     file: "KINGDOM SERVICE (MINISTR....pdf" },
+  { name: "New Creation Reality",                file: "New Creation Reality.pdf" },
+  { name: "Righteousness",                       file: "Righteousness.pdf" },
+  { name: "Stillness",                           file: "Stillness.pdf" },
+  { name: "The Mystery of Creative Power",       file: "THE MYSTERY OF CREATIVE ....pdf" },
+  { name: "The Godly Anointing",                 file: "The Godly Anointing.pdf" },
+  { name: "The Revelation of the Inner Kingdom", file: "The Revelation of the Inner Kin....pdf" },
+  { name: "The Christian Walk (UIC)",            file: "TheChristianwalk(UIC).pdf" }
+];
+
+const dGrid = document.getElementById('docsGrid');
+documents.forEach((doc, i) => {
+  const num = String(i+1).padStart(2,'0');
+  const card = document.createElement('div');
+  card.className = 'doc-card reveal';
+  card.innerHTML = `
+    <div class="doc-icon">📄</div>
+    <div class="doc-num">Note ${num}</div>
+    <div class="doc-title">${doc.name}</div>
+    <div class="doc-actions">
+      <button class="doc-btn view-btn" data-file="${doc.file}" data-name="${doc.name}">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        View
+      </button>
+      <button class="doc-btn download-btn" data-file="${doc.file}" data-name="${doc.name}">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download
+      </button>
+      <button class="doc-btn whatsapp-btn" data-file="${doc.file}" data-name="${doc.name}">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+        Share
+      </button>
+    </div>
+  `;
+
+  // View button → open modal
+  card.querySelector('.view-btn').addEventListener('click', () => openPDFModal(doc.file, doc.name));
+  // Download button
+  card.querySelector('.download-btn').addEventListener('click', () => downloadPDF(doc.file));
+  // WhatsApp button
+  card.querySelector('.whatsapp-btn').addEventListener('click', () => shareWhatsApp(doc.file, doc.name));
+
+  dGrid.appendChild(card);
+  io.observe(card);
+});
+
+/* ── PDF MODAL ── */
+const pdfModal    = document.getElementById('pdfModal');
+const pdfIframe   = document.getElementById('pdfModalIframe');
+const pdfTitle    = document.getElementById('pdfModalTitle');
+const pdfClose    = document.getElementById('pdfModalClose');
+const pdfDl       = document.getElementById('pdfModalDownload');
+const pdfWa       = document.getElementById('pdfModalWhatsapp');
+
+let currentFile = '';
+
+function openPDFModal(file, name) {
+  currentFile = file;
+  pdfTitle.textContent = name;
+  // Try to embed via object; fallback message inside
+  const src = `Notes/${file}`;
+  pdfIframe.src = src;
+  pdfModal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+
+  pdfDl.onclick = () => downloadPDF(file);
+  pdfWa.onclick = () => shareWhatsApp(file, name);
+}
+
+pdfClose.addEventListener('click', closePDFModal);
+pdfModal.addEventListener('click', e => { if(e.target === pdfModal) closePDFModal(); });
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closePDFModal(); });
+
+function closePDFModal() {
+  pdfModal.classList.remove('open');
+  document.body.style.overflow = '';
+  setTimeout(() => { pdfIframe.src = ''; }, 300);
+}
+
+function downloadPDF(file) {
+  const a = document.createElement('a');
+  a.href = `Notes/${file}`;
+  a.download = file;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+
+function shareWhatsApp(file, name) {
+  const url = `${window.location.origin}${window.location.pathname.replace(/[^/]*$/, '')}Notes/${encodeURIComponent(file)}`;
+  const text = `🔥 Teaching Note from Prophet Jay Uriel\n\n📖 ${name}\n\n📥 View/Download: ${url}`;
+  window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+}
+
+/* ── PRAYER FORM ── */
+const prayerSubmit = document.getElementById('prayerSubmit');
+if(prayerSubmit){
+  prayerSubmit.addEventListener('click', () => {
+    const name = document.getElementById('pName').value.trim();
+    const email = document.getElementById('pEmail').value.trim();
+    const msg = document.getElementById('pMessage').value.trim();
+    if(!name || !msg){ alert('Please fill in your name and prayer request.'); return; }
+    prayerSubmit.textContent = '✓ Prayer Sent — We Are Standing With You';
+    prayerSubmit.style.background = 'linear-gradient(135deg,#2d9e6a,#1a7a50)';
+    prayerSubmit.disabled = true;
+    setTimeout(() => {
+      prayerSubmit.textContent = 'Send Prayer Request';
+      prayerSubmit.style.background = '';
+      prayerSubmit.disabled = false;
+      document.getElementById('pName').value='';
+      document.getElementById('pEmail').value='';
+      document.getElementById('pSubject').value='';
+      document.getElementById('pMessage').value='';
+    }, 4000);
   });
 }
 </script>
