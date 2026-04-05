@@ -25,107 +25,232 @@
   body{background:var(--deep);color:var(--white);font-family:'Lato',sans-serif;overflow-x:hidden;transition:background .4s,color .4s}
   #particles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.3}
 
-  /* THEME TOGGLE */
-  .theme-toggle{position:fixed;bottom:28px;right:28px;z-index:9999;background:linear-gradient(135deg,#0A1E30,#122B42);border:1.5px solid rgba(74,172,220,0.55);color:#7ECFEF;width:50px;height:50px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.25rem;box-shadow:0 4px 24px rgba(10,60,100,.55);transition:all .3s}
-  .theme-toggle:hover{transform:scale(1.1);box-shadow:0 8px 32px rgba(74,172,220,.35)}
+  /* ── KEYFRAME ANIMATIONS ── */
+  @keyframes fadeInDown{from{opacity:0;transform:translateY(-30px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes fadeInUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  @keyframes scaleIn{from{opacity:0;transform:scale(0.88)}to{opacity:1;transform:scale(1)}}
+  @keyframes slideInLeft{from{opacity:0;transform:translateX(-50px)}to{opacity:1;transform:translateX(0)}}
+  @keyframes slideInRight{from{opacity:0;transform:translateX(50px)}to{opacity:1;transform:translateX(0)}}
+  @keyframes rotateSlow{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+  @keyframes pulseGlow{0%,100%{box-shadow:0 0 18px rgba(74,172,220,.25),0 0 0 0 rgba(74,172,220,.12)}50%{box-shadow:0 0 38px rgba(74,172,220,.5),0 0 0 14px rgba(74,172,220,0)}}
+  @keyframes shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
+  @keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  @keyframes beamSweep{0%{transform:translateX(-100%) skewX(-20deg)}100%{transform:translateX(300%) skewX(-20deg)}}
+  @keyframes goldLineDraw{from{width:0}to{width:55px}}
+  @keyframes goldLineCenterDraw{from{width:0;margin-left:auto;margin-right:auto}to{width:55px;margin-left:auto;margin-right:auto}}
+  @keyframes navSlideDown{from{opacity:0;transform:translateY(-100%)}to{opacity:1;transform:translateY(0)}}
+  @keyframes orbFloat{0%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-20px) scale(1.05)}66%{transform:translate(-20px,15px) scale(.97)}100%{transform:translate(0,0) scale(1)}}
+  @keyframes textGlint{0%,90%,100%{background-position:200% center}45%{background-position:-200% center}}
+  @keyframes cardEntrance{from{opacity:0;transform:translateY(50px) scale(.95)}to{opacity:1;transform:translateY(0) scale(1)}}
+  @keyframes borderPulse{0%,100%{border-color:rgba(74,172,220,.18)}50%{border-color:rgba(74,172,220,.45)}}
+  @keyframes iconBounce{0%,100%{transform:translateY(0)}40%{transform:translateY(-6px)}60%{transform:translateY(-3px)}}
+  @keyframes spinOnce{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+  @keyframes ringExpand{0%{transform:scale(.9);opacity:.7}50%{transform:scale(1.08);opacity:.3}100%{transform:scale(.9);opacity:.7}}
 
-  /* NAV */
-  nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:13px 56px;background:var(--nav-bg);border-bottom:1px solid rgba(74,172,220,.15);transition:all .3s}
+  /* ── THEME TOGGLE ── */
+  .theme-toggle{position:fixed;bottom:28px;right:28px;z-index:9999;background:linear-gradient(135deg,#0A1E30,#122B42);border:1.5px solid rgba(74,172,220,.55);color:#7ECFEF;width:50px;height:50px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.25rem;box-shadow:0 4px 24px rgba(10,60,100,.55);transition:all .3s;animation:fadeIn .8s 1.2s both}
+  .theme-toggle:hover{transform:scale(1.12) rotate(20deg);box-shadow:0 8px 32px rgba(74,172,220,.35)}
+  .theme-toggle:active{animation:spinOnce .4s ease}
+
+  /* ── NAV ── */
+  nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:13px 56px;background:var(--nav-bg);border-bottom:1px solid rgba(74,172,220,.15);transition:all .3s;animation:navSlideDown .7s ease both}
   .nav-logo{display:flex;align-items:center;gap:13px;text-decoration:none}
-  .nav-logo-img{width:48px;height:48px;border-radius:50%;border:2px solid var(--gold);overflow:hidden}
+  .nav-logo-img{width:48px;height:48px;border-radius:50%;border:2px solid var(--gold);overflow:hidden;transition:transform .4s,box-shadow .4s}
+  .nav-logo-img:hover{transform:scale(1.08);box-shadow:0 0 18px rgba(74,172,220,.45)}
   .nav-logo-img img{width:100%;height:100%;object-fit:cover}
   .nav-logo-text{font-family:'Cinzel',serif;font-size:.9rem;color:var(--gold);letter-spacing:.1em}
   .nav-logo-sub{font-size:.58rem;color:var(--text-muted);letter-spacing:.2em;text-transform:uppercase}
   .nav-links{display:flex;gap:28px;list-style:none}
+  .nav-links li{animation:fadeInDown .5s both}
+  .nav-links li:nth-child(1){animation-delay:.1s}
+  .nav-links li:nth-child(2){animation-delay:.18s}
+  .nav-links li:nth-child(3){animation-delay:.26s}
+  .nav-links li:nth-child(4){animation-delay:.34s}
+  .nav-links li:nth-child(5){animation-delay:.42s}
+  .nav-links li:nth-child(6){animation-delay:.5s}
   .nav-links a{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.18em;color:var(--white2);text-decoration:none;text-transform:uppercase;transition:color .3s;position:relative}
-  .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--gold);transform:scaleX(0);transition:transform .3s}
+  .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--gold);transform:scaleX(0);transition:transform .35s cubic-bezier(.4,0,.2,1)}
   .nav-links a:hover{color:var(--gold)}
   .nav-links a:hover::after{transform:scaleX(1)}
 
-  /* HERO */
+  /* ── HERO ── */
   .hero{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 40px 80px;overflow:hidden;z-index:1}
   .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 30%,rgba(74,172,220,.11) 0%,transparent 70%),linear-gradient(160deg,var(--deep) 0%,var(--dark) 50%,var(--deep) 100%)}
-  .hero-ornament{font-size:.7rem;letter-spacing:.5em;color:var(--gold);text-transform:uppercase;font-family:'Cinzel',serif;margin-bottom:16px}
-  .hero-title{font-family:'Cinzel',serif;font-size:clamp(2.3rem,6vw,4.8rem);font-weight:700;color:var(--white);margin-bottom:6px;text-shadow:0 0 80px rgba(74,172,220,.25)}
-  .hero-title span{color:var(--gold)}
-  .hero-logo-wrap{position:relative;width:220px;height:220px;margin:8px auto 26px}
-  .hero-logo-circle{width:198px;height:198px;border-radius:50%;border:2px solid var(--gold);margin:11px auto 0;display:flex;align-items:center;justify-content:center;background:rgba(2,12,20,.6);overflow:hidden}
-  .hero-logo-circle img{width:100%;height:100%;object-fit:cover;border-radius:50%}
-  .hero-tagline{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,2vw,1.35rem);font-style:italic;color:var(--white2);max-width:500px;margin:0 auto 34px;line-height:1.7}
-  .hero-cta{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
-  .btn-gold{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:#020C14;background:linear-gradient(135deg,var(--gold-light),var(--gold));border:none;padding:15px 34px;cursor:pointer;text-decoration:none;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:all .3s}
-  .btn-outline{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);background:transparent;border:1px solid var(--gold);padding:14px 34px;cursor:pointer;text-decoration:none;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:all .3s}
 
-  /* SHARED */
+  /* Floating orbs behind hero */
+  .hero-orb{position:absolute;border-radius:50%;pointer-events:none;filter:blur(60px)}
+  .hero-orb-1{width:440px;height:440px;background:radial-gradient(circle,rgba(74,172,220,.09),transparent 70%);top:-80px;left:-120px;animation:orbFloat 14s ease-in-out infinite}
+  .hero-orb-2{width:320px;height:320px;background:radial-gradient(circle,rgba(74,172,220,.07),transparent 70%);bottom:60px;right:-60px;animation:orbFloat 18s ease-in-out infinite reverse}
+  .hero-orb-3{width:200px;height:200px;background:radial-gradient(circle,rgba(126,207,239,.06),transparent 70%);top:50%;left:10%;animation:orbFloat 22s ease-in-out infinite 3s}
+
+  .hero-ornament{font-size:.7rem;letter-spacing:.5em;color:var(--gold);text-transform:uppercase;font-family:'Cinzel',serif;margin-bottom:16px;animation:fadeInDown .8s .4s both}
+  .hero-title{font-family:'Cinzel',serif;font-size:clamp(2.3rem,6vw,4.8rem);font-weight:700;color:var(--white);margin-bottom:6px;text-shadow:0 0 80px rgba(74,172,220,.25);animation:fadeInDown .9s .55s both}
+  .hero-title span{
+    color:var(--gold);
+    background:linear-gradient(90deg,var(--gold-dark),var(--gold-light),var(--gold),var(--gold-light),var(--gold-dark));
+    background-size:300% auto;
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+    animation:textGlint 5s linear 2s infinite
+  }
+
+  /* Logo ring animation */
+  .hero-logo-wrap{position:relative;width:220px;height:220px;margin:8px auto 26px;animation:scaleIn .9s .75s both}
+  .hero-logo-ring{position:absolute;inset:-12px;border-radius:50%;border:1px solid rgba(74,172,220,.2);animation:ringExpand 3.5s ease-in-out infinite}
+  .hero-logo-ring-2{position:absolute;inset:-24px;border-radius:50%;border:1px dashed rgba(74,172,220,.09);animation:ringExpand 3.5s ease-in-out infinite .8s}
+  .hero-logo-circle{width:198px;height:198px;border-radius:50%;border:2px solid var(--gold);margin:11px auto 0;display:flex;align-items:center;justify-content:center;background:rgba(2,12,20,.6);overflow:hidden;animation:pulseGlow 4s ease-in-out infinite;transition:transform .4s}
+  .hero-logo-circle:hover{transform:scale(1.04)}
+  .hero-logo-circle img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+
+  .hero-tagline{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,2vw,1.35rem);font-style:italic;color:var(--white2);max-width:500px;margin:0 auto 34px;line-height:1.7;animation:fadeInUp .9s 1s both}
+  .hero-cta{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;animation:fadeInUp .9s 1.15s both}
+
+  .btn-gold{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:#020C14;background:linear-gradient(135deg,var(--gold-light),var(--gold));border:none;padding:15px 34px;cursor:pointer;text-decoration:none;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:all .3s;position:relative;overflow:hidden}
+  .btn-gold::before{content:'';position:absolute;top:0;left:0;width:40%;height:100%;background:rgba(255,255,255,.22);transform:translateX(-120%) skewX(-20deg);transition:transform .5s}
+  .btn-gold:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(74,172,220,.35)}
+  .btn-gold:hover::before{transform:translateX(280%) skewX(-20deg)}
+
+  .btn-outline{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);background:transparent;border:1px solid var(--gold);padding:14px 34px;cursor:pointer;text-decoration:none;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:all .3s;position:relative;overflow:hidden}
+  .btn-outline::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--gold-light),var(--gold));opacity:0;transition:opacity .3s}
+  .btn-outline:hover{color:#020C14;transform:translateY(-3px);box-shadow:0 12px 28px rgba(74,172,220,.25)}
+  .btn-outline:hover::before{opacity:1}
+  .btn-outline span{position:relative;z-index:1}
+
+  /* ── SHARED SECTION STYLES ── */
   section{position:relative;z-index:1}
   .sec-lbl{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.4em;color:var(--gold);text-transform:uppercase;margin-bottom:11px;opacity:.85}
   .sec-lbl::before{content:'— '}
   .sec-lbl::after{content:' —'}
   .sec-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.9rem);font-weight:900;color:var(--white);line-height:1.15;margin-bottom:16px}
   .sec-title span{color:var(--gold)}
-  .sec-sub{font-family:'Cormorant Garamond',serif;font-size:1.08rem;color:var(--text-muted);font-style:italic;line-height:1.7;max-width:580px}
-  .gold-line{width:55px;height:2px;background:linear-gradient(to right,var(--gold),transparent);margin:20px 0}
-  .sec-center{text-align:center;max-width:700px;margin:0 auto 60px}
+
+  .gold-line{width:0;height:2px;background:linear-gradient(to right,var(--gold),transparent);margin:20px 0;transition:width .8s ease}
+  .gold-line.animated{width:55px}
   .sec-center .gold-line{margin:20px auto}
 
-  /* ABOUT */
+  .sec-center{text-align:center;max-width:700px;margin:0 auto 60px}
+
+  /* ── ABOUT ── */
   #about{padding:108px 60px;background:linear-gradient(160deg,var(--deep) 0%,var(--dark) 100%);border-top:1px solid var(--sec-border)}
   .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:76px;max-width:1200px;margin:0 auto;align-items:center}
-  .about-img{width:100%;aspect-ratio:3/4;object-fit:cover;border:1px solid rgba(74,172,220,.3)}
+  .about-img{width:100%;aspect-ratio:3/4;object-fit:cover;border:1px solid rgba(74,172,220,.3);transition:transform .6s ease,box-shadow .6s ease,border-color .4s}
+  .about-img:hover{transform:scale(1.025);border-color:rgba(74,172,220,.65);box-shadow:0 28px 64px rgba(0,0,0,.5),0 0 40px rgba(74,172,220,.12)}
 
-  /* SATURDAY */
+  /* Image shimmer overlay on hover */
+  .about-img-wrap{position:relative;overflow:hidden}
+  .about-img-wrap::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(74,172,220,.08),transparent);transition:left .7s ease;pointer-events:none}
+  .about-img-wrap:hover::after{left:160%}
+
+  /* ── SATURDAY ── */
   #saturday{padding:96px 60px;background:var(--deep);border-top:1px solid var(--sec-border)}
   .sat-grid{display:grid;grid-template-columns:1fr 1fr;gap:34px;max-width:1100px;margin:0 auto}
-  .sat-card{background:linear-gradient(160deg,var(--surface),var(--surface2));border:1px solid rgba(74,172,220,.18);padding:46px 40px;position:relative;overflow:hidden;transition:all .3s}
-  .sat-card:hover{transform:translateY(-6px);border-color:rgba(74,172,220,.5);box-shadow:0 20px 58px rgba(0,0,0,.4)}
-  .sat-n{font-family:'Playfair Display',serif;font-size:5rem;font-weight:900;color:rgba(74,172,220,.07);position:absolute;top:14px;right:24px}
-  .sat-icon{font-size:2rem;margin-bottom:14px}
+  .sat-card{background:linear-gradient(160deg,var(--surface),var(--surface2));border:1px solid rgba(74,172,220,.18);padding:46px 40px;position:relative;overflow:hidden;transition:transform .35s ease,border-color .35s,box-shadow .35s;animation:borderPulse 4s ease-in-out infinite}
+  .sat-card::before{content:'';position:absolute;top:0;left:-80%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(74,172,220,.05),transparent);transition:left .7s ease}
+  .sat-card:hover{transform:translateY(-8px);border-color:rgba(74,172,220,.55);box-shadow:0 24px 60px rgba(0,0,0,.45),inset 0 1px 0 rgba(74,172,220,.15)}
+  .sat-card:hover::before{left:160%}
+  .sat-card:nth-child(2){animation-delay:2s}
+  .sat-n{font-family:'Playfair Display',serif;font-size:5rem;font-weight:900;color:rgba(74,172,220,.07);position:absolute;top:14px;right:24px;transition:color .4s}
+  .sat-card:hover .sat-n{color:rgba(74,172,220,.13)}
+  .sat-icon{font-size:2rem;margin-bottom:14px;display:inline-block;transition:transform .3s}
+  .sat-card:hover .sat-icon{animation:iconBounce .6s ease}
   .sat-day{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.32em;color:var(--gold);text-transform:uppercase;margin-bottom:9px}
   .sat-title{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--white);margin-bottom:12px;font-weight:700}
   .sat-desc{font-size:.88rem;color:var(--text-muted);line-height:1.8;margin-bottom:20px}
   .sat-time{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.12em;color:var(--gold)}
 
-  /* SERMONS - 11 Videos */
+  /* ── SERMONS ── */
   #sermons{padding:96px 60px;background:linear-gradient(160deg,var(--dark),var(--deep));border-top:1px solid var(--sec-border)}
   .videos-container{max-width:1200px;margin:0 auto}
   .videos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:28px}
-  .video-card{background:var(--surface);border:1px solid rgba(74,172,220,.15);border-radius:8px;overflow:hidden;transition:all .3s}
-  .video-card:hover{transform:translateY(-6px);border-color:var(--gold);box-shadow:0 20px 50px rgba(0,0,0,.5)}
-  .video-wrapper{position:relative;padding-top:56.25%;background:#000;overflow:hidden}
-  .video-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none}
-  .video-info{padding:20px 22px}
-  .video-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--white);line-height:1.35;margin-bottom:8px}
-  .video-link{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.15em;color:var(--gold);text-decoration:none}
 
-  /* DOCUMENTS */
+  .video-card{background:var(--surface);border:1px solid rgba(74,172,220,.15);border-radius:8px;overflow:hidden;transition:transform .35s ease,border-color .35s,box-shadow .35s;position:relative}
+  .video-card::after{content:'';position:absolute;inset:0;border-radius:8px;box-shadow:inset 0 0 0 1px rgba(74,172,220,0);transition:box-shadow .35s;pointer-events:none}
+  .video-card:hover{transform:translateY(-8px);border-color:var(--gold);box-shadow:0 24px 56px rgba(0,0,0,.55),0 0 0 1px rgba(74,172,220,.2)}
+  .video-card:hover::after{box-shadow:inset 0 0 0 1px rgba(74,172,220,.15)}
+
+  .video-wrapper{position:relative;padding-top:56.25%;background:#000;overflow:hidden}
+  .video-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none;transition:transform .4s ease}
+  .video-card:hover .video-wrapper iframe{transform:scale(1.02)}
+
+  .video-info{padding:20px 22px}
+  .video-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--white);line-height:1.35;margin-bottom:8px;transition:color .3s}
+  .video-card:hover .video-title{color:var(--gold-light)}
+  .video-link{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.15em;color:var(--gold);text-decoration:none;display:inline-flex;align-items:center;gap:4px;transition:gap .3s,opacity .3s}
+  .video-link:hover{gap:10px;opacity:.85}
+
+  /* ── DOCUMENTS ── */
   #documents{padding:96px 60px;background:var(--deep);border-top:1px solid var(--sec-border)}
   .docs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:20px;max-width:1200px;margin:0 auto}
-  .doc-card{background:linear-gradient(160deg,var(--surface),var(--surface2));border:1px solid rgba(74,172,220,.15);padding:28px 24px;display:flex;flex-direction:column;gap:10px;transition:all .3s;cursor:pointer}
-  .doc-card:hover{transform:translateY(-5px);border-color:var(--gold)}
+  .doc-card{background:linear-gradient(160deg,var(--surface),var(--surface2));border:1px solid rgba(74,172,220,.15);padding:28px 24px;display:flex;flex-direction:column;gap:10px;transition:transform .3s ease,border-color .3s,box-shadow .3s;cursor:pointer;position:relative;overflow:hidden}
+  .doc-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,transparent,var(--gold),transparent);transform:scaleX(0);transition:transform .4s ease}
+  .doc-card:hover{transform:translateY(-6px);border-color:var(--gold);box-shadow:0 16px 40px rgba(0,0,0,.4)}
+  .doc-card:hover::before{transform:scaleX(1)}
 
-  /* PRAYER, SOCIAL, JOIN, FOOTER, MODAL styles kept from original */
+  /* ── PRAYER ── */
   #prayer{padding:96px 60px;background:linear-gradient(160deg,var(--dark),var(--deep));border-top:1px solid var(--sec-border)}
   .prayer-wrap{max-width:680px;margin:0 auto}
   .prayer-form{display:flex;flex-direction:column;gap:17px;margin-top:38px}
   .form-row{display:grid;grid-template-columns:1fr 1fr;gap:17px}
-  .form-input,.form-textarea{background:var(--surface);border:1px solid rgba(74,172,220,.2);padding:13px 17px;color:var(--white);font-size:.9rem;outline:none;width:100%}
-  .form-input:focus,.form-textarea:focus{border-color:var(--gold)}
-  .form-submit{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:#020C14;background:linear-gradient(135deg,var(--gold-light),var(--gold));border:none;padding:16px 38px;cursor:pointer;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%)}
+  .form-input,.form-textarea{background:var(--surface);border:1px solid rgba(74,172,220,.2);padding:13px 17px;color:var(--white);font-size:.9rem;outline:none;width:100%;transition:border-color .3s,box-shadow .3s,transform .2s}
+  .form-input:focus,.form-textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(74,172,220,.1);transform:translateY(-1px)}
+  .form-submit{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:#020C14;background:linear-gradient(135deg,var(--gold-light),var(--gold));border:none;padding:16px 38px;cursor:pointer;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:all .3s;position:relative;overflow:hidden}
+  .form-submit::before{content:'';position:absolute;top:0;left:-60%;width:40%;height:100%;background:rgba(255,255,255,.25);transform:skewX(-20deg);transition:left .5s}
+  .form-submit:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(74,172,220,.3)}
+  .form-submit:hover::before{left:160%}
 
+  /* ── CONNECT ── */
   #connect{padding:96px 60px;background:var(--deep);border-top:1px solid var(--sec-border)}
   .social-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:17px;max-width:880px;margin:0 auto}
-  .soc-card{background:var(--surface);border:1px solid rgba(74,172,220,.12);padding:30px 18px;text-align:center;transition:all .3s}
-  .soc-card:hover{transform:translateY(-6px);border-color:var(--gold)}
+  .soc-card{background:var(--surface);border:1px solid rgba(74,172,220,.12);padding:30px 18px;text-align:center;transition:transform .3s ease,border-color .3s,box-shadow .3s;position:relative;overflow:hidden}
+  .soc-card::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 100%,rgba(74,172,220,.08),transparent 60%);opacity:0;transition:opacity .35s}
+  .soc-card:hover{transform:translateY(-7px);border-color:var(--gold);box-shadow:0 18px 44px rgba(0,0,0,.4)}
+  .soc-card:hover::after{opacity:1}
 
+  /* ── JOIN ── */
   .join-sec{padding:86px 60px;background:var(--dark);border-top:1px solid var(--sec-border);text-align:center}
+
+  /* ── FOOTER ── */
   footer{background:#010810;border-top:1px solid rgba(74,172,220,.12);padding:54px 60px 34px}
 
-  /* ANIMATIONS */
-  .reveal{opacity:0;transform:translateY(34px);transition:opacity .7s ease,transform .7s ease}
+  /* ── REVEAL ANIMATION ── */
+  .reveal{opacity:0;transform:translateY(34px);transition:opacity .75s cubic-bezier(.4,0,.2,1),transform .75s cubic-bezier(.4,0,.2,1)}
   .reveal.visible{opacity:1;transform:translateY(0)}
+  .reveal-left{opacity:0;transform:translateX(-44px);transition:opacity .75s cubic-bezier(.4,0,.2,1),transform .75s cubic-bezier(.4,0,.2,1)}
+  .reveal-left.visible{opacity:1;transform:translateX(0)}
+  .reveal-right{opacity:0;transform:translateX(44px);transition:opacity .75s cubic-bezier(.4,0,.2,1),transform .75s cubic-bezier(.4,0,.2,1)}
+  .reveal-right.visible{opacity:1;transform:translateX(0)}
+
+  /* Stagger children inside a revealed parent */
+  .stagger-children > *{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+  .stagger-children.visible > *:nth-child(1){opacity:1;transform:translateY(0);transition-delay:.05s}
+  .stagger-children.visible > *:nth-child(2){opacity:1;transform:translateY(0);transition-delay:.15s}
+  .stagger-children.visible > *:nth-child(3){opacity:1;transform:translateY(0);transition-delay:.25s}
+  .stagger-children.visible > *:nth-child(4){opacity:1;transform:translateY(0);transition-delay:.35s}
+  .stagger-children.visible > *:nth-child(5){opacity:1;transform:translateY(0);transition-delay:.45s}
+  .stagger-children.visible > *:nth-child(6){opacity:1;transform:translateY(0);transition-delay:.55s}
+
+  /* Stagger videos specifically */
+  .videos-grid .video-card{opacity:0;transform:translateY(40px) scale(.97);transition:opacity .6s ease,transform .6s ease,border-color .35s,box-shadow .35s}
+  .videos-grid.staggered .video-card:nth-child(1){opacity:1;transform:none;transition-delay:.04s}
+  .videos-grid.staggered .video-card:nth-child(2){opacity:1;transform:none;transition-delay:.1s}
+  .videos-grid.staggered .video-card:nth-child(3){opacity:1;transform:none;transition-delay:.16s}
+  .videos-grid.staggered .video-card:nth-child(4){opacity:1;transform:none;transition-delay:.22s}
+  .videos-grid.staggered .video-card:nth-child(5){opacity:1;transform:none;transition-delay:.28s}
+  .videos-grid.staggered .video-card:nth-child(6){opacity:1;transform:none;transition-delay:.34s}
+  .videos-grid.staggered .video-card:nth-child(7){opacity:1;transform:none;transition-delay:.4s}
+  .videos-grid.staggered .video-card:nth-child(8){opacity:1;transform:none;transition-delay:.46s}
+  .videos-grid.staggered .video-card:nth-child(9){opacity:1;transform:none;transition-delay:.52s}
+  .videos-grid.staggered .video-card:nth-child(10){opacity:1;transform:none;transition-delay:.58s}
+  .videos-grid.staggered .video-card:nth-child(11){opacity:1;transform:none;transition-delay:.64s}
+
+  /* Hover ripple on buttons */
+  .btn-gold,.btn-outline,.form-submit{-webkit-tap-highlight-color:transparent}
+
   @media(max-width:900px){
-    .about-grid,.videos-grid{grid-template-columns:1fr}
+    .about-grid{grid-template-columns:1fr}
+    .sat-grid{grid-template-columns:1fr}
     nav{padding:13px 18px}
+    .hero-orb{display:none}
   }
 </style>
 </head>
@@ -155,25 +280,30 @@
 <!-- HERO -->
 <section class="hero">
   <div class="hero-bg"></div>
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+  <div class="hero-orb hero-orb-3"></div>
   <div class="hero-ornament">Ministry of the Word</div>
   <h1 class="hero-title">United in <span>Christ</span></h1>
   <div class="hero-logo-wrap">
+    <div class="hero-logo-ring"></div>
+    <div class="hero-logo-ring-2"></div>
     <div class="hero-logo-circle"><img src="photos/united-in-christ-logo.jpeg" alt="Logo" onerror="this.src='photos/united-in-christ-logo.png'"></div>
   </div>
   <p class="hero-tagline">"Proclaiming the Word of God with power, truth, and the spirit of prophecy"</p>
   <div class="hero-cta">
     <a href="#sermons" class="btn-gold">Watch Sermons</a>
-    <a href="#prayer" class="btn-outline">Submit Prayer</a>
+    <a href="#prayer" class="btn-outline"><span>Submit Prayer</span></a>
   </div>
 </section>
 
 <!-- ABOUT -->
 <section id="about">
   <div class="about-grid">
-    <div class="reveal">
+    <div class="reveal-left about-img-wrap">
       <img class="about-img" src="photos/jay-uriel.jpeg" alt="Prophet Jay Uriel" onerror="this.src='photos/jay-uriel.png';this.onerror=null;">
     </div>
-    <div class="reveal">
+    <div class="reveal-right">
       <div class="sec-lbl">Our Leader</div>
       <h2 class="sec-title">Prophet <span>Jay Uriel</span></h2>
       <div class="gold-line"></div>
@@ -191,12 +321,26 @@
     <p class="sec-sub">Two anointed sessions every Saturday — morning and evening.</p>
   </div>
   <div class="sat-grid">
-    <div class="sat-card reveal"> <!-- Session 1 --> </div>
-    <div class="sat-card reveal"> <!-- Session 2 --> </div>
+    <div class="sat-card reveal">
+      <div class="sat-n">01</div>
+      <div class="sat-icon">🌅</div>
+      <div class="sat-day">Saturday Morning</div>
+      <div class="sat-title">Morning Session</div>
+      <div class="sat-desc">Start your Saturday in the presence of God. Deep teaching from the Word of God to equip and strengthen your faith.</div>
+      <div class="sat-time">⏰ 09:00 AM – 12:00 PM</div>
+    </div>
+    <div class="sat-card reveal">
+      <div class="sat-n">02</div>
+      <div class="sat-icon">🌙</div>
+      <div class="sat-day">Saturday Evening</div>
+      <div class="sat-title">Evening Session</div>
+      <div class="sat-desc">An evening of prophetic ministry and intercession. Come expecting a move of God as we gather in His name.</div>
+      <div class="sat-time">⏰ 05:00 PM – 08:00 PM</div>
+    </div>
   </div>
 </section>
 
-<!-- SERMONS - All 11 Videos -->
+<!-- SERMONS -->
 <section id="sermons">
   <div class="sec-center reveal">
     <div class="sec-lbl">Anointed Messages</div>
@@ -205,18 +349,18 @@
     <p class="sec-sub">Watch and receive from the prophetic messages of Prophet Jay Uriel.</p>
   </div>
   <div class="videos-container">
-    <div class="videos-grid">
-      <div class="video-card reveal"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/0TS902WHcVc" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Recent Sermon</div><a href="https://youtu.be/0TS902WHcVc" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
-      <div class="video-card reveal"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/36V_GmO3050" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Recent Sermon</div><a href="https://youtu.be/36V_GmO3050" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
-      <div class="video-card reveal"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/MnnpCZcyYiI" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">The Power of Faith in Christ</div><a href="https://youtu.be/MnnpCZcyYiI" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
-      <div class="video-card reveal"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/yb0ykMTb_dE" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Recent Sermon</div><a href="https://youtu.be/yb0ykMTb_dE" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
-      <div class="video-card reveal"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/RvP9Mha5bTA" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Recent Sermon</div><a href="https://youtu.be/RvP9Mha5bTA" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
-      <div class="video-card reveal"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/_AZxY5wJ7Pk" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Recent Sermon</div><a href="https://youtu.be/_AZxY5wJ7Pk" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
-      <div class="video-card reveal"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/S-IFCaO4A4s" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Walking in God’s Grace</div><a href="https://youtu.be/S-IFCaO4A4s" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
-      <div class="video-card reveal"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/y7glFO4EkNk" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Recent Sermon</div><a href="https://youtu.be/y7glFO4EkNk" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
-      <div class="video-card reveal"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/LkaIPh6m6pc" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Recent Sermon</div><a href="https://youtu.be/LkaIPh6m6pc" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
-      <div class="video-card reveal"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/vwsWuBSVxbs" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">The Kingdom Mindset</div><a href="https://youtu.be/vwsWuBSVxbs" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
-      <div class="video-card reveal"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/ezxL__tQr8A" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Recent Sermon</div><a href="https://youtu.be/ezxL__tQr8A" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+    <div class="videos-grid" id="videosGrid">
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/0TS902WHcVc" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Recent Sermon</div><a href="https://youtu.be/0TS902WHcVc" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/36V_GmO3050" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Recent Sermon</div><a href="https://youtu.be/36V_GmO3050" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/MnnpCZcyYiI" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">The Power of Faith in Christ</div><a href="https://youtu.be/MnnpCZcyYiI" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/yb0ykMTb_dE" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Recent Sermon</div><a href="https://youtu.be/yb0ykMTb_dE" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/RvP9Mha5bTA" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Recent Sermon</div><a href="https://youtu.be/RvP9Mha5bTA" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/_AZxY5wJ7Pk" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Recent Sermon</div><a href="https://youtu.be/_AZxY5wJ7Pk" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/S-IFCaO4A4s" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Walking in God's Grace</div><a href="https://youtu.be/S-IFCaO4A4s" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/y7glFO4EkNk" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Recent Sermon</div><a href="https://youtu.be/y7glFO4EkNk" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/LkaIPh6m6pc" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Recent Sermon</div><a href="https://youtu.be/LkaIPh6m6pc" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/vwsWuBSVxbs" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">The Kingdom Mindset</div><a href="https://youtu.be/vwsWuBSVxbs" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
+      <div class="video-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/ezxL__tQr8A" allowfullscreen loading="lazy"></iframe></div><div class="video-info"><div class="video-title">Recent Sermon</div><a href="https://youtu.be/ezxL__tQr8A" target="_blank" class="video-link">Watch on YouTube →</a></div></div>
     </div>
   </div>
 </section>
@@ -229,29 +373,198 @@
     <div class="gold-line"></div>
     <p class="sec-sub">Study materials from Prophet Jay Uriel. Files from the <strong>files/</strong> folder.</p>
   </div>
-  <div class="docs-grid" id="docsGrid"></div>
+  <div class="docs-grid stagger-children" id="docsGrid"></div>
 </section>
 
-<!-- PRAYER, SOCIAL, JOIN, FOOTER sections remain as in your original code -->
-<!-- (I kept them to avoid making this response too long, but they are fully included in the actual file I recommend you use) -->
+<!-- PRAYER -->
+<section id="prayer">
+  <div class="prayer-wrap">
+    <div class="sec-center reveal">
+      <div class="sec-lbl">Come Before God</div>
+      <h2 class="sec-title">Submit a <span>Prayer Request</span></h2>
+      <div class="gold-line"></div>
+      <p class="sec-sub">We stand in agreement with you. Share your request and our team will pray for you.</p>
+    </div>
+    <div class="prayer-form reveal">
+      <div class="form-row">
+        <input class="form-input" type="text" placeholder="Your Name">
+        <input class="form-input" type="email" placeholder="Your Email">
+      </div>
+      <input class="form-input" type="text" placeholder="Subject">
+      <textarea class="form-textarea" rows="6" placeholder="Share your prayer request here..."></textarea>
+      <button class="form-submit">Send Prayer Request</button>
+    </div>
+  </div>
+</section>
+
+<!-- CONNECT -->
+<section id="connect">
+  <div class="sec-center reveal">
+    <div class="sec-lbl">Stay Connected</div>
+    <h2 class="sec-title">Follow & <span>Connect</span></h2>
+    <div class="gold-line"></div>
+    <p class="sec-sub">Join us on social media and stay updated with the latest teachings and announcements.</p>
+  </div>
+  <div class="social-grid stagger-children">
+    <div class="soc-card">
+      <div style="font-size:2rem;margin-bottom:12px">▶️</div>
+      <div style="font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.1em;color:var(--gold);margin-bottom:6px">YouTube</div>
+      <div style="font-size:.82rem;color:var(--text-muted)">Watch our sermons</div>
+    </div>
+    <div class="soc-card">
+      <div style="font-size:2rem;margin-bottom:12px">📘</div>
+      <div style="font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.1em;color:var(--gold);margin-bottom:6px">Facebook</div>
+      <div style="font-size:.82rem;color:var(--text-muted)">Join our community</div>
+    </div>
+    <div class="soc-card">
+      <div style="font-size:2rem;margin-bottom:12px">📸</div>
+      <div style="font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.1em;color:var(--gold);margin-bottom:6px">Instagram</div>
+      <div style="font-size:.82rem;color:var(--text-muted)">Daily inspiration</div>
+    </div>
+    <div class="soc-card">
+      <div style="font-size:2rem;margin-bottom:12px">💬</div>
+      <div style="font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.1em;color:var(--gold);margin-bottom:6px">WhatsApp</div>
+      <div style="font-size:.82rem;color:var(--text-muted)">Join our group</div>
+    </div>
+  </div>
+</section>
+
+<!-- JOIN -->
+<div class="join-sec reveal">
+  <div class="sec-lbl">Be Part of the Family</div>
+  <h2 class="sec-title" style="max-width:560px;margin:0 auto 16px">Join Us <span>This Saturday</span></h2>
+  <div class="gold-line" style="margin:16px auto 24px"></div>
+  <p style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--text-muted);font-size:1.1rem;max-width:480px;margin:0 auto 32px;line-height:1.7">Come as you are. Leave transformed. Every Saturday, we gather to encounter the living God.</p>
+  <a href="#prayer" class="btn-gold">Connect With Us</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:32px;max-width:1200px;margin:0 auto">
+    <div>
+      <div style="font-family:'Cinzel',serif;color:var(--gold);font-size:.85rem;letter-spacing:.12em;margin-bottom:8px">United in Christ</div>
+      <div style="font-size:.8rem;color:var(--text-muted)">Prophet Jay Uriel Ministry</div>
+    </div>
+    <div style="font-size:.78rem;color:var(--text-muted);text-align:right">
+      <div>Every Saturday · Morning & Evening</div>
+      <div style="margin-top:6px">© 2024 United in Christ. All rights reserved.</div>
+    </div>
+  </div>
+</footer>
 
 <script>
-// Particles, Theme Toggle, Reveal, Documents loading from files/, Prayer form - all restored
-// ... (full script from your original + updated docs loading)
+/* ────────────────────────────────────────
+   PARTICLES
+──────────────────────────────────────── */
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+let W, H, stars = [];
+function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight}
+function initStars(){stars=[];for(let i=0;i<90;i++)stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.4+.2,a:Math.random(),da:(.002+Math.random()*.006)*(Math.random()<.5?1:-1),vx:(Math.random()-.5)*.15,vy:(Math.random()-.5)*.15})}
+function drawStars(){ctx.clearRect(0,0,W,H);stars.forEach(s=>{s.a+=s.da;if(s.a<=0||s.a>=1)s.da*=-1;s.x+=s.vx;s.y+=s.vy;if(s.x<0)s.x=W;if(s.x>W)s.x=0;if(s.y<0)s.y=H;if(s.y>H)s.y=0;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(74,172,220,${s.a})`;ctx.fill()});requestAnimationFrame(drawStars)}
+window.addEventListener('resize',()=>{resize();initStars()});
+resize();initStars();drawStars();
 
+/* ────────────────────────────────────────
+   THEME TOGGLE
+──────────────────────────────────────── */
+const themeBtn = document.getElementById('themeToggle');
+const html = document.documentElement;
+let isDark = true;
+themeBtn.addEventListener('click',()=>{
+  isDark=!isDark;
+  html.setAttribute('data-theme',isDark?'dark':'light');
+  themeBtn.textContent=isDark?'🌙':'☀️';
+});
+
+/* ────────────────────────────────────────
+   INTERSECTION OBSERVER — REVEAL
+──────────────────────────────────────── */
+const revealEls = document.querySelectorAll('.reveal,.reveal-left,.reveal-right');
+const staggerEls = document.querySelectorAll('.stagger-children');
+const goldLines = document.querySelectorAll('.gold-line');
+const videosGrid = document.getElementById('videosGrid');
+
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('visible');
+      // Animate gold lines inside
+      e.target.querySelectorAll('.gold-line').forEach(l=>l.classList.add('animated'));
+      io.unobserve(e.target);
+    }
+  });
+},{threshold:.12});
+
+revealEls.forEach(el=>io.observe(el));
+
+const staggerIO = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add('visible');staggerIO.unobserve(e.target)}
+  });
+},{threshold:.08});
+staggerEls.forEach(el=>staggerIO.observe(el));
+
+// Gold lines at section level
+const glIO = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('animated');glIO.unobserve(e.target)}});
+},{threshold:.5});
+goldLines.forEach(gl=>glIO.observe(gl));
+
+// Videos stagger
+const vidIO = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('staggered');vidIO.unobserve(e.target)}});
+},{threshold:.05});
+if(videosGrid) vidIO.observe(videosGrid);
+
+/* ────────────────────────────────────────
+   DOCUMENTS
+──────────────────────────────────────── */
 const dGrid = document.getElementById('docsGrid');
-const docsList = ['The Prophetic Foundation','Walking in the Spirit','Authority of the Word','Kingdom Principles','The Fear of the Lord','Covenant & Promise'];
-docsList.forEach((title,i) => {
+const docsList = [
+  'The Prophetic Foundation','Walking in the Spirit','Authority of the Word',
+  'Kingdom Principles','The Fear of the Lord','Covenant & Promise'
+];
+docsList.forEach((title,i)=>{
   const num = String(i+1).padStart(2,'0');
   const file = `files/notes-${num}.pdf`;
   const card = document.createElement('div');
-  card.className = 'doc-card reveal';
-  card.innerHTML = `<div style="font-size:2rem">📄</div><div class="doc-num">Notes ${num}</div><div class="doc-title">${title}</div><div class="doc-action">Open Document →</div>`;
-  card.onclick = () => window.open(file,'_blank');
+  card.className = 'doc-card';
+  card.innerHTML = `<div style="font-size:2rem;transition:transform .3s">📄</div><div style="font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.2em;color:var(--text-muted)">Notes ${num}</div><div style="font-family:'Playfair Display',serif;font-weight:700;color:var(--white)">${title}</div><div style="font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.12em;color:var(--gold);margin-top:4px">Open Document →</div>`;
+  card.addEventListener('mouseenter',()=>card.querySelector('div').style.transform='scale(1.15) rotate(-5deg)');
+  card.addEventListener('mouseleave',()=>card.querySelector('div').style.transform='scale(1) rotate(0deg)');
+  card.onclick = ()=>window.open(file,'_blank');
   dGrid.appendChild(card);
 });
 
-// Full script for particles, theme, reveal, etc. is included in the complete file
+/* ────────────────────────────────────────
+   NAV SCROLL SHADOW
+──────────────────────────────────────── */
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll',()=>{
+  if(window.scrollY>40){
+    navbar.style.boxShadow='0 6px 28px rgba(0,0,0,.45)';
+    navbar.style.padding='10px 56px';
+  } else {
+    navbar.style.boxShadow='none';
+    navbar.style.padding='13px 56px';
+  }
+});
+
+/* ────────────────────────────────────────
+   PRAYER FORM SUBMIT FEEDBACK
+──────────────────────────────────────── */
+const submitBtn = document.querySelector('.form-submit');
+if(submitBtn){
+  submitBtn.addEventListener('click',()=>{
+    submitBtn.textContent='✓ Prayer Sent';
+    submitBtn.style.background='linear-gradient(135deg,#2d9e6a,#1a7a50)';
+    setTimeout(()=>{
+      submitBtn.textContent='Send Prayer Request';
+      submitBtn.style.background='';
+    },3000);
+  });
+}
 </script>
 </body>
 </html>
