@@ -752,19 +752,62 @@ window.addEventListener('scroll',()=>{
 
 /* ── DOCUMENTS / NOTES ── */
 const documents = [
-  { name: "Dominion & Royalty in Christ",       file: "DOMINION & ROYALTY IN CH....pdf" },
-  { name: "Gifts Impress But Fruit Proves",      file: "Gifts Impress But Fruit Proves....pdf" },
-  { name: "Kingdom Service (Ministry) Pt 1",     file: "KINGDOM SERVICE (MINISTR....pdf" },
-  { name: "Kingdom Service (Ministry) Pt 2",     file: "KINGDOM SERVICE (MINISTR....pdf" },
-  { name: "New Creation Reality",                file: "New Creation Reality.pdf" },
-  { name: "Righteousness",                       file: "Righteousness.pdf" },
-  { name: "Stillness",                           file: "Stillness.pdf" },
-  { name: "The Mystery of Creative Power",       file: "THE MYSTERY OF CREATIVE ....pdf" },
-  { name: "The Godly Anointing",                 file: "The Godly Anointing.pdf" },
-  { name: "The Revelation of the Inner Kingdom", file: "The Revelation of the Inner Kin....pdf" },
-  { name: "The Christian Walk (UIC)",            file: "TheChristianwalk(UIC).pdf" }
+  { 
+    name: "Dominion & Royalty in Christ", 
+    viewUrl: "https://drive.google.com/file/d/1RehRpaL6Yv2MmSr4zfxo9QCC3tKmDq3c/view?usp=drivesdk",
+    downloadUrl: "https://drive.google.com/uc?export=download&id=1RehRpaL6Yv2MmSr4zfxo9QCC3tKmDq3c"
+  },
+  { 
+    name: "Gifts Impress But Fruit Proves", 
+    viewUrl: "https://drive.google.com/file/d/19E-XcK4mRD-KgfpbTlQDCLvOqpr5wJiX/view?usp=drivesdk",
+    downloadUrl: "https://drive.google.com/uc?export=download&id=19E-XcK4mRD-KgfpbTlQDCLvOqpr5wJiX"
+  },
+  { 
+    name: "Kingdom Service (Ministry) Pt 1", 
+    viewUrl: "https://drive.google.com/file/d/13zRAHkv8aygwHnUCIdzrbpxShhtDN4PA/view?usp=drivesdk",
+    downloadUrl: "https://drive.google.com/uc?export=download&id=13zRAHkv8aygwHnUCIdzrbpxShhtDN4PA"
+  },
+  { 
+    name: "Kingdom Service (Ministry) Pt 2", 
+    viewUrl: "https://drive.google.com/file/d/1kuhbzAuftVih5WszZb5Tv3rH0Rvniiwq/view?usp=drivesdk",
+    downloadUrl: "https://drive.google.com/uc?export=download&id=1kuhbzAuftVih5WszZb5Tv3rH0Rvniiwq"
+  },
+  { 
+    name: "New Creation Reality", 
+    viewUrl: "https://drive.google.com/file/d/1y2sif6rLXgrQzuGA4d4AYaPCgoegtVe_/view?usp=drivesdk",
+    downloadUrl: "https://drive.google.com/uc?export=download&id=1y2sif6rLXgrQzuGA4d4AYaPCgoegtVe_"
+  },
+  { 
+    name: "Righteousness", 
+    viewUrl: "https://drive.google.com/file/d/1M3QorBT5ijy_nFHZcmuDn8qu-52m4Hnn/view?usp=drivesdk",
+    downloadUrl: "https://drive.google.com/uc?export=download&id=1M3QorBT5ijy_nFHZcmuDn8qu-52m4Hnn"
+  },
+  { 
+    name: "Stillness", 
+    viewUrl: "https://drive.google.com/file/d/11h_pPNgf9bJNQLdBnYozE11FcEUfTP9D/view?usp=drivesdk",
+    downloadUrl: "https://drive.google.com/uc?export=download&id=11h_pPNgf9bJNQLdBnYozE11FcEUfTP9D"
+  },
+  { 
+    name: "The Mystery of Creative Power", 
+    viewUrl: "https://drive.google.com/file/d/1rVCx1v2Wv9bAHen_WQoINkCU5lAxBT4I/view?usp=drivesdk",
+    downloadUrl: "https://drive.google.com/uc?export=download&id=1rVCx1v2Wv9bAHen_WQoINkCU5lAxBT4I"
+  },
+  { 
+    name: "The Godly Anointing", 
+    viewUrl: "https://drive.google.com/file/d/11RVAKxQ91d7PpkoIRcNL-wCCkD8O6yH8/view?usp=drivesdk",
+    downloadUrl: "https://drive.google.com/uc?export=download&id=11RVAKxQ91d7PpkoIRcNL-wCCkD8O6yH8"
+  },
+  { 
+    name: "The Revelation of the Inner Kingdom", 
+    viewUrl: "https://drive.google.com/file/d/1UjNiIJLxQs1NWeq1CPewLfphEqVTUuaA/view?usp=drivesdk",
+    downloadUrl: "https://drive.google.com/uc?export=download&id=1UjNiIJLxQs1NWeq1CPewLfphEqVTUuaA"
+  },
+  { 
+    name: "The Christian Walk (UIC)", 
+    viewUrl: "https://drive.google.com/file/d/1IXS0XzpkYtvjGRMA4cGj_lpRBWtj1ePl/view?usp=drivesdk",
+    downloadUrl: "https://drive.google.com/uc?export=download&id=1IXS0XzpkYtvjGRMA4cGj_lpRBWtj1ePl"
+  }
 ];
-
 const dGrid = document.getElementById('docsGrid');
 documents.forEach((doc, i) => {
   const num = String(i+1).padStart(2,'0');
@@ -811,24 +854,23 @@ const pdfWa       = document.getElementById('pdfModalWhatsapp');
 
 let currentFile = '';
 
-function openPDFModal(file, name) {
-  currentFile = file;
+function openPDFModal(viewUrl, name) {
+  currentFile = viewUrl;
   pdfTitle.textContent = name;
-
-  // Use Google Docs viewer so PDFs display reliably across all browsers/devices
-  // When hosted online the direct path works; Google Docs viewer is the universal fallback
-  const directSrc = `Notes/${encodeURIComponent(file)}`;
-  const googleSrc = `https://docs.google.com/viewer?url=${encodeURIComponent(window.location.href.replace(/[^/]*$/, '') + 'Notes/' + file)}&embedded=true`;
-
-  // Try direct embed first; if origin is file:// use Google viewer
-  const src = window.location.protocol === 'file:' ? googleSrc : directSrc;
-  pdfIframe.src = src;
-
+  pdfIframe.src = viewUrl;   // Use Google Drive link directly
   pdfModal.classList.add('open');
   document.body.style.overflow = 'hidden';
 
-  pdfDl.onclick = () => downloadPDF(file);
-  pdfWa.onclick = () => shareWhatsApp(file, name);
+  pdfDl.onclick = () => {
+    const a = document.createElement('a');
+    a.href = viewUrl.replace('/view?usp=drivesdk', '/uc?export=download');
+    a.target = "_blank";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  };
+
+  pdfWa.onclick = () => shareWhatsApp(viewUrl, name);
 }
 
 // "Open in New Tab" button inside modal header
