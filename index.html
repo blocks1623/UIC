@@ -29,8 +29,6 @@
   .nav-logo{display:flex;align-items:center;gap:13px;text-decoration:none}
   .nav-logo-img{width:48px;height:48px;border-radius:50%;border:2px solid var(--gold);overflow:hidden}
   .nav-logo-img img{width:100%;height:100%;object-fit:cover}
-  .nav-logo-text{font-family:'Cinzel',serif;font-size:.9rem;color:var(--gold);letter-spacing:.1em}
-  .nav-logo-sub{font-size:.58rem;color:var(--text-muted);letter-spacing:.2em;text-transform:uppercase}
 
   /* HERO */
   .hero{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 40px 80px;overflow:hidden}
@@ -46,7 +44,7 @@
   .btn-gold{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:#020C14;background:linear-gradient(135deg,var(--gold-light),var(--gold));border:none;padding:15px 34px;cursor:pointer;text-decoration:none;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%)}
   .btn-outline{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);background:transparent;border:1px solid var(--gold);padding:14px 34px;cursor:pointer;text-decoration:none;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%)}
 
-  /* SHARED */
+  /* SHARED STYLES */
   section{position:relative;z-index:1}
   .sec-lbl{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.4em;color:var(--gold);text-transform:uppercase;margin-bottom:11px;opacity:.85}
   .sec-lbl::before{content:'— '}
@@ -58,7 +56,13 @@
   .sec-center{text-align:center;max-width:700px;margin:0 auto 60px}
   .sec-center .gold-line{margin:20px auto}
 
-  /* SERMONS / VIDEOS - Consistent Layout */
+  /* ABOUT */
+  #about{padding:108px 60px;background:linear-gradient(160deg,var(--deep) 0%,var(--dark) 100%);border-top:1px solid var(--sec-border)}
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:76px;max-width:1200px;margin:0 auto;align-items:center}
+  .about-frame{position:relative;max-width:410px}
+  .about-img{width:100%;aspect-ratio:3/4;object-fit:cover;border:1px solid rgba(74,172,220,.3);background:var(--surface)}
+
+  /* VIDEOS */
   #sermons{padding:96px 60px;background:linear-gradient(160deg,var(--dark),var(--deep));border-top:1px solid var(--sec-border)}
   .videos-container{max-width:1200px;margin:0 auto}
   .videos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:28px}
@@ -70,28 +74,16 @@
   .video-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--white);line-height:1.35;margin-bottom:8px}
   .video-link{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.15em;color:var(--gold);text-decoration:none}
 
-  /* DOCUMENTS - from files/ folder */
+  /* DOCUMENTS */
   #documents{padding:96px 60px;background:var(--deep);border-top:1px solid var(--sec-border)}
   .docs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:20px;max-width:1200px;margin:0 auto}
   .doc-card{background:linear-gradient(160deg,var(--surface),var(--surface2));border:1px solid rgba(74,172,220,.15);padding:28px 24px;display:flex;flex-direction:column;gap:10px;transition:all .3s;cursor:pointer}
   .doc-card:hover{transform:translateY(-5px);border-color:var(--gold)}
-  .doc-icon{font-size:2rem}
-  .doc-num{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.24em;color:var(--gold);opacity:.75}
-  .doc-title{font-family:'Playfair Display',serif;font-size:.97rem;color:var(--white);font-weight:700;line-height:1.4}
-  .doc-sub{font-size:.78rem;color:var(--text-muted)}
-  .doc-action{margin-top:auto;font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.18em;color:var(--gold);text-transform:uppercase}
-
-  /* ABOUT */
-  #about{padding:108px 60px;background:linear-gradient(160deg,var(--deep) 0%,var(--dark) 100%);border-top:1px solid var(--sec-border)}
-  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:76px;max-width:1200px;margin:0 auto;align-items:center}
-  .about-frame{position:relative;max-width:410px}
-  .about-img{width:100%;aspect-ratio:3/4;object-fit:cover;border:1px solid rgba(74,172,220,.3)}
 
   @media(max-width:900px){
-    nav{padding:13px 18px}
-    #about,#saturday,#sermons,#documents,#prayer{padding:68px 18px}
     .about-grid{grid-template-columns:1fr}
     .videos-grid{grid-template-columns:1fr}
+    nav{padding:13px 18px}
   }
 </style>
 </head>
@@ -101,7 +93,8 @@
 <nav>
   <a href="#" class="nav-logo">
     <div class="nav-logo-img">
-      <img src="photos/united-in-christ-logo.jpeg" alt="United in Christ Logo">
+      <img src="photos/united-in-christ-logo.jpeg" alt="United in Christ Logo" 
+           onerror="this.src='photos/united-in-christ-logo.png'">
     </div>
     <div>
       <div class="nav-logo-text">United in Christ</div>
@@ -117,7 +110,8 @@
   <h1 class="hero-title">United in <span>Christ</span></h1>
   <div class="hero-logo-wrap">
     <div class="hero-logo-circle">
-      <img src="photos/united-in-christ-logo.jpeg" alt="United in Christ Logo">
+      <img src="photos/united-in-christ-logo.jpeg" alt="United in Christ Logo"
+           onerror="this.src='photos/united-in-christ-logo.png'">
     </div>
   </div>
   <p class="hero-tagline">"Proclaiming the Word of God with power, truth, and the spirit of prophecy"</p>
@@ -130,30 +124,19 @@
 <!-- ABOUT -->
 <section id="about">
   <div class="about-grid">
-    <div>
-      <div class="about-frame">
-        <img class="about-img" src="photos/jay-uriel.jpeg" alt="Prophet Jay Uriel"
-             onerror="this.outerHTML='<div style=\'padding:60px 20px;text-align:center;background:#122B42;color:#7ECFEF;font-family:Cinzel,sans-serif\'>Place jay-uriel.jpeg in the photos folder</div>'">
-      </div>
+    <div class="about-frame">
+      <img class="about-img" src="photos/jay-uriel.jpeg" alt="Prophet Jay Uriel"
+           onerror="this.src='photos/jay-uriel.png'; this.onerror=null;">
     </div>
     <div>
       <div class="sec-lbl">Our Leader</div>
       <h2 class="sec-title">Prophet <span>Jay Uriel</span></h2>
       <div class="gold-line"></div>
-      <p style="font-size:1.05rem;line-height:1.8;color:var(--text-muted);margin:25px 0">
-        Prophet Jay Uriel is a consecrated vessel called by God — a prophetic voice and teacher of the Word raised up for this generation.
-      </p>
+      <div style="font-size:1.05rem;line-height:1.8;color:var(--text-muted);margin:25px 0">
+        Prophet Jay Uriel is a consecrated vessel called by God — a prophetic voice and teacher of the Word raised up for this generation. 
+        With a burning passion for truth and a heart surrendered to the Holy Spirit, he carries a mantle of revelation that transforms lives.
+      </div>
     </div>
-  </div>
-</section>
-
-<!-- SATURDAY TEACHINGS -->
-<section id="saturday" style="padding:96px 60px;background:var(--deep);border-top:1px solid var(--sec-border)">
-  <div class="sec-center">
-    <div class="sec-lbl">Every Saturday</div>
-    <h2 class="sec-title">Saturday <span>Teachings</span></h2>
-    <div class="gold-line"></div>
-    <p class="sec-sub">Two anointed sessions every Saturday — morning and evening.</p>
   </div>
 </section>
 
@@ -165,22 +148,17 @@
     <div class="gold-line"></div>
     <p class="sec-sub">Watch and receive from the prophetic messages of Prophet Jay Uriel.</p>
   </div>
-  
   <div class="videos-container">
     <div class="videos-grid">
       <div class="video-card">
-        <div class="video-wrapper">
-          <iframe src="https://www.youtube.com/embed/MnnpCZcyYiI" allowfullscreen loading="lazy"></iframe>
-        </div>
+        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/MnnpCZcyYiI" allowfullscreen loading="lazy"></iframe></div>
         <div class="video-info">
           <div class="video-title">The Power of Faith in Christ</div>
           <a href="https://www.youtube.com/watch?v=MnnpCZcyYiI" target="_blank" class="video-link">Watch on YouTube →</a>
         </div>
       </div>
       <div class="video-card">
-        <div class="video-wrapper">
-          <iframe src="https://www.youtube.com/embed/vwsWuBSVxbs" allowfullscreen loading="lazy"></iframe>
-        </div>
+        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/vwsWuBSVxbs" allowfullscreen loading="lazy"></iframe></div>
         <div class="video-info">
           <div class="video-title">The Kingdom Mindset</div>
           <a href="https://www.youtube.com/watch?v=vwsWuBSVxbs" target="_blank" class="video-link">Watch on YouTube →</a>
@@ -196,18 +174,14 @@
     <div class="sec-lbl">Written Revelation</div>
     <h2 class="sec-title">Teaching <span>Notes</span></h2>
     <div class="gold-line"></div>
-    <p class="sec-sub">Study materials from Prophet Jay Uriel. Click to open (files from <strong>files/</strong> folder).</p>
+    <p class="sec-sub">Study materials from Prophet Jay Uriel (files from the <strong>files/</strong> folder).</p>
   </div>
   <div class="docs-grid" id="docsGrid"></div>
 </section>
 
 <script>
-// Documents load from files/ folder
-const docs = [
-  'The Prophetic Foundation', 'Walking in the Spirit', 'Authority of the Word',
-  'Kingdom Principles', 'The Fear of the Lord', 'Covenant & Promise'
-];
-
+// Load documents from files/ folder
+const docs = ['The Prophetic Foundation','Walking in the Spirit','Authority of the Word','Kingdom Principles','The Fear of the Lord','Covenant & Promise'];
 const dGrid = document.getElementById('docsGrid');
 docs.forEach((title, i) => {
   const num = String(i+1).padStart(2, '0');
@@ -215,11 +189,10 @@ docs.forEach((title, i) => {
   const d = document.createElement('div');
   d.className = 'doc-card';
   d.innerHTML = `
-    <div class="doc-icon">📄</div>
-    <div class="doc-num">Notes ${num}</div>
-    <div class="doc-title">${title}</div>
-    <div class="doc-sub">Prophet Jay Uriel</div>
-    <div class="doc-action">Open Document →</div>`;
+    <div style="font-size:2rem">📄</div>
+    <div style="font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.24em;color:var(--gold);opacity:.75">Notes ${num}</div>
+    <div style="font-family:'Playfair Display',serif;font-size:.97rem;color:var(--white);font-weight:700;line-height:1.4">${title}</div>
+    <div style="margin-top:auto;font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.18em;color:var(--gold);text-transform:uppercase">Open Document →</div>`;
   d.onclick = () => window.open(file, '_blank');
   dGrid.appendChild(d);
 });
