@@ -498,84 +498,46 @@
     <a href="#prayer" class="btn-outline"><span>Submit Prayer</span></a>
   </div>
 </section>
-<!-- ABOUT - CLEAN & BEAUTIFUL WITH TYPING VERSE -->
+<!-- ABOUT - IMPROVED -->
 <section id="about" style="padding: 120px 60px; background: linear-gradient(160deg, var(--deep) 0%, var(--dark) 100%); border-top: 1px solid var(--sec-border);">
-  
-  <div class="sec-center reveal" style="margin-bottom: 80px;">
-    <div class="sec-lbl">Our Leader</div>
-    <h2 class="sec-title">Prophet <span>Jay Uriel</span></h2>
-    <div class="gold-line"></div>
-  </div>
+  <div class="about-grid" style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;">
+    
+    <!-- Left: Image -->
+    <div class="reveal-left about-img-wrap" style="position: relative;">
+      <div style="position: absolute; inset: -20px; border: 1px solid rgba(74,172,220,0.25); border-radius: 20px; z-index: -1;"></div>
+      <img 
+        class="about-img" 
+        src="photos/jay-uriel.jpeg" 
+        alt="Prophet Jay Uriel" 
+        onerror="this.src='photos/jay-uriel.png';this.onerror=null;"
+        style="width: 100%; height: auto; border-radius: 16px; box-shadow: 0 30px 70px rgba(0,0,0,0.6); transition: transform 0.5s ease;"
+      >
+      <!-- Subtle glow ring -->
+      <div style="position: absolute; inset: -12px; border: 2px solid rgba(74,172,220,0.15); border-radius: 24px; z-index: -2; animation: ringExpand 6s ease-in-out infinite;"></div>
+    </div>
 
-  <div style="max-width: 1180px; margin: 0 auto;">
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
+    <!-- Right: Content -->
+    <div class="reveal-right">
+      <div class="sec-lbl">Our Leader & Founder</div>
+      <h2 class="sec-title" style="font-size: 2.8rem;">Prophet <span>Jay Uriel</span></h2>
+      <div class="gold-line" style="width: 70px;"></div>
+      
+      <p style="margin: 32px 0 40px; font-size: 1.08rem; line-height: 1.85; color: var(--white2);">
+        Prophet Jay Uriel is a consecrated vessel called by God — a bold prophetic voice raised for this generation. 
+        With deep revelation, anointed teaching, and the genuine gift of prophecy, he ministers the fullness of Christ 
+        with power, clarity, and compassion.
+      </p>
 
-      <!-- Photo -->
-      <div style="position: relative; border-radius: 20px; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.75);">
-        <img 
-          src="photos/jay-uriel.jpeg" 
-          alt="Prophet Jay Uriel" 
-          onerror="this.src='photos/jay-uriel.png';this.onerror=null;"
-          style="width: 100%; height: auto; display: block;"
-        >
-        <div style="position: absolute; top: 30px; left: 30px; background: rgba(2,12,20,0.9); border: 2px solid var(--gold); border-radius: 50%; width: 72px; height: 72px; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 0.67rem; line-height: 1.25; color: var(--gold); font-family: 'Cinzel', serif; box-shadow: 0 8px 25px rgba(74,172,220,0.4);">
-          CALLED<br>BY GOD
-        </div>
+      <div style="margin-bottom: 38px; padding: 22px 28px; background: rgba(74,172,220,0.06); border-left: 4px solid var(--gold); font-style: italic; color: var(--text-muted);">
+        “The Spirit of the Lord is upon me to proclaim liberty, healing, and the knowledge of Christ.”
       </div>
 
-      <!-- Text + Typing Verse -->
-      <div>
-        <p style="font-size: 1.08rem; line-height: 1.85; color: var(--white2); margin-bottom: 40px;">
-          Prophet Jay Uriel is a consecrated vessel called by God — a prophetic voice and teacher of the Word raised up for this generation. 
-          Through deep revelation, anointed teaching, and the prophetic gift, he ministers the fullness of Christ to hungry hearts every week.
-        </p>
-
-        <!-- Typing Verse -->
-        <div style="margin-bottom: 45px;">
-          <div id="typingVerse" style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.16rem; color: var(--gold-light); line-height: 1.75; min-height: 130px;">
-          </div>
-          <div id="verseRef" style="margin-top: 12px; font-size: 0.9rem; color: var(--text-muted);">
-            — 1 Peter 2:9
-          </div>
-        </div>
-
-        <a href="#saturday" class="btn-gold" style="font-size: 0.73rem; padding: 17px 44px;">
-          JOIN US THIS SATURDAY
-        </a>
-      </div>
-
+      <a href="#saturday" class="btn-gold" style="padding: 17px 42px; font-size: 0.72rem;">
+        JOIN US THIS SATURDAY
+      </a>
     </div>
   </div>
 </section>
-// Typing Effect for Bible Verse in About Section
-function startTypingVerse() {
-  const verse = "But you are a chosen people, a royal priesthood, a holy nation, God’s special possession, that you may declare the praises of him who called you out of darkness into his wonderful light.";
-  const verseEl = document.getElementById('typingVerse');
-  let i = 0;
-  verseEl.textContent = '';
-
-  const typeInterval = setInterval(() => {
-    if (i < verse.length) {
-      verseEl.textContent += verse.charAt(i);
-      i++;
-    } else {
-      clearInterval(typeInterval);
-    }
-  }, 35);
-}
-
-// Trigger typing when About section comes into view
-const aboutObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      setTimeout(startTypingVerse, 600);
-      aboutObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.4 });
-
-const aboutSection = document.getElementById('about');
-if (aboutSection) aboutObserver.observe(aboutSection);
   
 <!-- SATURDAY TEACHINGS - BEAUTIFUL WRAPPER -->
 <section id="saturday" style="padding: 110px 60px; background: linear-gradient(160deg, var(--dark) 0%, var(--deep) 100%); border-top: 1px solid var(--sec-border);">
