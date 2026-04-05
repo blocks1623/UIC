@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
@@ -826,118 +827,43 @@ document.querySelectorAll('.mob-link').forEach(link => {
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeMobileMenu();
 });
-<!-- Choice Buttons -->
-<div id="formChoice">
-  <button id="choosePrayer">🙏 Prayer Request</button>
-  <button id="chooseMentorship">👥 Mentorship Program</button>
-</div>
-<!-- Choice Buttons -->
-<div id="formChoice">
-  <button id="choosePrayer">🙏 Prayer Request</button>
-  <button id="chooseMentorship">👥 Mentorship Program</button>
-</div>
+/* ── PRAYER FORM → sends to WhatsApp ── */
+const PRAYER_WA = '27649842408'; // 064 9842408 in international format
+const prayerSubmit = document.getElementById('prayerSubmit');
+if(prayerSubmit){
+  prayerSubmit.addEventListener('click', () => {
+    const name    = document.getElementById('pName').value.trim();
+    const email   = document.getElementById('pEmail').value.trim();
+    const subject = document.getElementById('pSubject').value.trim();
+    const msg     = document.getElementById('pMessage').value.trim();
+    if(!name || !msg){ alert('Please fill in your name and prayer request.'); return; }
 
-<!-- Prayer Form -->
-<form id="prayerForm" class="form-section">
-  <input id="pName" placeholder="Your Name" required>
-  <input id="pEmail" placeholder="Your Email">
-  <input id="pSubject" placeholder="Subject">
-  <textarea id="pMessage" placeholder="Prayer Request" required></textarea>
-  <button id="prayerSubmit" type="button">Send Prayer Request</button>
-</form>
+    // Build the WhatsApp message
+    const waText = `🙏 *Prayer Request — United in Christ*\n\n` +
+      `*Name:* ${name}\n` +
+      (email   ? `*Email:* ${email}\n` : '') +
+      (subject ? `*Subject:* ${subject}\n` : '') +
+      `\n*Prayer Request:*\n${msg}`;
 
-<!-- Mentorship Form -->
-<form id="mentorForm" class="form-section" style="display:none;">
-  <input id="mName" placeholder="Your Name" required>
-  <input id="mEmail" placeholder="Your Email">
-  <textarea id="mReason" placeholder="Why do you want mentorship?" required></textarea>
-  <button id="mentorSubmit" type="button">Apply for Mentorship</button>
-</form>
+    // Open WhatsApp with pre-filled message
+    window.open(`https://wa.me/${PRAYER_WA}?text=${encodeURIComponent(waText)}`, '_blank');
 
-<!-- Confirmation Banner -->
-<div id="formConfirm"></div>
-
-<style>
-#formChoice { margin-bottom: 20px; }
-#formChoice button { margin-right: 10px; padding: 8px 14px; cursor:pointer; }
-
-.form-section { margin-top: 10px; }
-.form-section input, .form-section textarea { display:block; width:100%; margin:8px 0; padding:8px; }
-
-#formConfirm {
-  position: fixed;
-  top: -60px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #2d9e6a;
-  color: #fff;
-  padding: 12px 20px;
-  border-radius: 6px;
-  font-size: 14px;
-  transition: top 0.5s ease;
-  z-index: 999;
-}
-#formConfirm.show { top: 20px; }
-</style>
-
-<script>
-const PRAYER_WA = '27649842408'; // prayer number
-const MENTOR_WA = '27785260363'; // mentorship number
-const confirmBanner = document.getElementById('formConfirm');
-
-// Toggle forms
-document.getElementById('choosePrayer').onclick = () => {
-  document.getElementById('prayerForm').style.display='block';
-  document.getElementById('mentorForm').style.display='none';
-};
-document.getElementById('chooseMentorship').onclick = () => {
-  document.getElementById('mentorForm').style.display='block';
-  document.getElementById('prayerForm').style.display='none';
-};
-
-// Prayer form submit
-document.getElementById('prayerSubmit').onclick = () => {
-  const name    = document.getElementById('pName').value.trim();
-  const email   = document.getElementById('pEmail').value.trim();
-  const subject = document.getElementById('pSubject').value.trim();
-  const msg     = document.getElementById('pMessage').value.trim();
-  if(!name || !msg){ alert('Please fill in your name and prayer request.'); return; }
-
-  const waText = `🙏 *Prayer Request — United in Christ*\n\n*Name:* ${name}\n` +
-    (email   ? `*Email:* ${email}\n` : '') +
-    (subject ? `*Subject:* ${subject}\n` : '') +
-    `\n*Prayer Request:*\n${msg}`;
-
-  window.open(`https://wa.me/${PRAYER_WA}?text=${encodeURIComponent(waText)}`, '_blank');
-  showBanner("Your prayer request has been prepared in WhatsApp…");
-  document.getElementById('prayerForm').reset();
-};
-
-// Mentorship form submit
-document.getElementById('mentorSubmit').onclick = () => {
-  const name  = document.getElementById('mName').value.trim();
-  const email = document.getElementById('mEmail').value.trim();
-  const reason= document.getElementById('mReason').value.trim();
-  if(!name || !reason){ alert('Please fill in your name and reason.'); return; }
-
-  const waText = `👥 *Mentorship Application — United in Christ*\n\n*Name:* ${name}\n` +
-    (email ? `*Email:* ${email}\n` : '') +
-    `\n*Reason for joining:*\n${reason}\n\n` +
-    `Greetings everyone,\n\nGood news. Good news. Good news.\n\nThis Saturday marks the final session of our Word of Life teachings.\n\nFrom here, I will be transitioning into one-on-one private mentorship and discipleship programs, focusing on individual growth and spiritual maturity. These sessions will be centered on helping believers deepen their faith, strengthen their walk with God, and build solid foundations in Christ.\n\nPlease note: this mentorship will not include teachings on the prophetic. The focus will be on personal discipleship and spiritual development.\n\nIf you are interested in being part of this journey, you may contact: 0785260363.\nIt's for free.\n\nN.B. Only save the number if you're interested in the mentorship.\nThank you.`;
-
-  window.open(`https://wa.me/${MENTOR_WA}?text=${encodeURIComponent(waText)}`, '_blank');
-  showBanner("Your mentorship application has been prepared in WhatsApp…");
-  document.getElementById('mentorForm').reset();
-};
-
-// Banner helper
-function showBanner(msg){
-  confirmBanner.textContent = msg;
-  confirmBanner.classList.add('show');
-  setTimeout(() => confirmBanner.classList.remove('show'), 3000);
+    // Visual feedback
+    prayerSubmit.textContent = '✓ Opening WhatsApp…';
+    prayerSubmit.style.background = 'linear-gradient(135deg,#2d9e6a,#1a7a50)';
+    prayerSubmit.disabled = true;
+    setTimeout(() => {
+      prayerSubmit.textContent = 'Send Prayer Request';
+      prayerSubmit.style.background = '';
+      prayerSubmit.disabled = false;
+      document.getElementById('pName').value='';
+      document.getElementById('pEmail').value='';
+      document.getElementById('pSubject').value='';
+      document.getElementById('pMessage').value='';
+    }, 3500);
+  });
 }
 </script>
-
 
 </body>
 </html>
