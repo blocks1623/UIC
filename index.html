@@ -204,7 +204,7 @@
   #connect{padding:96px 60px;background:var(--deep);border-top:1px solid var(--sec-border)}
   .social-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:17px;max-width:880px;margin:0 auto}
   .soc-card{background:var(--surface);border:1px solid rgba(74,172,220,.12);padding:30px 18px;text-align:center;transition:transform .3s ease,border-color .3s,box-shadow .3s;position:relative;overflow:hidden;text-decoration:none;display:block;cursor:pointer}
-  .soc-card::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 100%,rgba(74,172,220,.08),transparent 60%);opacity:0;transition:opacity .35s}
+  .soc-card::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 100%,rgba(74,172,220,.08),transparent 60%);opacity:0;transition:opacity .35s;pointer-events:none}
   .soc-card:hover{transform:translateY(-7px);border-color:var(--gold);box-shadow:0 18px 44px rgba(0,0,0,.4)}
   .soc-card:hover::after{opacity:1}
   .soc-logo{width:44px;height:44px;margin:0 auto 14px;display:flex;align-items:center;justify-content:center}
@@ -267,10 +267,17 @@
   <div class="pdf-modal-inner">
     <div class="pdf-modal-header">
       <div class="pdf-modal-title" id="pdfModalTitle">Teaching Note</div>
-      <button class="pdf-modal-close" id="pdfModalClose">✕</button>
+      <div style="display:flex;align-items:center;gap:10px">
+        <button id="pdfModalOpenTab" style="font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;background:rgba(74,172,220,.15);color:var(--gold-light);border:1px solid rgba(74,172,220,.3);padding:7px 13px;cursor:pointer;transition:background .2s" title="Open in new tab">⬡ New Tab</button>
+        <button class="pdf-modal-close" id="pdfModalClose">✕</button>
+      </div>
     </div>
-    <div class="pdf-modal-body" id="pdfModalBody">
-      <iframe id="pdfModalIframe" src="" title="PDF Viewer"></iframe>
+    <div class="pdf-modal-body" id="pdfModalBody" style="position:relative">
+      <div id="pdfLoadingMsg" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:var(--text-muted);font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;z-index:1;pointer-events:none">
+        <div style="font-size:2rem">📄</div>
+        Loading document…
+      </div>
+      <iframe id="pdfModalIframe" src="" title="PDF Viewer" style="position:relative;z-index:2;width:100%;height:100%;min-height:500px;border:none" onload="document.getElementById('pdfLoadingMsg').style.display='none'"></iframe>
     </div>
     <div class="pdf-modal-footer">
       <button class="doc-btn download-btn" id="pdfModalDownload" style="font-size:.65rem;padding:9px 16px">⬇ Download PDF</button>
@@ -637,15 +644,27 @@ let currentFile = '';
 function openPDFModal(file, name) {
   currentFile = file;
   pdfTitle.textContent = name;
-  // Try to embed via object; fallback message inside
-  const src = `Notes/${file}`;
+
+  // Use Google Docs viewer so PDFs display reliably across all browsers/devices
+  // When hosted online the direct path works; Google Docs viewer is the universal fallback
+  const directSrc = `Notes/${encodeURIComponent(file)}`;
+  const googleSrc = `https://docs.google.com/viewer?url=${encodeURIComponent(window.location.href.replace(/[^/]*$/, '') + 'Notes/' + file)}&embedded=true`;
+
+  // Try direct embed first; if origin is file:// use Google viewer
+  const src = window.location.protocol === 'file:' ? googleSrc : directSrc;
   pdfIframe.src = src;
+
   pdfModal.classList.add('open');
   document.body.style.overflow = 'hidden';
 
   pdfDl.onclick = () => downloadPDF(file);
   pdfWa.onclick = () => shareWhatsApp(file, name);
 }
+
+// "Open in New Tab" button inside modal header
+document.getElementById('pdfModalOpenTab').addEventListener('click', () => {
+  window.open(`Notes/${currentFile}`, '_blank');
+});
 
 pdfClose.addEventListener('click', closePDFModal);
 pdfModal.addEventListener('click', e => { if(e.target === pdfModal) closePDFModal(); });
