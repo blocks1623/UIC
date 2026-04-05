@@ -364,17 +364,17 @@
     </div>
   </div>
 </section>
-
 /* ────────────────────────────────────────
-   DOCUMENTS — Dynamic from files/ folder + View + Download + WhatsApp
+   DOCUMENTS — Dynamic from your folder
 ──────────────────────────────────────── */
 const dGrid = document.getElementById('docsGrid');
 
+// Real files from your screenshot/folder
 const documents = [
-  { name: "DOMINION & ROYALTY IN CH...", filename: "DOMINION & ROYALTY IN CH....pdf" },
+  { name: "DOMINION & ROYALTY IN CH...", filename: "DOMINION & ROYALTY IN CH...pdf" },
   { name: "Gifts Impress But Fruit Proves....", filename: "Gifts Impress But Fruit Proves....pdf" },
-  { name: "KINGDOM SERVICE (MINISTR...", filename: "KINGDOM SERVICE (MINISTR....pdf" },
-  { name: "KINGDOM SERVICE (MINISTR...", filename: "KINGDOM SERVICE (MINISTR....pdf" },
+  { name: "KINGDOM SERVICE (MINISTR...", filename: "KINGDOM SERVICE (MINISTR...pdf" },
+  { name: "KINGDOM SERVICE (MINISTR...", filename: "KINGDOM SERVICE (MINISTR...pdf" }, // second one if different
   { name: "New Creation Reality", filename: "New Creation Reality.pdf" },
   { name: "Righteousness", filename: "Righteousness.pdf" },
   { name: "Stillness", filename: "Stillness.pdf" },
@@ -384,45 +384,48 @@ const documents = [
   { name: "TheChristianwalk(UIC)", filename: "TheChristianwalk(UIC).pdf" }
 ];
 
-dGrid.innerHTML = '';
+dGrid.innerHTML = ''; // Clear placeholder
 
 documents.forEach((doc, i) => {
   const card = document.createElement('div');
   card.className = 'doc-card';
 
-  const displayName = doc.name.replace(/\.{3,}$/, '...');
+  // Clean up display name (remove trailing ...)
+  let displayName = doc.name.replace(/\.{3,}$/, '...');
 
   card.innerHTML = `
-    <div style="font-size:2.2rem; transition:transform .3s">📄</div>
-    
-    <div style="font-family:'Cinzel',serif; font-size:.62rem; letter-spacing:.2em; color:var(--text-muted); margin-top:10px;">
+    <div style="font-size:2.1rem; transition:transform .3s">📄</div>
+    <div style="font-family:'Cinzel',serif; font-size:.62rem; letter-spacing:.2em; color:var(--text-muted); margin-top:8px;">
       Teaching Note ${String(i+1).padStart(2,'0')}
     </div>
-    
-    <div style="font-family:'Playfair Display',serif; font-weight:700; color:var(--white); margin:12px 0 16px; line-height:1.35;">
+    <div style="font-family:'Playfair Display',serif; font-weight:700; color:var(--white); margin:10px 0 12px; line-height:1.3;">
       ${displayName}
     </div>
     
-    <div style="display:flex; gap:8px; margin-top:auto;">
-      <button onclick="viewPDF('${doc.filename}')" class="doc-btn view-btn">👁️ View</button>
-      <button onclick="downloadPDF('${doc.filename}')" class="doc-btn download-btn">⬇️ Download</button>
-      <button onclick="shareToWhatsApp('${doc.filename}', '${displayName.replace(/'/g, "\\'")}')" class="doc-btn whatsapp-btn">💬 WhatsApp</button>
+    <div style="display:flex; gap:10px; margin-top:auto;">
+      <button onclick="viewPDF('${doc.filename}')" 
+              style="flex:1; font-family:'Cinzel',serif; font-size:.62rem; letter-spacing:.15em; padding:10px 12px; background:transparent; border:1px solid var(--gold); color:var(--gold); cursor:pointer; transition:all .3s;">
+        👁️ View
+      </button>
+      <button onclick="downloadPDF('${doc.filename}')" 
+              style="flex:1; font-family:'Cinzel',serif; font-size:.62rem; letter-spacing:.15em; padding:10px 12px; background:var(--gold); color:#020C14; border:none; cursor:pointer; transition:all .3s;">
+        ⬇️ Download
+      </button>
     </div>
   `;
 
-  // Icon hover effect
+  // Hover effect for icon
   card.addEventListener('mouseenter', () => {
-    card.querySelector('div:first-child').style.transform = 'scale(1.22) rotate(-10deg)';
+    card.querySelector('div').style.transform = 'scale(1.18) rotate(-8deg)';
   });
   card.addEventListener('mouseleave', () => {
-    card.querySelector('div:first-child').style.transform = 'scale(1) rotate(0deg)';
+    card.querySelector('div').style.transform = 'scale(1) rotate(0deg)';
   });
 
   dGrid.appendChild(card);
 });
 
-// ====================== FUNCTIONS ======================
-
+// Global functions for View & Download
 window.viewPDF = function(filename) {
   window.open(`files/${filename}`, '_blank');
 };
@@ -430,20 +433,10 @@ window.viewPDF = function(filename) {
 window.downloadPDF = function(filename) {
   const link = document.createElement('a');
   link.href = `files/${filename}`;
-  link.download = filename;           // forces download with original name
+  link.download = filename;
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
-};
-
-window.shareToWhatsApp = function(filename, title) {
-  const fileUrl = `${window.location.origin}/files/${encodeURIComponent(filename)}`;
-  
-  const message = `🔥 *Teaching Note from Prophet Jay Uriel*\n\n📖 *${title}*\n\n📥 View / Download here:\n${fileUrl}\n\nUnited in Christ Ministry\nBlessings! 🙏`;
-
-  // This works on both mobile WhatsApp and WhatsApp Web
-  const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
-  window.open(whatsappUrl, '_blank');
 };
 
 <!-- PRAYER -->
