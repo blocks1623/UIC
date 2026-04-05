@@ -751,50 +751,17 @@ window.addEventListener('scroll',()=>{
 });
 /* ── DOCUMENTS / NOTES ── */
 const documents = [
-  { 
-    name: "Dominion & Royalty in Christ", 
-    viewUrl: "https://drive.google.com/file/d/1RehRpaL6Yv2MmSr4zfxo9QCC3tKmDq3c/view?usp=drivesdk"
-  },
-  { 
-    name: "Gifts Impress But Fruit Proves", 
-    viewUrl: "https://drive.google.com/file/d/19E-XcK4mRD-KgfpbTlQDCLvOqpr5wJiX/view?usp=drivesdk"
-  },
-  { 
-    name: "Kingdom Service (Ministry) Pt 1", 
-    viewUrl: "https://drive.google.com/file/d/13zRAHkv8aygwHnUCIdzrbpxShhtDN4PA/view?usp=drivesdk"
-  },
-  { 
-    name: "Kingdom Service (Ministry) Pt 2", 
-    viewUrl: "https://drive.google.com/file/d/1kuhbzAuftVih5WszZb5Tv3rH0Rvniiwq/view?usp=drivesdk"
-  },
-  { 
-    name: "New Creation Reality", 
-    viewUrl: "https://drive.google.com/file/d/1y2sif6rLXgrQzuGA4d4AYaPCgoegtVe_/view?usp=drivesdk"
-  },
-  { 
-    name: "Righteousness", 
-    viewUrl: "https://drive.google.com/file/d/1M3QorBT5ijy_nFHZcmuDn8qu-52m4Hnn/view?usp=drivesdk"
-  },
-  { 
-    name: "Stillness", 
-    viewUrl: "https://drive.google.com/file/d/11h_pPNgf9bJNQLdBnYozE11FcEUfTP9D/view?usp=drivesdk"
-  },
-  { 
-    name: "The Mystery of Creative Power", 
-    viewUrl: "https://drive.google.com/file/d/1rVCx1v2Wv9bAHen_WQoINkCU5lAxBT4I/view?usp=drivesdk"
-  },
-  { 
-    name: "The Godly Anointing", 
-    viewUrl: "https://drive.google.com/file/d/11RVAKxQ91d7PpkoIRcNL-wCCkD8O6yH8/view?usp=drivesdk"
-  },
-  { 
-    name: "The Revelation of the Inner Kingdom", 
-    viewUrl: "https://drive.google.com/file/d/1UjNiIJLxQs1NWeq1CPewLfphEqVTUuaA/view?usp=drivesdk"
-  },
-  { 
-    name: "The Christian Walk (UIC)", 
-    viewUrl: "https://drive.google.com/file/d/1IXS0XzpkYtvjGRMA4cGj_lpRBWtj1ePl/view?usp=drivesdk"
-  }
+  { name: "Dominion & Royalty in Christ", viewUrl: "https://drive.google.com/file/d/1RehRpaL6Yv2MmSr4zfxo9QCC3tKmDq3c/view?usp=drivesdk" },
+  { name: "Gifts Impress But Fruit Proves", viewUrl: "https://drive.google.com/file/d/19E-XcK4mRD-KgfpbTlQDCLvOqpr5wJiX/view?usp=drivesdk" },
+  { name: "Kingdom Service (Ministry) Pt 1", viewUrl: "https://drive.google.com/file/d/13zRAHkv8aygwHnUCIdzrbpxShhtDN4PA/view?usp=drivesdk" },
+  { name: "Kingdom Service (Ministry) Pt 2", viewUrl: "https://drive.google.com/file/d/1kuhbzAuftVih5WszZb5Tv3rH0Rvniiwq/view?usp=drivesdk" },
+  { name: "New Creation Reality", viewUrl: "https://drive.google.com/file/d/1y2sif6rLXgrQzuGA4d4AYaPCgoegtVe_/view?usp=drivesdk" },
+  { name: "Righteousness", viewUrl: "https://drive.google.com/file/d/1M3QorBT5ijy_nFHZcmuDn8qu-52m4Hnn/view?usp=drivesdk" },
+  { name: "Stillness", viewUrl: "https://drive.google.com/file/d/11h_pPNgf9bJNQLdBnYozE11FcEUfTP9D/view?usp=drivesdk" },
+  { name: "The Mystery of Creative Power", viewUrl: "https://drive.google.com/file/d/1rVCx1v2Wv9bAHen_WQoINkCU5lAxBT4I/view?usp=drivesdk" },
+  { name: "The Godly Anointing", viewUrl: "https://drive.google.com/file/d/11RVAKxQ91d7PpkoIRcNL-wCCkD8O6yH8/view?usp=drivesdk" },
+  { name: "The Revelation of the Inner Kingdom", viewUrl: "https://drive.google.com/file/d/1UjNiIJLxQs1NWeq1CPewLfphEqVTUuaA/view?usp=drivesdk" },
+  { name: "The Christian Walk (UIC)", viewUrl: "https://drive.google.com/file/d/1IXS0XzpkYtvjGRMA4cGj_lpRBWtj1ePl/view?usp=drivesdk" }
 ];
 
 const dGrid = document.getElementById('docsGrid');
@@ -817,7 +784,7 @@ documents.forEach((doc, i) => {
     window.open(doc.viewUrl, '_blank');
   });
 
-  // WhatsApp button → share link
+  // Share button → WhatsApp
   card.querySelector('.whatsapp-btn').addEventListener('click', () => {
     const text = `🔥 Teaching Note from Prophet Jay Uriel\n\n📖 ${doc.name}\n\n📥 View Online: ${doc.viewUrl}`;
     window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
