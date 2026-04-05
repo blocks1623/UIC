@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>United in Christ | Prophet Jay Uriel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Cormorant+Garamond:wght@300;400;600&family=Cinzel:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #4AACDC; --gold-light: #7ECFEF; --gold-dark: #1A6E9A;
+    --deep: #020C14; --dark: #05121E; --mid: #0A1E30;
+    --surface: #0D2337; --surface2: #122B42;
+    --white: #EEF6FB; --white2: #D8EDF7; --text-muted: #7AAEC8;
+    --nav-bg: rgba(2,12,20,0.97); --sec-border: rgba(74,172,220,0.08);
+  }
+  [data-theme="light"] {
+    --deep: #EAF4FB; --dark: #D8ECF7; --mid: #C4E2F2;
+    --surface: #FFFFFF; --surface2: #EAF4FB;
+    --white: #072236; --white2: #0E3350; --text-muted: #2A6E99;
+    --nav-bg: rgba(234,244,251,0.97); --sec-border: rgba(26,110,154,0.15);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--deep);color:var(--white);font-family:'Lato',sans-serif;overflow-x:hidden;transition:background .4s,color .4s}
+  #particles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.3}
+
+  /* THEME TOGGLE */
+  .theme-toggle{position:fixed;bottom:28px;right:28px;z-index:9999;background:linear-gradient(135deg,#0A1E30,#122B42);border:1.5px solid rgba(74,172,220,0.55);color:#7ECFEF;width:50px;height:50px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.25rem;box-shadow:0 4px 24px rgba(10,60,100,.55);transition:all .3s}
+  .theme-toggle:hover{transform:scale(1.1);box-shadow:0 8px 32px rgba(74,172,220,.35)}
+  [data-theme="light"] .theme-toggle{background:linear-gradient(135deg,#0E3350,#1A5278);border-color:rgba(74,172,220,0.6);color:#7ECFEF}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:13px 56px;background:var(--nav-bg);border-bottom:1px solid rgba(74,172,220,.15);transition:all .3s}
+  .nav-logo{display:flex;align-items:center;gap:13px;text-decoration:none}
+  .nav-logo-img{width:48px;height:48px;border-radius:50%;border:2px solid var(--gold);overflow:hidden;flex-shrink:0}
+  .nav-logo-img img{width:100%;height:100%;object-fit:cover}
+  .nav-logo-text{font-family:'Cinzel',serif;font-size:.9rem;color:var(--gold);letter-spacing:.1em;line-height:1.3}
+  .nav-logo-sub{font-size:.58rem;color:var(--text-muted);letter-spacing:.2em;text-transform:uppercase}
+  .nav-links{display:flex;gap:28px;list-style:none}
+  .nav-links a{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.18em;color:var(--white2);text-decoration:none;text-transform:uppercase;transition:color .3s;position:relative}
+  .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--gold);transform:scaleX(0);transition:transform .3s}
+  .nav-links a:hover{color:var(--gold)}
+  .nav-links a:hover::after{transform:scaleX(1)}
+
+  /* HERO */
+  .hero{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 40px 80px;overflow:hidden;z-index:1}
+  .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 30%,rgba(74,172,220,.11) 0%,transparent 70%),linear-gradient(160deg,var(--deep) 0%,var(--dark) 50%,var(--deep) 100%)}
+  .hero-ornament{font-size:.7rem;letter-spacing:.5em;color:var(--gold);text-transform:uppercase;font-family:'Cinzel',serif;margin-bottom:16px;animation:fadeInDown 1s ease both;position:relative}
+  .hero-ornament::before,.hero-ornament::after{content:'✦';margin:0 13px;opacity:.7}
+  .hero-title{font-family:'Cinzel',serif;font-size:clamp(2.3rem,6vw,4.8rem);font-weight:700;color:var(--white);margin-bottom:6px;animation:fadeInDown 1s .15s ease both;position:relative;text-shadow:0 0 80px rgba(74,172,220,.25)}
+  .hero-title span{color:var(--gold)}
+  .hero-div{display:flex;align-items:center;gap:18px;margin:18px auto;width:280px;animation:fadeIn 1s .3s ease both;position:relative}
+  .hero-div::before,.hero-div::after{content:'';flex:1;height:1px;background:linear-gradient(to right,transparent,var(--gold))}
+  .hero-div::after{background:linear-gradient(to left,transparent,var(--gold))}
+
+  /* LOGO HERO */
+  .hero-logo-wrap{position:relative;width:220px;height:220px;margin:8px auto 26px;animation:fadeIn 1s .4s ease both}
+  .hero-logo-circle{width:198px;height:198px;border-radius:50%;border:2px solid var(--gold);margin:11px auto 0;display:flex;align-items:center;justify-content:center;background:rgba(2,12,20,.6);box-shadow:0 0 60px rgba(74,172,220,.22),inset 0 0 30px rgba(74,172,220,.05);overflow:hidden;position:relative;z-index:2}
+  .hero-logo-circle img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+  .h-ring{position:absolute;border-radius:50%;border:1px solid rgba(74,172,220,.22);top:50%;left:50%;transform:translate(-50%,-50%)}
+  .h-ring-1{width:213px;height:213px;animation:rotateSlow 18s linear infinite}
+  .h-ring-2{width:224px;height:224px;border-color:rgba(74,172,220,.09);animation:rotateSlow 28s linear infinite reverse}
+
+  .hero-tagline{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,2vw,1.35rem);font-style:italic;color:var(--white2);max-width:500px;margin:0 auto 34px;line-height:1.7;animation:fadeInUp 1s .5s ease both;position:relative;opacity:.9}
+  .hero-cta{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;animation:fadeInUp 1s .65s ease both;position:relative}
+  .btn-gold{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:#020C14;background:linear-gradient(135deg,var(--gold-light),var(--gold));border:none;padding:15px 34px;cursor:pointer;text-decoration:none;display:inline-block;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:all .3s;box-shadow:0 4px 24px rgba(74,172,220,.3)}
+  .btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 36px rgba(74,172,220,.5)}
+  .btn-outline{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);background:transparent;border:1px solid var(--gold);padding:14px 34px;cursor:pointer;text-decoration:none;display:inline-block;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:all .3s}
+  .btn-outline:hover{background:rgba(74,172,220,.12);transform:translateY(-2px)}
+
+  /* ANNOUNCEMENT */
+  .announcement{position:relative;z-index:1;background:linear-gradient(135deg,var(--gold-dark),var(--gold),var(--gold-dark));overflow:hidden}
+  .announcement-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:auto 1fr;align-items:stretch}
+  .ann-badge{background:rgba(0,0,0,.2);padding:30px 34px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-width:130px}
+  .ann-badge .b-icon{font-size:2rem}
+  .ann-badge .b-lbl{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.25em;color:rgba(2,12,20,.85);text-transform:uppercase}
+  .ann-body{padding:30px 38px}
+  .ann-title{font-family:'Cinzel',serif;font-size:.95rem;font-weight:700;color:#020C14;letter-spacing:.07em;margin-bottom:10px}
+  .ann-text{font-size:.9rem;color:rgba(2,12,20,.83);line-height:1.76}
+  .ann-text strong{color:#020C14;font-weight:700}
+  .ann-num{font-family:'Cinzel',serif;font-size:1rem;font-weight:700;color:#020C14;text-decoration:underline}
+
+  /* SHARED */
+  section{position:relative;z-index:1}
+  .sec-lbl{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.4em;color:var(--gold);text-transform:uppercase;margin-bottom:11px;opacity:.85}
+  .sec-lbl::before{content:'— '}
+  .sec-lbl::after{content:' —'}
+  .sec-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.9rem);font-weight:900;color:var(--white);line-height:1.15;margin-bottom:16px}
+  .sec-title span{color:var(--gold)}
+  .sec-sub{font-family:'Cormorant Garamond',serif;font-size:1.08rem;color:var(--text-muted);font-style:italic;line-height:1.7;max-width:580px}
+  .gold-line{width:55px;height:2px;background:linear-gradient(to right,var(--gold),transparent);margin:20px 0}
+  .sec-center{text-align:center;max-width:700px;margin:0 auto 60px}
+  .sec-center .gold-line{margin:20px auto}
+  .sec-center .sec-sub{margin:0 auto}
+
+  /* ABOUT */
+  #about{padding:108px 60px;background:linear-gradient(160deg,var(--deep) 0%,var(--dark) 100%);border-top:1px solid var(--sec-border)}
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:76px;max-width:1200px;margin:0 auto;align-items:center}
+  .about-frame{position:relative;max-width:410px}
+  .about-frame::before{content:'';position:absolute;top:-15px;left:-15px;right:15px;bottom:15px;border:1px solid rgba(74,172,220,.3);z-index:0}
+  .about-img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;position:relative;z-index:1;background:var(--surface)}
+  .about-ph{width:100%;aspect-ratio:3/4;background:linear-gradient(160deg,var(--surface),var(--surface2));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;z-index:1;position:relative;border:1px solid rgba(74,172,220,.1)}
+  .about-ph .ic{font-size:3.5rem;opacity:.22}
+  .about-ph p{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.16em;color:var(--gold);opacity:.7;text-align:center;padding:0 18px}
+  .badge-abs{position:absolute;bottom:28px;right:-18px;background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:#020C14;padding:16px 20px;z-index:2;text-align:center;box-shadow:0 10px 36px rgba(0,0,0,.5)}
+  .badge-n{font-family:'Cinzel',serif;font-size:1.7rem;font-weight:700;line-height:1;display:block}
+  .badge-t{font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;display:block;margin-top:4px}
+  .about-verse{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-style:italic;color:var(--gold-light);line-height:1.6;border-left:2px solid var(--gold);padding-left:20px;margin:26px 0}
+  .about-verse cite{display:block;font-size:.8rem;color:var(--text-muted);margin-top:7px;font-style:normal;font-family:'Cinzel',serif;letter-spacing:.1em}
+  .about-text{font-size:.95rem;line-height:1.85;color:rgba(238,246,251,.7);margin-bottom:13px}
+  [data-theme="light"] .about-text{color:rgba(7,34,54,.7)}
+  .roles{display:flex;gap:11px;flex-wrap:wrap;margin-top:26px}
+  .role{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.16em;color:var(--gold);border:1px solid rgba(74,172,220,.35);padding:7px 15px;text-transform:uppercase;background:rgba(74,172,220,.07)}
+
+  /* SATURDAY */
+  #saturday{padding:96px 60px;background:var(--deep);border-top:1px solid var(--sec-border)}
+  .sat-grid{display:grid;grid-template-columns:1fr 1fr;gap:34px;max-width:1100px;margin:0 auto}
+  .sat-card{background:linear-gradient(160deg,var(--surface),var(--surface2));border:1px solid rgba(74,172,220,.18);padding:46px 40px;position:relative;overflow:hidden;transition:transform .3s,border-color .3s,box-shadow .3s}
+  .sat-card:hover{transform:translateY(-6px);border-color:rgba(74,172,220,.5);box-shadow:0 20px 58px rgba(0,0,0,.4)}
+  .sat-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:linear-gradient(to bottom,var(--gold),transparent)}
+  .sat-n{font-family:'Playfair Display',serif;font-size:5rem;font-weight:900;color:rgba(74,172,220,.07);line-height:1;position:absolute;top:14px;right:24px}
+  .sat-icon{font-size:2rem;margin-bottom:14px;display:block}
+  .sat-day{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.32em;color:var(--gold);text-transform:uppercase;margin-bottom:9px}
+  .sat-title{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--white);margin-bottom:12px;font-weight:700}
+  .sat-desc{font-size:.88rem;color:var(--text-muted);line-height:1.8;margin-bottom:20px}
+  .sat-time{display:flex;align-items:center;gap:9px;font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.12em;color:var(--gold)}
+  .sat-time::before{content:'◉';font-size:.48rem;animation:pulse 2s infinite}
+
+  /* SERMONS */
+  #sermons{padding:96px 60px;background:linear-gradient(160deg,var(--dark),var(--deep));border-top:1px solid var(--sec-border)}
+  .sermons-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:24px;max-width:1200px;margin:0 auto}
+  .sermon-card{background:var(--surface);border:1px solid rgba(74,172,220,.12);overflow:hidden;transition:transform .3s,border-color .3s,box-shadow .3s}
+  .sermon-card:hover{transform:translateY(-4px);border-color:rgba(74,172,220,.4);box-shadow:0 14px 46px rgba(0,0,0,.45)}
+
+  .serm-info{padding:17px 19px}
+  .yt-link{display:inline-block;margin-top:8px;font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.14em;color:var(--gold);text-decoration:none;opacity:.8;}
+  .yt-link:hover{opacity:1;text-decoration:underline;}
+  .serm-num{font-family:'Cinzel',serif;font-size:.57rem;letter-spacing:.28em;color:var(--gold);opacity:.7;margin-bottom:6px}
+  .serm-title{font-family:'Playfair Display',serif;font-size:.97rem;color:var(--white);font-weight:700;line-height:1.4;margin-bottom:9px}
+  .serm-meta{font-size:.74rem;color:var(--text-muted);display:flex;gap:12px}
+
+  /* DOCUMENTS */
+  #documents{padding:96px 60px;background:var(--deep);border-top:1px solid var(--sec-border)}
+  .docs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:20px;max-width:1200px;margin:0 auto}
+  .doc-card{background:linear-gradient(160deg,var(--surface),var(--surface2));border:1px solid rgba(74,172,220,.15);padding:28px 24px;display:flex;flex-direction:column;gap:10px;transition:transform .3s,border-color .3s,box-shadow .3s;cursor:pointer;position:relative;overflow:hidden;text-decoration:none}
+  .doc-card:hover{transform:translateY(-5px);border-color:rgba(74,172,220,.48);box-shadow:0 14px 46px rgba(0,0,0,.4)}
+  .doc-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:2px;background:linear-gradient(to right,var(--gold),transparent)}
+  .doc-icon{font-size:2rem}
+  .doc-num{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.24em;color:var(--gold);opacity:.75}
+  .doc-title{font-family:'Playfair Display',serif;font-size:.97rem;color:var(--white);font-weight:700;line-height:1.4}
+  .doc-sub{font-size:.78rem;color:var(--text-muted)}
+  .doc-action{margin-top:auto;font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.18em;color:var(--gold);text-transform:uppercase;display:flex;align-items:center;gap:7px}
+  .doc-action::after{content:'→'}
+
+  /* PRAYER */
+  #prayer{padding:96px 60px;background:linear-gradient(160deg,var(--dark),var(--deep));border-top:1px solid var(--sec-border)}
+  .prayer-wrap{max-width:680px;margin:0 auto}
+  .prayer-form{display:flex;flex-direction:column;gap:17px;margin-top:38px}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:17px}
+  .form-group{display:flex;flex-direction:column;gap:7px}
+  .form-label{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.22em;color:var(--gold);text-transform:uppercase}
+  .form-input,.form-textarea{background:var(--surface);border:1px solid rgba(74,172,220,.2);padding:13px 17px;color:var(--white);font-family:'Lato',sans-serif;font-size:.9rem;outline:none;transition:border-color .3s;width:100%}
+  .form-input:focus,.form-textarea:focus{border-color:var(--gold)}
+  .form-input::placeholder,.form-textarea::placeholder{color:var(--text-muted)}
+  .form-textarea{resize:vertical;min-height:130px}
+  .form-submit{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:#020C14;background:linear-gradient(135deg,var(--gold-light),var(--gold));border:none;padding:16px 38px;cursor:pointer;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:all .3s;box-shadow:0 4px 24px rgba(74,172,220,.3);align-self:flex-start}
+  .form-submit:hover{transform:translateY(-2px);box-shadow:0 8px 34px rgba(74,172,220,.5)}
+  .prayer-success{display:none;background:rgba(74,172,220,.1);border:1px solid rgba(74,172,220,.4);padding:18px 22px;margin-top:18px;font-family:'Cinzel',serif;font-size:.76rem;letter-spacing:.1em;color:#7ECFEF;text-align:center;line-height:1.6}
+
+  /* SOCIAL */
+  #connect{padding:96px 60px;background:var(--deep);border-top:1px solid var(--sec-border)}
+  .social-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:17px;max-width:880px;margin:0 auto}
+  .soc-card{background:var(--surface);border:1px solid rgba(74,172,220,.12);padding:30px 18px;text-align:center;text-decoration:none;display:block;transition:all .3s;position:relative;overflow:hidden}
+  .soc-card:hover{transform:translateY(-6px);border-color:rgba(74,172,220,.55);box-shadow:0 14px 46px rgba(0,0,0,.4)}
+  .soc-card:hover .soc-iw{transform:scale(1.14)}
+  .soc-iw{transition:transform .3s;margin-bottom:13px}
+  .soc-iw svg{width:34px;height:34px;display:block;margin:0 auto}
+  .soc-name{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.18em;color:var(--gold);text-transform:uppercase;margin-bottom:5px}
+  .soc-handle{font-size:.8rem;color:var(--text-muted)}
+
+  /* JOIN */
+  .join-sec{padding:86px 60px;background:var(--dark);border-top:1px solid var(--sec-border);text-align:center;position:relative;overflow:hidden;z-index:1}
+  .join-sec::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,rgba(74,172,220,.07),transparent);pointer-events:none}
+  .join-inner{max-width:560px;margin:0 auto;position:relative}
+  .join-form{display:flex;gap:0;margin:30px auto 0;max-width:440px}
+  .join-input{flex:1;background:var(--surface);border:1px solid rgba(74,172,220,.25);border-right:none;padding:14px 18px;color:var(--white);font-family:'Lato',sans-serif;font-size:.88rem;outline:none;transition:border-color .3s}
+  .join-input:focus{border-color:var(--gold)}
+  .join-input::placeholder{color:var(--text-muted)}
+  .join-btn{font-family:'Cinzel',serif;font-size:.66rem;letter-spacing:.17em;text-transform:uppercase;color:#020C14;background:linear-gradient(135deg,var(--gold-light),var(--gold));border:none;padding:14px 22px;cursor:pointer;white-space:nowrap;transition:all .3s}
+  .join-btn:hover{background:linear-gradient(135deg,var(--gold),var(--gold-light))}
+
+  /* FOOTER */
+  footer{background:#010810;border-top:1px solid rgba(74,172,220,.12);padding:54px 60px 34px;position:relative;z-index:1}
+  [data-theme="light"] footer{background:#05121E}
+  .foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:52px;max-width:1200px;margin:0 auto 40px}
+  .foot-logo{font-family:'Cinzel',serif;font-size:1.15rem;color:var(--gold);letter-spacing:.1em;margin-bottom:11px}
+  .foot-brand p{font-size:.83rem;color:rgba(122,174,200,.65);line-height:1.8;max-width:255px}
+  .foot-col h4{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.25em;color:var(--gold);text-transform:uppercase;margin-bottom:18px}
+  .foot-col ul{list-style:none}
+  .foot-col ul li{margin-bottom:10px}
+  .foot-col ul li a{font-size:.83rem;color:rgba(122,174,200,.65);text-decoration:none;transition:color .3s}
+  .foot-col ul li a:hover{color:var(--gold)}
+  .foot-bot{border-top:1px solid rgba(255,255,255,.05);padding-top:24px;display:flex;align-items:center;justify-content:space-between;max-width:1200px;margin:0 auto}
+  .foot-bot p{font-size:.74rem;color:rgba(122,174,200,.4);letter-spacing:.06em}
+  .foot-cross{font-family:'Cinzel',serif;font-size:.7rem;color:var(--gold);opacity:.5;letter-spacing:.18em}
+
+  /* MODAL */
+  .modal-ov{position:fixed;inset:0;background:rgba(0,0,0,.87);z-index:9000;display:none;align-items:center;justify-content:center;padding:20px}
+  .modal-ov.open{display:flex}
+  .modal-box{background:var(--surface);border:1px solid rgba(74,172,220,.3);max-width:720px;width:100%;max-height:90vh;overflow-y:auto;position:relative;padding:46px}
+  .modal-close{position:absolute;top:16px;right:20px;font-size:1.3rem;color:var(--gold);cursor:pointer;background:none;border:none;line-height:1}
+  .modal-title{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--white);margin:10px 0 16px;font-weight:700}
+  .modal-pdf{width:100%;height:480px;border:none;margin-top:12px;background:#111}
+  .modal-fallback{padding:30px;text-align:center;color:var(--text-muted);font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-style:italic;line-height:1.7}
+  .modal-fallback a{color:var(--gold);font-family:'Cinzel',serif;font-size:.75rem;letter-spacing:.15em;text-decoration:none;border:1px solid rgba(74,172,220,.4);padding:10px 22px;display:inline-block;margin-top:14px}
+
+  /* ANIMATIONS */
+  @keyframes fadeInDown{from{opacity:0;transform:translateY(-28px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes fadeInUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  @keyframes rotateSlow{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+  .reveal{opacity:0;transform:translateY(34px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+
+  @media(max-width:900px){
+    nav{padding:13px 18px}
+    .nav-links{display:none}
+    #about,#saturday,#sermons,#documents,#prayer,#connect,.join-sec,footer{padding:68px 18px}
+    .about-grid,.sat-grid{grid-template-columns:1fr;gap:40px}
+    .about-frame{max-width:310px;margin:0 auto}
+    .sermons-grid{grid-template-columns:1fr}
+    .docs-grid{grid-template-columns:1fr 1fr}
+    .form-row{grid-template-columns:1fr}
+    .foot-grid{grid-template-columns:1fr;gap:32px}
+    .foot-bot{flex-direction:column;gap:9px;text-align:center}
+    .announcement-inner{grid-template-columns:1fr}
+    .ann-badge{flex-direction:row;padding:20px;gap:10px}
+  }
+</style>
+</head>
+<body>
+
+<!-- SVG DEFS -->
+<svg width="0" height="0" style="position:absolute"><defs>
+  <linearGradient id="igG" x1="0%" y1="100%" x2="100%" y2="0%">
+    <stop offset="0%" stop-color="#f09433"/><stop offset="25%" stop-color="#e6683c"/>
+    <stop offset="50%" stop-color="#dc2743"/><stop offset="75%" stop-color="#cc2366"/>
+    <stop offset="100%" stop-color="#bc1888"/>
+  </linearGradient>
+</defs></svg>
+
+<canvas id="particles"></canvas>
+<button class="theme-toggle" id="themeToggle" title="Toggle light/dark">🌙</button>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-img"><img src="united-in-christ-logo.png" alt="United in Christ"></div>
+    <div>
+      <div class="nav-logo-text">United in Christ</div>
+      <div class="nav-logo-sub">Prophet Jay Uriel</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#saturday">Teachings</a></li>
+    <li><a href="#sermons">Sermons</a></li>
+    <li><a href="#documents">Notes</a></li>
+    <li><a href="#prayer">Prayer</a></li>
+    <li><a href="#connect">Connect</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-ornament">Ministry of the Word</div>
+  <h1 class="hero-title">United in <span>Christ</span></h1>
+  <div class="hero-div"><span style="color:var(--gold);font-size:1.05rem">✝</span></div>
+  <div class="hero-logo-wrap">
+    <div class="hero-logo-circle"><img src="united-in-christ-logo.png" alt="United in Christ Logo"></div>
+    <div class="h-ring h-ring-1"></div>
+    <div class="h-ring h-ring-2"></div>
+  </div>
+  <p class="hero-tagline">"Proclaiming the Word of God with power, truth, and the spirit of prophecy"</p>
+  <div class="hero-cta">
+    <a href="#sermons" class="btn-gold">Watch Sermons</a>
+    <a href="#prayer" class="btn-outline">Submit Prayer</a>
+  </div>
+</section>
+
+<!-- ANNOUNCEMENT -->
+<div class="announcement">
+  <div class="announcement-inner">
+    <div class="ann-badge">
+      <span class="b-icon">📣</span>
+      <span class="b-lbl">Good News</span>
+    </div>
+    <div class="ann-body">
+      <div class="ann-title">Important Announcement from Prophet Jay Uriel</div>
+      <div class="ann-text">
+        Greetings everyone — <strong>Good news. Good news. Good news.</strong><br>
+        This Saturday marks the <strong>final session</strong> of our Word of Life teachings. Prophet Jay Uriel will be transitioning into <strong>one-on-one private mentorship and discipleship programs</strong> — focusing on individual growth and spiritual maturity, helping believers deepen their faith, strengthen their walk with God, and build solid foundations in Christ.<br><br>
+        <em>Note: This mentorship will not include teachings on the prophetic. The focus will be on personal discipleship and spiritual development.</em><br>
+        If you are interested, contact: <a href="tel:0785260363" class="ann-num">0785260363</a> — <strong>It's free.</strong>
+        <small style="display:block;margin-top:6px;opacity:.7;font-size:.78rem">NB: Only save the number if you're interested in mentorship.</small>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="reveal">
+      <div class="about-frame">
+        <img class="about-img" src="jay-uriel.png" alt="Prophet Jay Uriel"
+          onerror="this.outerHTML='<div class=\'about-ph\'><span class=\'ic\'>🙏</span><p>Place<br>jay-uriel.png<br>in this folder</p></div>'">
+        <div class="badge-abs">
+          <span class="badge-n">✝</span>
+          <span class="badge-t">Prophet & Teacher</span>
+        </div>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="sec-lbl">Our Leader</div>
+      <h2 class="sec-title">Prophet <span>Jay Uriel</span></h2>
+      <div class="gold-line"></div>
+      <div class="about-verse">
+        "Before I formed you in the womb I knew you, before you were born I set you apart; I appointed you as a prophet to the nations."
+        <cite>— Jeremiah 1:5</cite>
+      </div>
+      <p class="about-text">Prophet Jay Uriel is a consecrated vessel called by God — a prophetic voice and teacher of the Word raised up for this generation. With a burning passion for truth and a heart surrendered to the Holy Spirit, he carries a mantle of revelation that transforms lives.</p>
+      <p class="about-text">Through the ministry of United in Christ, Prophet Jay Uriel brings the uncompromised Word of God to all nations — teaching, preaching, and releasing prophetic revelation that draws people into deeper encounters with the living God.</p>
+      <div class="roles">
+        <span class="role">Prophet</span>
+        <span class="role">Teacher of the Word</span>
+        <span class="role">Preacher</span>
+        <span class="role">Mentor & Discipler</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SATURDAY -->
+<section id="saturday">
+  <div class="sec-center reveal">
+    <div class="sec-lbl">Every Saturday</div>
+    <h2 class="sec-title">Saturday <span>Teachings</span></h2>
+    <div class="gold-line"></div>
+    <p class="sec-sub">Two anointed sessions every Saturday — morning and evening — filled with the Word of God, prophetic release, and transformation.</p>
+  </div>
+  <div class="sat-grid">
+    <div class="sat-card reveal">
+      <span class="sat-n">01</span>
+      <span class="sat-icon">🌅</span>
+      <div class="sat-day">Saturday · Session One</div>
+      <h3 class="sat-title">Morning Word & Prophecy</h3>
+      <p class="sat-desc">Begin your Saturday in the presence of God. Deep Word study, prophetic release, and morning prayer. Come with an open heart to receive what the Spirit is saying.</p>
+      <div class="sat-time">Live Every Saturday Morning</div>
+    </div>
+    <div class="sat-card reveal">
+      <span class="sat-n">02</span>
+      <span class="sat-icon">🌙</span>
+      <div class="sat-day">Saturday · Session Two</div>
+      <h3 class="sat-title">Evening Teaching & Encounter</h3>
+      <p class="sat-desc">In-depth Scripture teaching, testimonies, and corporate intercession. Where revelation meets activation — come ready to be transformed by the Word.</p>
+      <div class="sat-time">Live Every Saturday Evening</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERMONS -->
+<section id="sermons" style="padding:96px 60px;background:linear-gradient(160deg,var(--dark),var(--deep));border-top:1px solid var(--sec-border);position:relative;z-index:1;">
+  <div class="sec-center reveal">
+    <div class="sec-lbl">Anointed Messages</div>
+    <h2 class="sec-title">Sermons & <span>Preachings</span></h2>
+    <div class="gold-line"></div>
+    <p class="sec-sub">Watch and receive from the prophetic messages of Prophet Jay Uriel. Each sermon carries an impartation — press play and encounter God.</p>
+  </div>
+ <section id="videos" class="p-8 grid md:grid-cols-2 gap-6 bg-opacity-20 backdrop-blur-md bg-blue-100 dark:bg-blue-900 animate__animated animate__fadeIn">
+    <h2 class="text-2xl font-bold mb-4 col-span-full text-center">Sermons & Messages by Prophet Josias Uriel</h2>
+    <div class="relative aspect-video rounded-xl overflow-hidden shadow-lg hover:scale-105 transition-transform duration-300 bg-white dark:bg-gray-800">
+      <iframe src="https://www.youtube.com/embed/MnnpCZcyYiI" title="The Power of Faith in Christ" allow="encrypted-media" class="w-full h-full" loading="lazy"></iframe>
+      <a href="https://www.youtube.com/watch?v=MnnpCZcyYiI" target="_blank" rel="noopener noreferrer" class="block text-center text-blue-500 hover:underline mt-2" tabindex="0">Watch on YouTube</a>
+    </div>
+    <div class="relative aspect-video rounded-xl overflow-hidden shadow-lg hover:scale-105 transition-transform duration-300 bg-white dark:bg-gray-800">
+      <iframe src="https://www.youtube.com/embed/vwsWuBSVxbs" title="The Kingdom Mindset" allow="encrypted-media" class="w-full h-full" loading="lazy"></iframe>
+      <a href="https://www.youtube.com/watch?v=vwsWuBSVxbs" target="_blank" rel="noopener noreferrer" class="block text-center text-blue-500 hover:underline mt-2" tabindex="0">Watch on YouTube</a>
+    </div>
+    <div class="relative aspect-video rounded-xl overflow-hidden shadow-lg hover:scale-105 transition-transform duration-300 bg-white dark:bg-gray-800">
+      <iframe src="https://www.youtube.com/embed/kEj4c_ayeDY" title="How to Access the Kingdom" allow="encrypted-media" class="w-full h-full" loading="lazy"></iframe>
+      <a href="https://www.youtube.com/watch?v=kEj4c_ayeDY" target="_blank" rel="noopener noreferrer" class="block text-center text-blue-500 hover:underline mt-2" tabindex="0">Watch on YouTube</a>
+    </div>
+    <div class="relative aspect-video rounded-xl overflow-hidden shadow-lg hover:scale-105 transition-transform duration-300 bg-white dark:bg-gray-800">
+      <iframe src="https://www.youtube.com/embed/bcwtsyJVtwnYQhFH" title="Walking in God’s Grace" allow="encrypted-media" class="w-full h-full" loading="lazy"></iframe>
+      <a href="https://youtu.be/S-IFCaO4A4s?si=bcwtsyJVtwnYQhFH" target="_blank" rel="noopener noreferrer" class="block text-center text-blue-500 hover:underline mt-2" tabindex="0">Watch on YouTube</a>
+    </div>
+  </section>
+</section>
+
+<!-- DOCUMENTS -->
+<section id="documents">
+  <div class="sec-center reveal">
+    <div class="sec-lbl">Written Revelation</div>
+    <h2 class="sec-title">Teaching <span>Notes</span></h2>
+    <div class="gold-line"></div>
+    <p class="sec-sub">Study materials and prophetic notes from Prophet Jay Uriel — written revelations to deepen your walk with God. Click any note to read.</p>
+  </div>
+  <div class="docs-grid" id="docsGrid"></div>
+</section>
+
+<!-- PRAYER -->
+<section id="prayer">
+  <div class="prayer-wrap">
+    <div class="reveal">
+      <div class="sec-lbl">We Stand With You</div>
+      <h2 class="sec-title">Prayer <span>Requests</span></h2>
+      <div class="gold-line"></div>
+      <p class="sec-sub">Submit your prayer request and our prayer team will intercede on your behalf. You are not alone — we stand together in faith.</p>
+    </div>
+    <form class="prayer-form reveal" id="prayerForm" onsubmit="submitPrayer(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Your Name</label>
+          <input type="text" class="form-input" id="pName" placeholder="Enter your name" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone / WhatsApp (optional)</label>
+          <input type="text" class="form-input" id="pPhone" placeholder="Your contact number">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Your Prayer Request</label>
+        <textarea class="form-textarea" id="pRequest" placeholder="Share your prayer request here. Be as specific as you need — God hears every word." required></textarea>
+      </div>
+      <button type="submit" class="form-submit" id="pSubmitBtn">Send Prayer Request ✝</button>
+      <div class="prayer-success" id="prayerSuccess">
+        ✦ Your prayer request has been received and sent to our prayer team. We are standing with you in faith.<br>
+        <small style="opacity:.75;font-size:.8rem">— Sent from UnitedInChrist.com · WhatsApp will open to confirm delivery</small>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- SOCIAL -->
+<section id="connect">
+  <div class="sec-center reveal">
+    <div class="sec-lbl">Stay Connected</div>
+    <h2 class="sec-title">Follow the <span>Ministry</span></h2>
+    <div class="gold-line"></div>
+    <p class="sec-sub">Connect with United in Christ across all platforms. Daily Word, prophetic posts, and live service notifications.</p>
+  </div>
+  <div class="social-grid reveal">
+
+    <!-- YouTube -->
+    <a href="https://youtube.com/@JayUriel" target="_blank" rel="noopener" class="soc-card">
+      <div class="soc-iw">
+        <svg viewBox="0 0 34 34"><rect width="34" height="34" rx="7" fill="#FF0000"/>
+        <path d="M26 12.8a2.3 2.3 0 00-1.6-1.6C22.8 11 17 11 17 11s-5.8 0-7.4.2a2.3 2.3 0 00-1.6 1.6A24 24 0 008 17c0 1.5.2 3 .7 4.2a2.3 2.3 0 001.6 1.6C11.9 23 17 23 17 23s5.8 0 7.4-.2a2.3 2.3 0 001.6-1.6A24 24 0 0026 17c0-1.5-.2-3-.7-4.2zM15 20v-6l5 3-5 3z" fill="white"/></svg>
+      </div>
+      <div class="soc-name">YouTube</div>
+      <div class="soc-handle">@JayUriel</div>
+    </a>
+
+    <!-- Instagram -->
+    <a href="https://www.instagram.com/jayuriel28?igsh=bmkxMTJ6cmR2Zzdw" target="_blank" rel="noopener" class="soc-card">
+      <div class="soc-iw">
+        <svg viewBox="0 0 34 34"><defs><linearGradient id="ig2" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#f09433"/><stop offset="50%" stop-color="#dc2743"/><stop offset="100%" stop-color="#bc1888"/></linearGradient></defs>
+        <rect width="34" height="34" rx="7" fill="url(#ig2)"/>
+        <rect x="8" y="8" width="18" height="18" rx="5" stroke="white" stroke-width="1.8" fill="none"/>
+        <circle cx="17" cy="17" r="5" stroke="white" stroke-width="1.8" fill="none"/>
+        <circle cx="23" cy="11" r="1.2" fill="white"/></svg>
+      </div>
+      <div class="soc-name">Instagram</div>
+      <div class="soc-handle">@jayuriel28</div>
+    </a>
+
+    <!-- Facebook -->
+    <a href="https://www.facebook.com/josiasuriel28" target="_blank" rel="noopener" class="soc-card">
+      <div class="soc-iw">
+        <svg viewBox="0 0 34 34"><rect width="34" height="34" rx="7" fill="#1877F2"/>
+        <path d="M21 11h-2.4A1.4 1.4 0 0017.2 12.4V15H21l-.5 3.8H17.2V28H13V18.8h-2.8V15H13v-2.6A5 5 0 0118 7H21v4z" fill="white"/></svg>
+      </div>
+      <div class="soc-name">Facebook</div>
+      <div class="soc-handle">josiasuriel28</div>
+    </a>
+
+    <!-- TikTok -->
+    <a href="http://tiktok.com/@jayuriel28?_t=8o1cEvqxSz7&_r=1" target="_blank" rel="noopener" class="soc-card">
+      <div class="soc-iw">
+        <svg viewBox="0 0 34 34"><rect width="34" height="34" rx="7" fill="#010101"/>
+        <path d="M22.5 9v10.5a6 6 0 01-6-6V9h-4v15.5a6 6 0 106 6V16.5a10 10 0 005 1.3V13a6 6 0 01-5-6V9h4z" fill="white" opacity=".9"/>
+        <text x="17" y="21" text-anchor="middle" fill="#00f2ea" font-size="7" font-family="Arial" font-weight="900" opacity=".8">TikTok</text></svg>
+      </div>
+      <div class="soc-name">TikTok</div>
+      <div class="soc-handle">@jayuriel28</div>
+    </a>
+
+    <!-- WhatsApp -->
+    <a href="https://wa.me/27649842408" target="_blank" rel="noopener" class="soc-card">
+      <div class="soc-iw">
+        <svg viewBox="0 0 34 34"><rect width="34" height="34" rx="7" fill="#25D366"/>
+        <path d="M17 6C11 6 6 11 6 17c0 1.9.5 3.7 1.4 5.3L6 28l5.8-1.5A11 11 0 0017 28c6 0 11-5 11-11S23 6 17 6zm5.7 15c-.3.7-1.4 1.4-1.9 1.4-.5.1-1 .1-1.5-.1s-1-.4-1.9-.8a11 11 0 01-4.2-4.7c-.3-.6-.4-1.1-.4-1.5 0-.4.1-.8.4-1l.5-.6c.2-.2.4-.2.5-.2h.4c.1 0 .4 0 .5.4l.7 1.9c.1.2.1.4-.1.6l-.4.5c-.1.2-.1.3 0 .4.4.7.9 1.3 1.4 1.8s1.2.8 1.9 1.1c.2.1.3.1.4-.1l.5-.7c.1-.2.3-.2.5-.2l1.9.9c.2.1.3.2.3.4v.4c0 .5-.2.9-.5 1.1z" fill="white"/></svg>
+      </div>
+      <div class="soc-name">WhatsApp</div>
+      <div class="soc-handle">064 984 2408</div>
+    </a>
+
+  </div>
+</section>
+
+<!-- JOIN -->
+<div class="join-sec reveal">
+  <div class="join-inner">
+    <div class="sec-lbl">Be Part of the Family</div>
+    <h2 class="sec-title">Join the <span>United in Christ</span> Family</h2>
+    <p style="color:var(--text-muted);font-size:.9rem;margin-top:13px;line-height:1.8">Receive prophetic updates, new sermon alerts, and ministry news straight to your inbox.</p>
+    <div class="join-form">
+      <input type="email" class="join-input" placeholder="Your email address">
+      <button class="join-btn" onclick="doSub(this)">Subscribe</button>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-grid">
+    <div class="foot-brand">
+      <div class="foot-logo">United in Christ</div>
+      <p>A ministry built on the prophetic Word of God — raising a generation that walks in truth, power, and the Spirit of the Living God.</p>
+    </div>
+    <div class="foot-col">
+      <h4>Navigate</h4>
+      <ul>
+        <li><a href="#about">About the Prophet</a></li>
+        <li><a href="#saturday">Saturday Teachings</a></li>
+        <li><a href="#sermons">Sermons</a></li>
+        <li><a href="#documents">Teaching Notes</a></li>
+        <li><a href="#prayer">Prayer Requests</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h4>Ministry</h4>
+      <ul>
+        <li><a href="https://wa.me/27649842408" target="_blank">Contact on WhatsApp</a></li>
+        <li><a href="https://www.facebook.com/josiasuriel28" target="_blank">Facebook</a></li>
+        <li><a href="https://www.instagram.com/jayuriel28" target="_blank">Instagram</a></li>
+        <li><a href="http://tiktok.com/@jayuriel28" target="_blank">TikTok</a></li>
+        <li><a href="#prayer">Submit a Prayer</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bot">
+    <p>© 2025 United in Christ Ministry · Prophet Jay Uriel. All Rights Reserved.</p>
+    <span class="foot-cross">✝ For His Glory</span>
+  </div>
+</footer>
+
+<!-- PDF MODAL -->
+<div class="modal-ov" id="pdfModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="sec-lbl">Teaching Notes</div>
+    <div class="modal-title" id="modalTitle"></div>
+    <iframe class="modal-pdf" id="modalPdf" src="" title="Teaching Notes" allowfullscreen></iframe>
+    <div class="modal-fallback" id="modalFallback" style="display:none">
+      <p>This document will display once you add the PDF file to the same folder as this website.</p>
+      <a href="#" id="modalDlLink" download>⬇ Download PDF</a>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── DOCUMENTS ──
+const docs = [
+  'The Prophetic Foundation',
+  'Walking in the Spirit',
+  'Authority of the Word',
+  'Kingdom Principles',
+  'The Fear of the Lord',
+  'Covenant & Promise',
+  'Spiritual Warfare',
+  'Prayer & Intercession',
+  'Healing & Deliverance',
+  'Discipleship Foundations',
+  'Living the Word Daily',
+];
+const dGrid = document.getElementById('docsGrid');
+docs.forEach((title,i) => {
+  const num = String(i+1).padStart(2,'0');
+  const file = `notes-${num}.pdf`;
+  const d = document.createElement('div');
+  d.className = 'doc-card reveal';
+  d.innerHTML = `
+    <div class="doc-icon">📄</div>
+    <div class="doc-num">Notes ${num}</div>
+    <div class="doc-title">${title}</div>
+    <div class="doc-sub">Prophet Jay Uriel · United in Christ</div>
+    <div class="doc-action">Open Document</div>`;
+  d.onclick = () => openDoc(`Teaching Notes ${num} — ${title}`, file);
+  dGrid.appendChild(d);
+});
+
+function openDoc(title, file) {
+  document.getElementById('modalTitle').textContent = title;
+  const iframe = document.getElementById('modalPdf');
+  const fallback = document.getElementById('modalFallback');
+  const dlLink = document.getElementById('modalDlLink');
+  iframe.src = file;
+  dlLink.href = file;
+  fallback.style.display = 'none';
+  iframe.style.display = 'block';
+  iframe.onerror = () => { iframe.style.display='none'; fallback.style.display='block'; };
+  document.getElementById('pdfModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('pdfModal').classList.remove('open');
+  document.getElementById('modalPdf').src = '';
+  document.body.style.overflow = '';
+}
+document.getElementById('pdfModal').addEventListener('click', e => { if(e.target===e.currentTarget) closeModal(); });
+
+// ── PRAYER ──
+function submitPrayer(e) {
+  e.preventDefault();
+  const name = document.getElementById('pName').value.trim();
+  const phone = document.getElementById('pPhone').value.trim();
+  const req = document.getElementById('pRequest').value.trim();
+  if (!name || !req) return;
+  const btn = document.getElementById('pSubmitBtn');
+  btn.textContent = 'Sending…'; btn.disabled = true;
+  const msg = `🙏 *PRAYER REQUEST*\n*United in Christ Ministry*\n\n*Name:* ${name}${phone?'\n*Contact:* '+phone:''}\n\n*Prayer:*\n${req}\n\n_— Sent from UnitedInChrist.com_`;
+  const enc = encodeURIComponent(msg);
+  const nums = ['27649842408','27679937070','27790116611','27785260363','27796280889'];
+  nums.forEach((n,i) => setTimeout(() => window.open(`https://wa.me/${n}?text=${enc}`,'_blank'), i*500));
+  document.getElementById('prayerSuccess').style.display = 'block';
+  document.getElementById('prayerForm').reset();
+  btn.textContent = 'Send Prayer Request ✝'; btn.disabled = false;
+}
+
+// ── REVEAL ──
+function reveal() {
+  document.querySelectorAll('.reveal:not(.visible)').forEach(el => {
+    const r = el.getBoundingClientRect();
+    if (r.top < window.innerHeight - 60) el.classList.add('visible');
+  });
+}
+window.addEventListener('scroll', reveal, {passive:true});
+setTimeout(reveal, 150);
+
+// ── DARK / LIGHT MODE ──
+const htmlEl = document.documentElement;
+const tBtn = document.getElementById('themeToggle');
+const saved = localStorage.getItem('uic-theme');
+if (saved) { htmlEl.setAttribute('data-theme', saved); tBtn.textContent = saved==='light'?'☀️':'🌙'; }
+tBtn.addEventListener('click', () => {
+  const isDark = htmlEl.getAttribute('data-theme')==='dark';
+  const next = isDark ? 'light' : 'dark';
+  htmlEl.setAttribute('data-theme', next);
+  tBtn.textContent = next==='light'?'☀️':'🌙';
+  localStorage.setItem('uic-theme', next);
+});
+
+// ── NAV SHADOW ──
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').style.boxShadow = scrollY>60?'0 4px 28px rgba(0,0,0,.4)':'';
+}, {passive:true});
+
+// ── SUBSCRIBE ──
+function doSub(btn) {
+  const inp = btn.previousElementSibling;
+  if (inp.value && inp.value.includes('@')) {
+    btn.textContent='✓ Joined!'; btn.style.background='linear-gradient(135deg,#1A9E5C,#0D7A45)';
+    inp.value='';
+    setTimeout(()=>{btn.textContent='Subscribe';btn.style.background='';},3000);
+  } else {
+    inp.style.borderColor='rgba(220,80,80,.8)';
+    setTimeout(()=>inp.style.borderColor='',1500);
+  }
+}
+
+// ── PARTICLES ──
+const cv = document.getElementById('particles');
+const cx = cv.getContext('2d');
+let W,H,pts;
+function rs(){W=cv.width=innerWidth;H=cv.height=innerHeight}
+rs(); window.addEventListener('resize',()=>{rs();ip()},{passive:true});
+function ip(){pts=Array.from({length:55},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.3+.3,vx:(Math.random()-.5)*.22,vy:(Math.random()-.5)*.22,a:Math.random()*.38+.1}));}
+ip();
+(function dp(){cx.clearRect(0,0,W,H);pts.forEach(p=>{cx.beginPath();cx.arc(p.x,p.y,p.r,0,Math.PI*2);cx.fillStyle=`rgba(74,172,220,${p.a})`;cx.fill();p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=W;if(p.x>W)p.x=0;if(p.y<0)p.y=H;if(p.y>H)p.y=0;});requestAnimationFrame(dp);})();
+</script>
+</body>
+</html>
