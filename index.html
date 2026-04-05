@@ -499,50 +499,56 @@
   </div>
 </section>
 
-
-<!-- ABOUT - ENHANCED WITH ANIMATION & VERSE -->
+<!-- ABOUT - FULLY ENHANCED -->
 <section id="about" style="padding: 120px 60px; background: linear-gradient(160deg, var(--deep) 0%, var(--dark) 100%); border-top: 1px solid var(--sec-border);">
   
-  <div class="sec-center reveal" style="margin-bottom: 70px;">
+  <div class="sec-center reveal" style="margin-bottom: 80px;">
     <div class="sec-lbl">Our Leader</div>
     <h2 class="sec-title">Prophet <span>Jay Uriel</span></h2>
     <div class="gold-line"></div>
   </div>
 
   <div style="max-width: 1180px; margin: 0 auto;">
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0; background: var(--surface); border: 1px solid rgba(74,172,220,0.25); border-radius: 20px; overflow: hidden; box-shadow: 0 35px 90px rgba(0,0,0,0.75);">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0; background: var(--surface); border: 1px solid rgba(74,172,220,0.28); border-radius: 22px; overflow: hidden; box-shadow: 0 40px 100px rgba(0,0,0,0.8);">
 
-      <!-- Left Side: Image -->
+      <!-- Left: Image -->
       <div style="position: relative; overflow: hidden;">
         <img 
           src="photos/jay-uriel.jpeg" 
           alt="Prophet Jay Uriel" 
           onerror="this.src='photos/jay-uriel.png';this.onerror=null;"
-          style="width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.9s ease;"
+          style="width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 1s ease;"
         >
-        <div style="position: absolute; inset: 0; background: linear-gradient(to right, rgba(2,12,20,0.35), transparent);"></div>
+        <!-- Subtle depth overlay -->
+        <div style="position: absolute; inset: 0; background: linear-gradient(to right, rgba(2,12,20,0.4), transparent 60%);"></div>
+        
+        <!-- Small circular badge -->
+        <div style="position: absolute; top: 35px; left: 35px; background: rgba(2,12,20,0.9); border: 2px solid var(--gold); border-radius: 50%; width: 68px; height: 68px; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 0.68rem; line-height: 1.2; color: var(--gold); font-family: 'Cinzel', serif; box-shadow: 0 8px 25px rgba(74,172,220,0.3);">
+          CALLED<br>BY GOD
+        </div>
       </div>
 
-      <!-- Right Side: Animated Content -->
-      <div style="padding: 70px 65px; display: flex; flex-direction: column; justify-content: center;">
+      <!-- Right: Content with animation -->
+      <div style="padding: 75px 70px; display: flex; flex-direction: column; justify-content: center;">
         
-        <div class="about-text reveal-right" style="opacity: 0; transform: translateY(30px); transition: all 0.8s ease;">
-          <p style="font-size: 1.08rem; line-height: 1.85; color: var(--white2); margin-bottom: 35px;">
+        <div class="reveal-right" style="opacity: 0; transform: translateY(40px); transition: all 0.9s cubic-bezier(0.4, 0, 0.2, 1);">
+          <p style="font-size: 1.09rem; line-height: 1.85; color: var(--white2); margin-bottom: 40px;">
             Prophet Jay Uriel is a consecrated vessel called by God — a prophetic voice and teacher of the Word raised up for this generation. 
             Through deep revelation, anointed teaching, and the prophetic gift, he ministers the fullness of Christ to hungry hearts every week.
           </p>
         </div>
 
         <!-- Bible Verse -->
-        <div class="reveal-right" style="opacity: 0; transform: translateY(30px); transition: all 0.8s ease 0.3s; margin-bottom: 40px;">
-          <div style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.15rem; color: var(--gold-light); line-height: 1.7; border-left: 3px solid var(--gold); padding-left: 22px;">
+        <div class="reveal-right" style="opacity: 0; transform: translateY(40px); transition: all 0.9s cubic-bezier(0.4, 0, 0.2, 1) 0.2s; margin-bottom: 45px;">
+          <div style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.18rem; color: var(--gold-light); line-height: 1.75; border-left: 4px solid var(--gold); padding-left: 26px;">
             "But you are a chosen people, a royal priesthood, a holy nation, God’s special possession, that you may declare the praises of him who called you out of darkness into his wonderful light."
           </div>
-          <div style="margin-top: 12px; font-size: 0.88rem; color: var(--text-muted);">— 1 Peter 2:9</div>
+          <div style="margin-top: 14px; font-size: 0.9rem; color: var(--text-muted);">— 1 Peter 2:9</div>
         </div>
 
-        <div class="reveal-right" style="opacity: 0; transform: translateY(30px); transition: all 0.8s ease 0.5s;">
-          <a href="#saturday" class="btn-gold" style="font-size: 0.73rem; padding: 17px 42px;">
+        <!-- Button -->
+        <div class="reveal-right" style="opacity: 0; transform: translateY(40px); transition: all 0.9s cubic-bezier(0.4, 0, 0.2, 1) 0.4s;">
+          <a href="#saturday" class="btn-gold" style="font-size: 0.73rem; padding: 18px 46px; letter-spacing: 0.05em;">
             JOIN US THIS SATURDAY
           </a>
         </div>
@@ -551,7 +557,6 @@
     </div>
   </div>
 </section>
-
   
 <!-- SATURDAY TEACHINGS - BEAUTIFUL WRAPPER -->
 <section id="saturday" style="padding: 110px 60px; background: linear-gradient(160deg, var(--dark) 0%, var(--deep) 100%); border-top: 1px solid var(--sec-border);">
