@@ -896,12 +896,11 @@ function downloadPDF(file) {
   a.click();
   document.body.removeChild(a);
 }
-
-function shareWhatsApp(file, name) {
-  const url = `${window.location.origin}${window.location.pathname.replace(/[^/]*$/, '')}Notes/${encodeURIComponent(file)}`;
-  const text = `🔥 Teaching Note from Prophet Jay Uriel\n\n📖 ${name}\n\n📥 View/Download: ${url}`;
+function shareWhatsApp(viewUrl, name) {
+  const text = `🔥 Teaching Note from Prophet Jay Uriel\n\n📖 ${name}\n\n📥 View Online: ${viewUrl}`;
   window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
 }
+
 
 /* ── HAMBURGER MOBILE NAV ── */
 const hamburger = document.getElementById('navHamburger');
