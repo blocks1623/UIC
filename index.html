@@ -859,4 +859,33 @@ if(prayerSubmit){
 }
 </script>
 </body>
+<script>
+// Video of the Day + Random Shuffle
+const allVideos = Array.from(document.querySelectorAll('#videosGrid .video-card'));
+
+function shuffle(array) {
+  return array.sort(() => Math.random() - 0.5);
+}
+
+function setVideoOfTheDay() {
+  const container = document.getElementById('videosGrid');
+  const votd = allVideos[Math.floor(Math.random() * allVideos.length)].cloneNode(true);
+  votd.style.border = '2px solid var(--gold)';
+  votd.querySelector('.video-title').innerHTML += ' <span style="color:var(--gold)">★ Video of the Day</span>';
+  
+  const votdSection = document.createElement('div');
+  votdSection.innerHTML = `<div class="sec-center" style="margin:40px 0 20px"><div class="sec-lbl">Featured Today</div><h2 class="sec-title">Video of the <span>Day</span></h2></div>`;
+  votdSection.appendChild(votd);
+  
+  container.parentNode.insertBefore(votdSection, container);
+}
+
+// Shuffle + VOTD on load
+window.addEventListener('load', () => {
+  const shuffled = shuffle(allVideos);
+  document.getElementById('videosGrid').innerHTML = '';
+  shuffled.forEach(v => document.getElementById('videosGrid').appendChild(v));
+  setVideoOfTheDay();
+});
+</script>
 </html>
