@@ -724,35 +724,56 @@ export default function Home() {
 
         {/* ── ANIMATED CROSS CHAIN between logo and nav links ── */}
         <div className="nav-cross-chain" aria-hidden="true">
-          {[0,1,2,3,4].map(i=>(
-            <motion.span key={i} style={{ fontSize:'clamp(0.4rem,0.9vw,0.58rem)', color:'var(--gold)', lineHeight:1 }}
-              animate={{ opacity:[0.25,1,0.25], y:[0,-3,0] }}
-              transition={{ duration:2.5,repeat:Infinity,ease:'easeInOut',delay:i*0.35 }}
-            >✝</motion.span>
-          ))}
-          <motion.div
-            style={{ height:'1px', background:'linear-gradient(to right,transparent,var(--gold),transparent)', minWidth:0 }}
-            animate={{ width:['0px','clamp(30px,6vw,100px)','0px'], opacity:[0,0.65,0] }}
-            transition={{ duration:3.5,repeat:Infinity,ease:'easeInOut',delay:0.8 }}
-          />
-          <motion.span
-            className="nav-verse-hint"
-            style={{ fontFamily:"'Cormorant Garamond',serif", fontStyle:'italic', fontSize:'clamp(0rem,1vw,0.65rem)', color:'var(--text-muted)', whiteSpace:'nowrap', letterSpacing:'0.04em' }}
-            animate={{ opacity:[0,0.75,0] }}
-            transition={{ duration:5,repeat:Infinity,ease:'easeInOut',delay:1.5 }}
-          >&ldquo;The Kingdom of God is within you&rdquo;</motion.span>
-          <motion.div
-            style={{ height:'1px', background:'linear-gradient(to left,transparent,var(--gold),transparent)', minWidth:0 }}
-            animate={{ width:['0px','clamp(30px,6vw,100px)','0px'], opacity:[0,0.65,0] }}
-            transition={{ duration:3.5,repeat:Infinity,ease:'easeInOut',delay:2.2 }}
-          />
-          {[0,1,2,3,4].map(i=>(
-            <motion.span key={`r${i}`} style={{ fontSize:'clamp(0.4rem,0.9vw,0.58rem)', color:'var(--gold)', lineHeight:1 }}
-              animate={{ opacity:[0.25,1,0.25], y:[0,-3,0] }}
-              transition={{ duration:2.5,repeat:Infinity,ease:'easeInOut',delay:1.1+i*0.35 }}
-            >✝</motion.span>
-          ))}
-        </div>
+  {[0,1,2,3,4].map(i=>(
+    <motion.span
+      key={i}
+      style={{ fontSize:'clamp(0.4rem,0.9vw,0.58rem)', color:'var(--gold)', lineHeight:1 }}
+      animate={{ opacity:[0.25,1,0.25], y:[0,-3,0] }}
+      transition={{ duration:2.5,repeat:Infinity,ease:'easeInOut',delay:i*0.35 }}
+    >
+      ✝
+    </motion.span>
+  ))}
+
+  <motion.div
+    style={{ height:'1px', background:'linear-gradient(to right,transparent,var(--gold),transparent)', minWidth:0 }}
+    animate={{ width:['0px','clamp(30px,6vw,100px)','0px'], opacity:[0,0.65,0] }}
+    transition={{ duration:3.5,repeat:Infinity,ease:'easeInOut',delay:0.8 }}
+  />
+
+  <span
+    className="nav-verse-hint"
+    style={{
+      fontFamily: "'Cormorant Garamond',serif",
+      fontStyle: 'italic',
+      fontSize: 'clamp(0rem,1vw,0.65rem)',
+      color: 'var(--text-muted)',
+      whiteSpace: 'nowrap',
+      letterSpacing: '0.04em',
+      opacity: 0.75,
+    }}
+  >
+    &ldquo;The Kingdom of God is within you&rdquo;
+  </span>
+
+  <motion.div
+    style={{ height:'1px', background:'linear-gradient(to left,transparent,var(--gold),transparent)', minWidth:0 }}
+    animate={{ width:['0px','clamp(30px,6vw,100px)','0px'], opacity:[0,0.65,0] }}
+    transition={{ duration:3.5,repeat:Infinity,ease:'easeInOut',delay:2.2 }}
+  />
+
+  {[0,1,2,3,4].map(i=>(
+    <motion.span
+      key={`r${i}`}
+      style={{ fontSize:'clamp(0.4rem,0.9vw,0.58rem)', color:'var(--gold)', lineHeight:1 }}
+      animate={{ opacity:[0.25,1,0.25], y:[0,-3,0] }}
+      transition={{ duration:2.5,repeat:Infinity,ease:'easeInOut',delay:1.1+i*0.35 }}
+    >
+      ✝
+    </motion.span>
+  ))}
+</div>
+
 
         <ul className="nav-links">
           {navItems.map(item=>(
