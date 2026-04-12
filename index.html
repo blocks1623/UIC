@@ -859,33 +859,5 @@ if(prayerSubmit){
 }
 </script>
 </body>
-<script>
-// Light version - Video of the Day + Shuffle
-const videosGrid = document.getElementById('videosGrid');
-const allVideos = Array.from(videosGrid.querySelectorAll('.video-card'));
 
-function shuffle(array) {
-  return array.sort(() => Math.random() - 0.5);
-}
-
-window.addEventListener('load', () => {
-  // Shuffle only
-  const shuffled = shuffle(allVideos);
-  videosGrid.innerHTML = '';
-  shuffled.forEach(v => videosGrid.appendChild(v));
-
-  // Simple Video of the Day (no heavy clone)
-  const votd = shuffled[0].cloneNode(true);
-  votd.style.border = '2px solid var(--gold)';
-  votd.querySelector('.video-title').insertAdjacentHTML('beforeend', ' <span style="color:var(--gold);font-size:0.9em">★ Today</span>');
-
-  const votdHeader = document.createElement('div');
-  votdHeader.className = 'sec-center';
-  votdHeader.style.margin = '30px 0 15px';
-  votdHeader.innerHTML = `<div class="sec-lbl">Featured</div><h2 class="sec-title">Video of the <span>Day</span></h2>`;
-
-  videosGrid.parentNode.insertBefore(votdHeader, videosGrid);
-  videosGrid.parentNode.insertBefore(votd, videosGrid);
-});
-</script>
 </html>
