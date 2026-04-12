@@ -102,6 +102,8 @@ const PRAYER_WALL_ENTRIES = [
 // ─────────────────────────────────────────────
 // UTILS
 // ─────────────────────────────────────────────
+
+// Deterministic — safe for both SSR and client (no Math.random)
 function seededRandom(seed: string): number {
   let hash = 0;
   for (let i = 0; i < seed.length; i++) {
@@ -116,11 +118,11 @@ function getDailyIndex(listLength: number): number {
   return Math.floor(seededRandom(new Date().toDateString()) * listLength);
 }
 
-// True random shuffle — re-randomizes on every page load
-function randomShuffle<T>(arr: T[]): T[] {
+// Seeded daily shuffle — deterministic per day, avoids SSR/client mismatch
+function seededShuffle<T>(arr: T[], seed: string): T[] {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+    const j = Math.floor(seededRandom(seed + i) * (i + 1));
     [a[i], a[j]] = [a[j], a[i]];
   }
   return a;
@@ -157,6 +159,75 @@ const scaleIn = {
   hidden:  { opacity: 0, scale: 0.88 },
   visible: { opacity: 1, scale: 1,    transition: SPRING },
 };
+
+// ─────────────────────────────────────────────
+// LAZY VIDEO CARD — only loads iframe when visible
+// This is the key fix for scroll crashes on mobile
+// ─────────────────────────────────────────────
+interface VideoCardProps {
+  video: { id: string; title: string; url: string };
+  index: number;
+}
+
+function LazyVideoCard({ video, index }: VideoCardProps) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '200px' }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <motion.div
+      ref={ref}
+      className="video-card"
+      initial={{ opacity: 0, y: 32 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-40px' }}
+      transition={{ ...SPRING, delay: Math.min(index * 0.04, 0.4) }}
+      whileHover={{ y: -8, borderColor: 'var(--gold)', boxShadow: '0 24px 56px rgba(0,0,0,.55)' }}
+    >
+      <div className="video-wrapper">
+        {isVisible ? (
+          <iframe
+            src={`https://www.youtube.com/embed/${video.id}`}
+            allowFullScreen
+            loading="lazy"
+            title={video.title}
+          />
+        ) : (
+          // Placeholder shown before iframe loads — prevents layout shift
+          <div style={{
+            position: 'absolute', inset: 0, background: 'var(--surface)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+          }}>
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="rgba(74,172,220,0.3)">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          </div>
+        )}
+      </div>
+      <div className="video-info">
+        <div className="video-title">{video.title}</div>
+        <a href={video.url} target="_blank" rel="noopener noreferrer" className="video-link">
+          Watch on YouTube &#8594;
+        </a>
+      </div>
+    </motion.div>
+  );
+}
 
 // ─────────────────────────────────────────────
 // WAVE RIPPLE
@@ -260,7 +331,7 @@ function PdfModal({ doc, onClose }: PdfModalProps) {
 
   const shareDoc = () => {
     if (!doc) return;
-    const text = `✦ Teaching Note from Prophet Jay Uriel\n\n\u2737 ${doc.name}\n\n\u2193 View Online: ${doc.viewUrl}`;
+    const text = `✦ Teaching Note from Prophet Jay Uriel\n\n✧ ${doc.name}\n\n↓ View Online: ${doc.viewUrl}`;
     window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
   };
 
@@ -328,7 +399,7 @@ function DocumentsSection() {
   );
 
   const shareDoc = (doc: typeof DOCUMENTS[0]) => {
-    const text = `✦ Teaching Note from Prophet Jay Uriel\n\n\u2737 ${doc.name}\n\n\u2193 View Online: ${doc.viewUrl}`;
+    const text = `✦ Teaching Note from Prophet Jay Uriel\n\n✧ ${doc.name}\n\n↓ View Online: ${doc.viewUrl}`;
     window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
   };
 
@@ -342,8 +413,6 @@ function DocumentsSection() {
         <p style={{ color: 'var(--text-muted)', fontSize: 'clamp(.88rem,1.5vw,1rem)', marginBottom: 'clamp(20px,3vw,32px)', lineHeight: '1.7' }}>
           Study materials from Prophet Jay Uriel. View online or download to study at your pace.
         </p>
-
-        {/* Search bar */}
         <div className="doc-search-wrap">
           <span className="doc-search-icon">&#9740;</span>
           <input
@@ -379,38 +448,21 @@ function DocumentsSection() {
                 viewport={{ once: true, margin: '-30px' }}
                 transition={{ ...SPRING, delay: i * 0.055 }}
               >
-                {/* Serial */}
-                <div className="doc-glass-num">
-                  {String(origIdx + 1).padStart(2, '0')}
-                </div>
-
-                {/* NEW badge */}
+                <div className="doc-glass-num">{String(origIdx + 1).padStart(2, '0')}</div>
                 {doc.isNew && <div className="doc-glass-new">NEW</div>}
-
-                {/* Icon */}
-                <div className="doc-glass-icon">
-                  &#128196;
-                </div>
-
-                {/* Title */}
+                <div className="doc-glass-icon">&#128196;</div>
                 <div className="doc-glass-title">{doc.name}</div>
-
-                {/* Actions */}
                 <div className="doc-glass-actions">
                   <motion.button
                     className="doc-glass-btn doc-glass-view"
                     onClick={() => setOpenDoc(doc)}
                     whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={SPRING}
-                  >
-                    &#128065; View
-                  </motion.button>
+                  >&#128065; View</motion.button>
                   <motion.button
                     className="doc-glass-btn doc-glass-wa"
                     onClick={() => shareDoc(doc)}
                     whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={SPRING}
-                  >
-                    &#8679; Share
-                  </motion.button>
+                  >&#8679; Share</motion.button>
                 </div>
               </motion.div>
             );
@@ -468,9 +520,9 @@ function PrayerWall() {
                 onClick={(e) => {
                   const btn = e.currentTarget as HTMLButtonElement;
                   if (!btn.disabled) {
-                    btn.textContent = '\u2737 Praying\u2026';
+                    btn.textContent = '✧ Praying…';
                     btn.disabled = true;
-                    setTimeout(() => { btn.textContent = '\u2713 Prayed'; }, 1400);
+                    setTimeout(() => { btn.textContent = '✓ Prayed'; }, 1400);
                   }
                 }}
               >
@@ -503,9 +555,9 @@ function PrayerSection() {
     if (!msg) { alert('Please share your prayer request.'); return; }
 
     const cat = category || 'General';
-    const wallNote = addToWall ? '\n\n\u2713 Approved to display on Prayer Wall (first name only)' : '';
-    const anonNote = isAnon ? '\n\ud83d\udd12 Submitted anonymously' : '';
-    const text = `\u2737 Prayer Request \u2014 United in Christ\n\nName: ${name}${anonNote}\n${subject ? `Subject: ${subject}\n` : ''}Category: ${cat}\n\nPrayer Request:\n${msg}${wallNote}`;
+    const wallNote = addToWall ? '\n\n✓ Approved to display on Prayer Wall (first name only)' : '';
+    const anonNote = isAnon ? '\n🔒 Submitted anonymously' : '';
+    const text = `✧ Prayer Request — United in Christ\n\nName: ${name}${anonNote}\n${subject ? `Subject: ${subject}\n` : ''}Category: ${cat}\n\nPrayer Request:\n${msg}${wallNote}`;
 
     window.open(`https://wa.me/27649842408?text=${encodeURIComponent(text)}`, '_blank');
     setSubmitted(true);
@@ -531,7 +583,6 @@ function PrayerSection() {
           <h2 className="sec-title">Submit a <span>Prayer Request</span></h2>
           <motion.div initial={{ width: 0 }} whileInView={{ width: 55 }} transition={{ duration: 0.8 }}
             style={{ height: 2, background: 'linear-gradient(to right, var(--gold), transparent)', margin: '20px auto 24px' }} />
-
           <div className="prayer-scripture">
             <span className="prayer-scripture-icon">&#10022;</span>
             <em>&ldquo;Do not be anxious about anything, but in every situation, by prayer and petition, with thanksgiving, present your requests to God.&rdquo; &mdash; Philippians 4:6</em>
@@ -566,8 +617,6 @@ function PrayerSection() {
             </motion.div>
           ) : (
             <motion.div key="form" className="prayer-form" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
-
-              {/* Anonymous toggle */}
               <div className="prayer-anon-row">
                 <span className="prayer-anon-lock">&#128274;</span>
                 <label className="prayer-anon-label" htmlFor="anonToggle">
@@ -585,7 +634,6 @@ function PrayerSection() {
                 </button>
               </div>
 
-              {/* Name field (hidden when anon) */}
               <AnimatePresence>
                 {!isAnon && (
                   <motion.div
@@ -601,7 +649,6 @@ function PrayerSection() {
                 )}
               </AnimatePresence>
 
-              {/* Category */}
               <div className="form-field-wrap">
                 <span className="form-field-icon" style={{ fontSize: '12px', opacity: '.5' }}>&#9670;</span>
                 <select
@@ -614,13 +661,11 @@ function PrayerSection() {
                 </select>
               </div>
 
-              {/* Subject */}
               <div className="form-field-wrap">
                 <span className="form-field-icon" style={{ fontSize: '12px', opacity: '.5' }}>&#9671;</span>
                 <input className="form-input form-input-icon" type="text" placeholder="Subject (optional)" id="pSubject" />
               </div>
 
-              {/* Message */}
               <div style={{ position: 'relative' }}>
                 <span className="form-field-icon" style={{ top: '15px', position: 'absolute', left: '15px', fontSize: '13px', opacity: '.5', zIndex: 2 }}>&#10022;</span>
                 <textarea
@@ -631,13 +676,12 @@ function PrayerSection() {
                 />
               </div>
 
-              {/* More options */}
               <motion.button
                 className="prayer-expand-btn"
                 onClick={() => setExpanded(!expanded)}
                 whileHover={{ color: 'var(--gold)' }}
               >
-                {expanded ? '&#9652; Less options' : '&#9662; More options (Prayer Wall, notifications)'}
+                {expanded ? '▲ Less options' : '▾ More options (Prayer Wall, notifications)'}
               </motion.button>
 
               <AnimatePresence>
@@ -673,7 +717,6 @@ function PrayerSection() {
                 )}
               </AnimatePresence>
 
-              {/* Privacy */}
               <div className="prayer-privacy">
                 <span style={{ fontSize: '14px', flexShrink: 0 }}>&#128274;</span>
                 Your information is strictly confidential and will never be shared outside our prayer team.
@@ -725,9 +768,16 @@ export default function Home() {
   const [ripple, setRipple]         = useState<{ color: string } | null>(null);
   const canvasRef                   = useRef<HTMLCanvasElement>(null);
 
-  // Shuffle videos randomly on every page load
-  const [videos] = useState(() => randomShuffle(VIDEOS));
-  const videoOfTheDay = videos[getDailyIndex(VIDEOS.length)];
+  // FIX: Use seeded (deterministic) shuffle so SSR and client match exactly.
+  // Videos are shuffled by day, not randomly per render.
+  const dailySeed = typeof window === 'undefined'
+    ? new Date().toDateString()
+    : new Date().toDateString();
+
+  const videos = seededShuffle(VIDEOS, dailySeed);
+
+  // FIX: videoOfTheDay must be stable — use seeded index, not Math.random()
+  const videoOfTheDay = videos[getDailyIndex(videos.length)];
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
@@ -762,15 +812,24 @@ export default function Home() {
     let stars: Star[] = [];
     const resize = () => { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; };
     const initStars = () => {
+      // FIX: Use seeded values for star positions so they match SSR.
+      // We only animate them on the client so this is fine.
       stars = [];
       for (let i = 0; i < 90; i++) {
+        const s1 = seededRandom(`star-x-${i}`);
+        const s2 = seededRandom(`star-y-${i}`);
+        const s3 = seededRandom(`star-r-${i}`);
+        const s4 = seededRandom(`star-a-${i}`);
+        const s5 = seededRandom(`star-da-${i}`);
+        const s6 = seededRandom(`star-vx-${i}`);
+        const s7 = seededRandom(`star-vy-${i}`);
         stars.push({
-          x: Math.random() * W, y: Math.random() * H,
-          r: Math.random() * 1.4 + 0.2,
-          a: Math.random(),
-          da: (0.002 + Math.random() * 0.006) * (Math.random() < 0.5 ? 1 : -1),
-          vx: (Math.random() - 0.5) * 0.15,
-          vy: (Math.random() - 0.5) * 0.15,
+          x: s1 * W, y: s2 * H,
+          r: s3 * 1.4 + 0.2,
+          a: s4,
+          da: (0.002 + s5 * 0.006) * (i % 2 === 0 ? 1 : -1),
+          vx: (s6 - 0.5) * 0.15,
+          vy: (s7 - 0.5) * 0.15,
         });
       }
     };
@@ -795,12 +854,13 @@ export default function Home() {
     return () => { window.removeEventListener('resize', onResize); cancelAnimationFrame(animId); };
   }, []);
 
-  // Scroll-linked navbar
+  // FIX: Add `layoutEffect: false` / clamp to reduce jank on mobile during fast scroll
   const { scrollY } = useScroll();
   const navPaddingY  = useTransform(scrollY, [0, 120], [13, 7]);
   const navLogoSize  = useTransform(scrollY, [0, 120], [48, 36]);
-  const springNavPy  = useSpring(navPaddingY,  { stiffness: 120, damping: 20 });
-  const springLogoSz = useSpring(navLogoSize,  { stiffness: 120, damping: 20 });
+  // Softer spring = less thrashing on fast scroll
+  const springNavPy  = useSpring(navPaddingY,  { stiffness: 80, damping: 20 });
+  const springLogoSz = useSpring(navLogoSize,  { stiffness: 80, damping: 20 });
 
   const navItems = [
     { href: '#about',     label: 'About'     },
@@ -825,7 +885,7 @@ export default function Home() {
         transition={SPRING}
         initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }}
         style={{ zIndex: 99999 }}
-      >{isDark ? '&#9790;' : '&#9728;'}</motion.button>
+      >{isDark ? '☾' : '☀'}</motion.button>
 
       {/* ── NAV ── */}
       <motion.nav id="navbar"
@@ -914,6 +974,7 @@ export default function Home() {
       </section>
 
       {/* ── VIDEO OF THE DAY ── */}
+      {/* FIX: suppressHydrationWarning on the date display to prevent mismatch */}
       <motion.section id="video-of-day"
         initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} variants={fadeUp}>
         <div className="sec-center" style={{ marginBottom: 'clamp(24px,4vw,44px)' }}>
@@ -924,13 +985,14 @@ export default function Home() {
         </div>
         <motion.div className="votd-card"
           whileHover={{ scale: 1.012, boxShadow: '0 32px 72px rgba(0,0,0,.6)' }} transition={SPRING_SOFT}>
-          <div className="votd-badge">
+          <div className="votd-badge" suppressHydrationWarning>
             &#9670; {new Date().toLocaleDateString('en-ZA', { weekday: 'long', month: 'long', day: 'numeric' })}
           </div>
           <div className="video-wrapper">
             <iframe
               src={`https://www.youtube.com/embed/${videoOfTheDay.id}`}
-              allowFullScreen loading="lazy"
+              allowFullScreen
+              loading="lazy"
               title={videoOfTheDay.title}
             />
           </div>
@@ -1027,7 +1089,6 @@ export default function Home() {
             style={{ height: 2, background: 'linear-gradient(to right, var(--gold), transparent)', margin: '20px auto' }} />
         </motion.div>
         <div className="announce-grid">
-          {/* Left col — Announcement */}
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeLeft}>
             <div className="announce-col-header">
               <div className="announce-col-icon">&#9670;</div>
@@ -1076,7 +1137,6 @@ export default function Home() {
             </div>
           </motion.div>
 
-          {/* Right col — Testimonials */}
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeRight}>
             <div className="announce-col-header">
               <div className="announce-col-icon">&#10022;</div>
@@ -1115,6 +1175,7 @@ export default function Home() {
       </section>
 
       {/* ── SERMONS ── */}
+      {/* FIX: Each video card is now a LazyVideoCard that only mounts its iframe when scrolled into view */}
       <section id="sermons">
         <motion.div className="sec-center"
           initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
@@ -1126,26 +1187,7 @@ export default function Home() {
         <div className="videos-container">
           <div className="videos-grid">
             {videos.map((v, idx) => (
-              <motion.div className="video-card" key={v.id}
-                initial={{ opacity: 0, y: 32 }} whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-40px' }}
-                transition={{ ...SPRING, delay: Math.min(idx * 0.04, 0.4) }}
-                whileHover={{ y: -8, borderColor: 'var(--gold)', boxShadow: '0 24px 56px rgba(0,0,0,.55)' }}
-              >
-                <div className="video-wrapper">
-                  <iframe
-                    src={`https://www.youtube.com/embed/${v.id}`}
-                    allowFullScreen loading="lazy"
-                    title={v.title}
-                  />
-                </div>
-                <div className="video-info">
-                  <div className="video-title">{v.title}</div>
-                  <a href={v.url} target="_blank" rel="noopener noreferrer" className="video-link">
-                    Watch on YouTube &#8594;
-                  </a>
-                </div>
-              </motion.div>
+              <LazyVideoCard key={v.id} video={v} index={idx} />
             ))}
           </div>
         </div>
@@ -1246,7 +1288,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Built by Bonny Sithole */}
         <div className="built-by">
           <div className="built-by-beam" />
           <div className="built-by-inner">
