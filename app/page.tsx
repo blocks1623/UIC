@@ -92,7 +92,6 @@ const PRAYER_WALL_ENTRIES = [
   { initials: "LD", name: "L.D",      category: "Salvation for Loved Ones",text: "Interceding for my family to come to know the Lord. He is able to save!",                        time: "2d ago" },
 ];
 
-// Global floating cross positions (fixed, scattered across whole page)
 const GLOBAL_CROSSES = [
   { left:'5%',  top:'8%',  size:'1.1rem', dur:9,  delay:0   },
   { left:'18%', top:'22%', size:'0.7rem', dur:13, delay:1.5 },
@@ -111,6 +110,30 @@ const GLOBAL_CROSSES = [
 // ─────────────────────────────────────────────
 // UTILS
 // ─────────────────────────────────────────────
+
+/**
+ * Real-time date-based video selection.
+ * Uses actual today's date (year + day of year) so each calendar day
+ * consistently maps to one video from the full list.
+ */
+function getDailyVideoIndex(listLength: number): number {
+  const now = new Date();
+  const year = now.getFullYear();
+  const start = new Date(year, 0, 0);
+  const diff = now.getTime() - start.getTime();
+  const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
+  // Combine year + dayOfYear so it resets cleanly each year
+  return ((year * 1000) + dayOfYear) % listLength;
+}
+
+/** Same algorithm for picking the daily scripture */
+function getDailyScriptureIndex(listLength: number): number {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 0, 0);
+  const dayOfYear = Math.floor((now.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
+  return dayOfYear % listLength;
+}
+
 function seededRandom(seed: string): number {
   let hash = 0;
   for (let i = 0; i < seed.length; i++) {
@@ -119,10 +142,6 @@ function seededRandom(seed: string): number {
     hash |= 0;
   }
   return Math.abs(hash) / 2147483647;
-}
-
-function getDailyIndex(listLength: number): number {
-  return Math.floor(seededRandom(new Date().toDateString()) * listLength);
 }
 
 function seededShuffle<T>(arr: T[], seed: string): T[] {
@@ -143,8 +162,6 @@ function getDownloadUrl(viewUrl: string): string {
   return m ? `https://drive.google.com/uc?export=download&id=${m[1]}` : viewUrl;
 }
 
-// Silently open a mailto: to send anonymous prayer details to jayuriel28@gmail.com
-// Uses a hidden <a> click so there's no visible popup for the sender
 function sendAnonEmail(details: {
   category: string; subject: string; message: string; addToWall: boolean;
 }) {
@@ -158,9 +175,7 @@ function sendAnonEmail(details: {
     'Prayer Request:',
     details.message,
     '',
-    details.addToWall
-      ? '✓ Consented to Prayer Wall display'
-      : '✗ Private — do not display on Prayer Wall',
+    details.addToWall ? '✓ Consented to Prayer Wall display' : '✗ Private — do not display on Prayer Wall',
     '',
     '— Sent automatically from the United in Christ website',
   ].filter((l): l is string => l !== null).join('\n');
@@ -181,19 +196,17 @@ function sendAnonEmail(details: {
 const SPRING      = { type: 'spring' as const, stiffness: 280, damping: 22 };
 const SPRING_SOFT = { type: 'spring' as const, stiffness: 200, damping: 26 };
 
-const fadeUp   = { hidden: { opacity:0, y:36  }, visible: { opacity:1, y:0,  transition: SPRING } };
-const fadeLeft = { hidden: { opacity:0, x:-44 }, visible: { opacity:1, x:0,  transition: SPRING } };
-const fadeRight= { hidden: { opacity:0, x:44  }, visible: { opacity:1, x:0,  transition: SPRING } };
-const scaleIn  = { hidden: { opacity:0, scale:0.88 }, visible: { opacity:1, scale:1, transition: SPRING } };
+const fadeUp    = { hidden: { opacity:0, y:36   }, visible: { opacity:1, y:0,  transition: SPRING } };
+const fadeLeft  = { hidden: { opacity:0, x:-44  }, visible: { opacity:1, x:0,  transition: SPRING } };
+const fadeRight = { hidden: { opacity:0, x:44   }, visible: { opacity:1, x:0,  transition: SPRING } };
+const scaleIn   = { hidden: { opacity:0, scale:0.88 }, visible: { opacity:1, scale:1, transition: SPRING } };
 
 // ─────────────────────────────────────────────
 // GLOBAL BACKGROUND LAYER
-// Fixed behind ALL content — floating crosses + radial orbs + light streaks
 // ─────────────────────────────────────────────
 function GlobalBackgroundLayer() {
   return (
     <div style={{ position:'fixed', inset:0, zIndex:0, pointerEvents:'none', overflow:'hidden' }}>
-      {/* Slow radial orb pulses */}
       {[
         { cx:'15%', cy:'30%', r:'35vw', delay:0,  dur:18 },
         { cx:'80%', cy:'60%', r:'28vw', delay:6,  dur:22 },
@@ -201,19 +214,14 @@ function GlobalBackgroundLayer() {
         { cx:'70%', cy:'10%', r:'18vw', delay:3,  dur:20 },
       ].map((orb, i) => (
         <motion.div key={`orb-${i}`}
-          style={{
-            position:'absolute', left:orb.cx, top:orb.cy,
-            width:orb.r, height:orb.r,
+          style={{ position:'absolute', left:orb.cx, top:orb.cy, width:orb.r, height:orb.r,
             transform:'translate(-50%,-50%)', borderRadius:'50%',
             background:'radial-gradient(circle, rgba(74,172,220,0.055) 0%, transparent 70%)',
-            filter:'blur(40px)',
-          }}
+            filter:'blur(40px)' }}
           animate={{ scale:[1,1.25,1], opacity:[0.4,0.8,0.4] }}
           transition={{ duration:orb.dur, repeat:Infinity, ease:'easeInOut', delay:orb.delay }}
         />
       ))}
-
-      {/* Floating ✝ crosses */}
       {GLOBAL_CROSSES.map((c, i) => (
         <motion.div key={`gcross-${i}`}
           style={{ position:'absolute', left:c.left, top:c.top, fontSize:c.size, color:'rgba(74,172,220,0.09)', userSelect:'none', lineHeight:1 }}
@@ -221,14 +229,10 @@ function GlobalBackgroundLayer() {
           transition={{ duration:c.dur, repeat:Infinity, ease:'easeInOut', delay:c.delay }}
         >✝</motion.div>
       ))}
-
-      {/* Subtle horizontal light streaks */}
       {[20,55,78].map((top, i) => (
         <motion.div key={`streak-${i}`}
-          style={{
-            position:'absolute', top:`${top}%`, left:0, width:'100%', height:'1px',
-            background:'linear-gradient(to right, transparent, rgba(74,172,220,0.04), rgba(74,172,220,0.08), rgba(74,172,220,0.04), transparent)',
-          }}
+          style={{ position:'absolute', top:`${top}%`, left:0, width:'100%', height:'1px',
+            background:'linear-gradient(to right, transparent, rgba(74,172,220,0.04), rgba(74,172,220,0.08), rgba(74,172,220,0.04), transparent)' }}
           animate={{ opacity:[0,1,0], scaleX:[0.3,1,0.3] }}
           transition={{ duration:8+i*3, repeat:Infinity, ease:'easeInOut', delay:i*4 }}
         />
@@ -258,7 +262,9 @@ function LazyVideoCard({ video, index }: { video:{id:string;title:string;url:str
       <div className="video-wrapper">
         {isVisible
           ? <iframe src={`https://www.youtube.com/embed/${video.id}`} allowFullScreen loading="lazy" title={video.title} />
-          : <div style={{ position:'absolute',inset:0,background:'var(--surface)',display:'flex',alignItems:'center',justifyContent:'center' }}><svg width="48" height="48" viewBox="0 0 24 24" fill="rgba(74,172,220,0.3)"><path d="M8 5v14l11-7z"/></svg></div>
+          : <div style={{ position:'absolute',inset:0,background:'var(--surface)',display:'flex',alignItems:'center',justifyContent:'center' }}>
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="rgba(74,172,220,0.3)"><path d="M8 5v14l11-7z"/></svg>
+            </div>
         }
       </div>
       <div className="video-info">
@@ -382,7 +388,7 @@ function DocumentsSection() {
         <h2 className="sec-title">Teaching <span>Notes</span></h2>
         <motion.div initial={{ width:0 }} whileInView={{ width:55 }} transition={{ duration:0.8 }}
           style={{ height:2,background:'linear-gradient(to right, var(--gold), transparent)',margin:'20px auto 16px' }} />
-        <p style={{ color:'var(--text-muted)',fontSize:'clamp(.88rem,1.5vw,1rem)',marginBottom:'clamp(20px,3vw,32px)',lineHeight:'1.7' }}>
+        <p style={{ color:'var(--text-muted)',fontSize:'clamp(.86rem,1.4vw,1rem)',marginBottom:'clamp(18px,2.8vw,32px)',lineHeight:'1.7' }}>
           Study materials from Prophet Jay Uriel. View online or download to study at your pace.
         </p>
         <div className="doc-search-wrap">
@@ -455,8 +461,6 @@ function PrayerWall() {
 
 // ─────────────────────────────────────────────
 // PRAYER SECTION
-// Anonymous path: sends mailto to jayuriel28@gmail.com + WhatsApp (name hidden)
-// Named path: WhatsApp only (unchanged)
 // ─────────────────────────────────────────────
 function PrayerSection() {
   const [isAnon,    setIsAnon]    = useState(false);
@@ -476,14 +480,11 @@ function PrayerSection() {
     const cat = category || 'General';
 
     if (isAnon) {
-      // ── ANONYMOUS: silently email full details to jayuriel28@gmail.com ──
       sendAnonEmail({ category: cat, subject: subjectVal, message: msgVal, addToWall });
-      // Also route to WhatsApp without name
       const wallNote = addToWall ? '\n\n✓ Consented to Prayer Wall display' : '';
       const waText   = `🔒 Anonymous Prayer Request — United in Christ\n\nCategory: ${cat}${subjectVal?`\nSubject: ${subjectVal}`:''}\n\nPrayer Request:\n${msgVal}${wallNote}`;
       window.open(`https://wa.me/27649842408?text=${encodeURIComponent(waText)}`,'_blank');
     } else {
-      // ── NAMED: WhatsApp with full name ──
       const wallNote = addToWall ? '\n\n✓ Approved to display on Prayer Wall (first name only)' : '';
       const text     = `✧ Prayer Request — United in Christ\n\nName: ${nameVal}\n${subjectVal?`Subject: ${subjectVal}\n`:''}Category: ${cat}\n\nPrayer Request:\n${msgVal}${wallNote}`;
       window.open(`https://wa.me/27649842408?text=${encodeURIComponent(text)}`,'_blank');
@@ -508,7 +509,7 @@ function PrayerSection() {
             <span className="prayer-scripture-icon">&#10022;</span>
             <em>&ldquo;Do not be anxious about anything, but in every situation, by prayer and petition, with thanksgiving, present your requests to God.&rdquo; &mdash; Philippians 4:6</em>
           </div>
-          <p style={{ color:'var(--text-muted)',fontSize:'clamp(.88rem,1.5vw,1rem)',marginTop:'14px',lineHeight:'1.7' }}>
+          <p style={{ color:'var(--text-muted)',fontSize:'clamp(.86rem,1.4vw,1rem)',marginTop:'14px',lineHeight:'1.7' }}>
             We stand in agreement with you. Share your request and our team will pray for you.
           </p>
         </motion.div>
@@ -529,7 +530,6 @@ function PrayerSection() {
             </motion.div>
           ) : (
             <motion.div key="form" className="prayer-form" initial="hidden" whileInView="visible" viewport={{ once:true }} variants={fadeUp}>
-              {/* Anonymous toggle */}
               <div className="prayer-anon-row">
                 <span className="prayer-anon-lock">&#128274;</span>
                 <label className="prayer-anon-label" htmlFor="anonToggle">
@@ -615,7 +615,7 @@ function PrayerSection() {
 // VERSE OF THE DAY
 // ─────────────────────────────────────────────
 function VerseOfTheDay() {
-  const idx = getDailyIndex(SCRIPTURES.length);
+  const idx = getDailyScriptureIndex(SCRIPTURES.length);
   const s   = SCRIPTURES[idx];
   return (
     <motion.div className="verse-of-day" initial={{ opacity:0,y:20 }} whileInView={{ opacity:1,y:0 }} viewport={{ once:true }} transition={SPRING_SOFT}>
@@ -623,6 +623,103 @@ function VerseOfTheDay() {
       <p className="vod-text">&ldquo;{s.verse}&rdquo;</p>
       <div className="vod-ref">&mdash; {s.ref}</div>
     </motion.div>
+  );
+}
+
+// ─────────────────────────────────────────────
+// HERO LEFT PANEL
+// ─────────────────────────────────────────────
+function HeroLeftPanel() {
+  const todayScripture = SCRIPTURES[getDailyScriptureIndex(SCRIPTURES.length)];
+  return (
+    <div className="hero-left-panel">
+      <motion.div initial={{ opacity:0, x:-40 }} animate={{ opacity:1, x:0 }} transition={{ ...SPRING, delay:0.9 }}>
+        <motion.div className="hero-stat-card"
+          whileHover={{ borderColor:'rgba(74,172,220,0.55)', transform:'translateX(-5px)', boxShadow:'0 12px 32px rgba(0,0,0,0.4)' }}
+          transition={{ duration:0.2 }}
+        >
+          <span className="stat-num">40+</span>
+          <span className="stat-label">Sermons Preached</span>
+        </motion.div>
+      </motion.div>
+
+      <div className="panel-divider" />
+
+      <motion.div initial={{ opacity:0, x:-40 }} animate={{ opacity:1, x:0 }} transition={{ ...SPRING, delay:1.05 }}>
+        <motion.div className="hero-stat-card"
+          whileHover={{ borderColor:'rgba(74,172,220,0.55)', transform:'translateX(-5px)', boxShadow:'0 12px 32px rgba(0,0,0,0.4)' }}
+          transition={{ duration:0.2 }}
+        >
+          <span className="stat-num">11</span>
+          <span className="stat-label">Teaching Notes</span>
+        </motion.div>
+      </motion.div>
+
+      <motion.div initial={{ opacity:0, x:-40 }} animate={{ opacity:1, x:0 }} transition={{ ...SPRING, delay:1.2 }}>
+        <div className="hero-verse-ticker">
+          <div className="verse-ticker-label">✦ Daily Word</div>
+          <div className="verse-ticker-text">&ldquo;{todayScripture.verse.slice(0, 72)}{todayScripture.verse.length > 72 ? '…' : ''}&rdquo;</div>
+          <span className="verse-ticker-ref">— {todayScripture.ref}</span>
+        </div>
+      </motion.div>
+
+      <motion.div
+        style={{ alignSelf:'flex-end', fontSize:'clamp(1.2rem,2vw,2rem)', color:'rgba(74,172,220,0.12)', userSelect:'none' }}
+        animate={{ y:[0,-14,0], rotate:[0,8,-8,0], opacity:[0.06,0.2,0.06] }}
+        transition={{ duration:6, repeat:Infinity, ease:'easeInOut' }}
+        initial={{ opacity:0 }}
+      >✝</motion.div>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────
+// HERO RIGHT PANEL
+// ─────────────────────────────────────────────
+function HeroRightPanel() {
+  return (
+    <div className="hero-right-panel">
+      <motion.div initial={{ opacity:0, x:40 }} animate={{ opacity:1, x:0 }} transition={{ ...SPRING, delay:0.9 }}>
+        <div className="hero-status-badge">
+          <div><span className="status-dot" /><span className="status-text">Active Ministry</span></div>
+          <p className="status-sub">Every Saturday 8PM<br />El Roi Chambers</p>
+        </div>
+      </motion.div>
+
+      <div className="panel-divider" />
+
+      <motion.div initial={{ opacity:0, x:40 }} animate={{ opacity:1, x:0 }} transition={{ ...SPRING, delay:1.05 }}>
+        <div className="hero-quick-links">
+          <div className="ql-title">Quick Links</div>
+          {[
+            { href:'#sermons',   label:'Watch Sermons' },
+            { href:'#documents', label:'Study Notes'   },
+            { href:'#prayer',    label:'Prayer Request' },
+            { href:'#saturday',  label:'Join Saturday'  },
+            { href:'#connect',   label:'Connect'        },
+          ].map(item => (
+            <a key={item.href} href={item.href} className="ql-item">
+              <span className="ql-dot" />
+              <span className="ql-text">{item.label}</span>
+            </a>
+          ))}
+        </div>
+      </motion.div>
+
+      <motion.div initial={{ opacity:0, x:40 }} animate={{ opacity:1, x:0 }} transition={{ ...SPRING, delay:1.2 }}>
+        <div className="hero-scripture-strip">
+          <div className="verse-ticker-label">✦ Sat 8PM</div>
+          <p className="verse-ticker-text" style={{ fontSize:'clamp(.66rem,1.1vw,.76rem)' }}>Come expecting an encounter with God. Open to all.</p>
+        </div>
+      </motion.div>
+
+      <motion.div
+        style={{ alignSelf:'flex-start', fontSize:'clamp(1.2rem,2vw,2rem)', color:'rgba(74,172,220,0.12)', userSelect:'none' }}
+        animate={{ y:[0,-14,0], rotate:[0,-8,8,0], opacity:[0.06,0.2,0.06] }}
+        transition={{ duration:7, repeat:Infinity, ease:'easeInOut', delay:1 }}
+        initial={{ opacity:0 }}
+      >✝</motion.div>
+    </div>
   );
 }
 
@@ -635,9 +732,13 @@ export default function Home() {
   const [ripple,     setRipple]     = useState<{color:string}|null>(null);
   const canvasRef                   = useRef<HTMLCanvasElement>(null);
 
-  const dailySeed     = new Date().toDateString();
-  const videos        = seededShuffle(VIDEOS, dailySeed);
-  const videoOfTheDay = videos[getDailyIndex(videos.length)];
+  // Real-time date-based video of the day
+  // Uses getDailyVideoIndex which reads actual Date() — changes each calendar day
+  const videoOfTheDay = VIDEOS[getDailyVideoIndex(VIDEOS.length)];
+
+  // Seeded shuffle for sermons grid (consistent within a day's session)
+  const dailySeed = new Date().toDateString();
+  const videos    = seededShuffle(VIDEOS, dailySeed);
 
   useEffect(() => { document.documentElement.setAttribute('data-theme', isDark?'dark':'light'); }, [isDark]);
   const handleThemeToggle = () => setRipple({ color: isDark?'#EAF4FB':'#020C14' });
@@ -660,22 +761,28 @@ export default function Home() {
     const initStars=()=>{
       stars=[];
       for(let i=0;i<90;i++){
-        stars.push({x:seededRandom(`sx${i}`)*W,y:seededRandom(`sy${i}`)*H,r:seededRandom(`sr${i}`)*1.4+0.2,a:seededRandom(`sa${i}`),da:(0.002+seededRandom(`sda${i}`)*0.006)*(i%2===0?1:-1),vx:(seededRandom(`svx${i}`)-0.5)*0.15,vy:(seededRandom(`svy${i}`)-0.5)*0.15});
+        stars.push({
+          x:seededRandom(`sx${i}`)*W, y:seededRandom(`sy${i}`)*H,
+          r:seededRandom(`sr${i}`)*1.4+0.2, a:seededRandom(`sa${i}`),
+          da:(0.002+seededRandom(`sda${i}`)*0.006)*(i%2===0?1:-1),
+          vx:(seededRandom(`svx${i}`)-0.5)*0.15, vy:(seededRandom(`svy${i}`)-0.5)*0.15
+        });
       }
     };
     const draw=()=>{
       ctx.clearRect(0,0,W,H);
       stars.forEach(s=>{
         s.a+=s.da; if(s.a<=0||s.a>=1)s.da*=-1;
-        s.x+=s.vx;s.y+=s.vy;
-        if(s.x<0)s.x=W;if(s.x>W)s.x=0;if(s.y<0)s.y=H;if(s.y>H)s.y=0;
-        ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(74,172,220,${s.a})`;ctx.fill();
+        s.x+=s.vx; s.y+=s.vy;
+        if(s.x<0)s.x=W; if(s.x>W)s.x=0; if(s.y<0)s.y=H; if(s.y>H)s.y=0;
+        ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+        ctx.fillStyle=`rgba(74,172,220,${s.a})`; ctx.fill();
       });
       animId=requestAnimationFrame(draw);
     };
     const onResize=()=>{resize();initStars();};
     window.addEventListener('resize',onResize);
-    resize();initStars();draw();
+    resize(); initStars(); draw();
     return ()=>{window.removeEventListener('resize',onResize);cancelAnimationFrame(animId);};
   },[]);
 
@@ -691,11 +798,16 @@ export default function Home() {
     {href:'#prayer',label:'Prayer'},{href:'#connect',label:'Connect'},
   ];
 
+  // Ministry stats (shown inline on mobile/tablet)
+  const miniStats = [
+    {num:'40+', label:'Sermons'},
+    {num:'11',  label:'Notes'},
+    {num:'Sat', label:'8PM Weekly'},
+  ];
+
   return (
     <>
-      {/* ── GLOBAL FLOATING BACKGROUND (fixed, z-index 0) ── */}
       <GlobalBackgroundLayer />
-
       <canvas ref={canvasRef} id="particles" />
 
       <AnimatePresence>
@@ -704,7 +816,7 @@ export default function Home() {
 
       <motion.button className="theme-toggle" title="Toggle light/dark"
         onClick={handleThemeToggle} whileHover={{ scale:1.12,rotate:15 }} whileTap={{ scale:0.9 }}
-        transition={SPRING} initial={{ opacity:0,scale:0 }} animate={{ opacity:1,scale:1 }} style={{ zIndex:99999 }}
+        transition={SPRING} initial={{ opacity:0,scale:0 }} animate={{ opacity:1,scale:1 }}
       >{isDark?'☾':'☀'}</motion.button>
 
       {/* ── NAV ── */}
@@ -722,58 +834,36 @@ export default function Home() {
           </div>
         </a>
 
-        {/* ── ANIMATED CROSS CHAIN between logo and nav links ── */}
+        {/* Animated cross chain */}
         <div className="nav-cross-chain" aria-hidden="true">
-  {[0,1,2,3,4].map(i=>(
-    <motion.span
-      key={i}
-      style={{ fontSize:'clamp(0.4rem,0.9vw,0.58rem)', color:'var(--gold)', lineHeight:1 }}
-      animate={{ opacity:[0.25,1,0.25], y:[0,-3,0] }}
-      transition={{ duration:2.5,repeat:Infinity,ease:'easeInOut',delay:i*0.35 }}
-    >
-      ✝
-    </motion.span>
-  ))}
-
-  <motion.div
-    style={{ height:'1px', background:'linear-gradient(to right,transparent,var(--gold),transparent)', minWidth:0 }}
-    animate={{ width:['0px','clamp(30px,6vw,100px)','0px'], opacity:[0,0.65,0] }}
-    transition={{ duration:3.5,repeat:Infinity,ease:'easeInOut',delay:0.8 }}
-  />
-
-  <span
-    className="nav-verse-hint"
-    style={{
-      fontFamily: "'Cormorant Garamond',serif",
-      fontStyle: 'italic',
-      fontSize: 'clamp(0rem,1vw,0.65rem)',
-      color: 'var(--text-muted)',
-      whiteSpace: 'nowrap',
-      letterSpacing: '0.04em',
-      opacity: 0.75,
-    }}
-  >
-    &ldquo;The Kingdom of God is within you&rdquo;
-  </span>
-
-  <motion.div
-    style={{ height:'1px', background:'linear-gradient(to left,transparent,var(--gold),transparent)', minWidth:0 }}
-    animate={{ width:['0px','clamp(30px,6vw,100px)','0px'], opacity:[0,0.65,0] }}
-    transition={{ duration:3.5,repeat:Infinity,ease:'easeInOut',delay:2.2 }}
-  />
-
-  {[0,1,2,3,4].map(i=>(
-    <motion.span
-      key={`r${i}`}
-      style={{ fontSize:'clamp(0.4rem,0.9vw,0.58rem)', color:'var(--gold)', lineHeight:1 }}
-      animate={{ opacity:[0.25,1,0.25], y:[0,-3,0] }}
-      transition={{ duration:2.5,repeat:Infinity,ease:'easeInOut',delay:1.1+i*0.35 }}
-    >
-      ✝
-    </motion.span>
-  ))}
-</div>
-
+          {[0,1,2,3,4].map(i=>(
+            <motion.span key={i}
+              style={{ fontSize:'clamp(0.4rem,0.9vw,0.58rem)', color:'var(--gold)', lineHeight:1 }}
+              animate={{ opacity:[0.25,1,0.25], y:[0,-3,0] }}
+              transition={{ duration:2.5,repeat:Infinity,ease:'easeInOut',delay:i*0.35 }}
+            >✝</motion.span>
+          ))}
+          <motion.div
+            style={{ height:'1px', background:'linear-gradient(to right,transparent,var(--gold),transparent)', minWidth:0 }}
+            animate={{ width:['0px','clamp(30px,6vw,100px)','0px'], opacity:[0,0.65,0] }}
+            transition={{ duration:3.5,repeat:Infinity,ease:'easeInOut',delay:0.8 }}
+          />
+          <span className="nav-verse-hint" style={{ fontFamily:"'Cormorant Garamond',serif", fontStyle:'italic', fontSize:'clamp(0rem,1vw,0.65rem)', color:'var(--text-muted)', whiteSpace:'nowrap', letterSpacing:'0.04em', opacity:0.75 }}>
+            &ldquo;The Kingdom of God is within you&rdquo;
+          </span>
+          <motion.div
+            style={{ height:'1px', background:'linear-gradient(to left,transparent,var(--gold),transparent)', minWidth:0 }}
+            animate={{ width:['0px','clamp(30px,6vw,100px)','0px'], opacity:[0,0.65,0] }}
+            transition={{ duration:3.5,repeat:Infinity,ease:'easeInOut',delay:2.2 }}
+          />
+          {[0,1,2,3,4].map(i=>(
+            <motion.span key={`r${i}`}
+              style={{ fontSize:'clamp(0.4rem,0.9vw,0.58rem)', color:'var(--gold)', lineHeight:1 }}
+              animate={{ opacity:[0.25,1,0.25], y:[0,-3,0] }}
+              transition={{ duration:2.5,repeat:Infinity,ease:'easeInOut',delay:1.1+i*0.35 }}
+            >✝</motion.span>
+          ))}
+        </div>
 
         <ul className="nav-links">
           {navItems.map(item=>(
@@ -787,7 +877,7 @@ export default function Home() {
         </motion.button>
       </motion.nav>
 
-      {/* ── MOBILE MENU ── */}
+      {/* Mobile menu */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.ul className="nav-mobile-menu open" initial={{ x:'100%' }} animate={{ x:0 }} exit={{ x:'100%' }} transition={{ type:'spring',stiffness:300,damping:30 }}>
@@ -800,75 +890,95 @@ export default function Home() {
         )}
       </AnimatePresence>
 
-      {/* ── HERO ── */}
+      {/* ════════════════════════════════════════
+          HERO — 3-column desktop, 1-col mobile
+      ════════════════════════════════════════ */}
       <section className="hero">
         <div className="hero-bg" />
         <div className="hero-orb hero-orb-1" />
         <div className="hero-orb hero-orb-2" />
 
-        <motion.div className="hero-ornament" initial={{ opacity:0,y:-20 }} animate={{ opacity:1,y:0 }} transition={{ ...SPRING,delay:0.4 }}>
-          Ministry of the Word
-        </motion.div>
+        {/* LEFT PANEL — desktop only (hidden on ≤1024px via CSS) */}
+        <HeroLeftPanel />
 
-        <motion.h1 className="hero-title" initial={{ opacity:0,y:-24 }} animate={{ opacity:1,y:0 }} transition={{ ...SPRING,delay:0.55 }}>
-          United in <span>Christ</span>
-        </motion.h1>
+        {/* CENTER COLUMN */}
+        <div className="hero-center-col">
+          <motion.div className="hero-ornament" initial={{ opacity:0,y:-20 }} animate={{ opacity:1,y:0 }} transition={{ ...SPRING,delay:0.4 }}>
+            Ministry of the Word
+          </motion.div>
 
-        <motion.div className="hero-logo-wrap" initial={{ opacity:0,scale:0.8 }} animate={{ opacity:1,scale:1 }} transition={{ ...SPRING,delay:0.7 }}>
-          <div className="hero-logo-ring" />
-          <div className="hero-logo-ring-2" />
-          <div className="hero-logo-circle">
-            <img src="/photos/united-in-christ-logo.png" alt="Logo" />
-          </div>
-        </motion.div>
+          <motion.h1 className="hero-title" initial={{ opacity:0,y:-24 }} animate={{ opacity:1,y:0 }} transition={{ ...SPRING,delay:0.55 }}>
+            United in <span>Christ</span>
+          </motion.h1>
 
-        <motion.p className="hero-tagline" initial={{ opacity:0,y:24 }} animate={{ opacity:1,y:0 }} transition={{ ...SPRING,delay:0.9 }}>
-          &ldquo;Proclaiming the Word of God with power, truth, and the spirit of prophecy&rdquo;
-        </motion.p>
+          <motion.div className="hero-logo-wrap" initial={{ opacity:0,scale:0.8 }} animate={{ opacity:1,scale:1 }} transition={{ ...SPRING,delay:0.7 }}>
+            <div className="hero-logo-ring" />
+            <div className="hero-logo-ring-2" />
+            <div className="hero-logo-circle">
+              <img src="/photos/united-in-christ-logo.png" alt="Logo" />
+            </div>
+          </motion.div>
 
-        {/* Scripture ticker — fills empty space */}
-        <motion.div initial={{ opacity:0,y:16 }} animate={{ opacity:1,y:0 }} transition={{ ...SPRING,delay:1.05 }}
-          style={{ display:'flex',alignItems:'center',gap:'12px',margin:'0 0 22px',overflow:'hidden',maxWidth:'520px',width:'100%' }}
-        >
-          <div style={{ height:'1px',flex:1,background:'linear-gradient(to right,transparent,rgba(74,172,220,0.4))' }} />
-          <motion.span style={{ fontFamily:"'Cinzel',serif",fontSize:'clamp(0.5rem,1.1vw,0.6rem)',letterSpacing:'0.22em',color:'var(--gold)',opacity:0.8,whiteSpace:'nowrap' }}
-            animate={{ opacity:[0.45,1,0.45] }} transition={{ duration:4,repeat:Infinity,ease:'easeInOut' }}>
-            JOHN 3:16 &nbsp;✦&nbsp; PHIL 4:13 &nbsp;✦&nbsp; PS 23:1
-          </motion.span>
-          <div style={{ height:'1px',flex:1,background:'linear-gradient(to left,transparent,rgba(74,172,220,0.4))' }} />
-        </motion.div>
+          <motion.p className="hero-tagline" initial={{ opacity:0,y:24 }} animate={{ opacity:1,y:0 }} transition={{ ...SPRING,delay:0.9 }}>
+            &ldquo;Proclaiming the Word of God with power, truth, and the spirit of prophecy&rdquo;
+          </motion.p>
 
-        {/* Ministry stats row */}
-        <motion.div initial={{ opacity:0,y:20 }} animate={{ opacity:1,y:0 }} transition={{ ...SPRING,delay:1.15 }}
-          style={{ display:'flex',gap:'clamp(12px,3.5vw,36px)',justifyContent:'center',marginBottom:'30px',flexWrap:'wrap' }}
-        >
-          {[{num:'40+',label:'Sermons'},{num:'11',label:'Teaching Notes'},{num:'Sat 8PM',label:'Every Week'}].map((stat,i)=>(
-            <motion.div key={i}
-              style={{ textAlign:'center',padding:'10px 18px',borderRadius:'10px',background:'rgba(74,172,220,0.06)',border:'1px solid rgba(74,172,220,0.15)' }}
-              whileHover={{ borderColor:'rgba(74,172,220,0.45)',background:'rgba(74,172,220,0.1)' }} transition={{ duration:0.2 }}
-            >
-              <div style={{ fontFamily:"'Cinzel',serif",fontSize:'clamp(1rem,2.5vw,1.45rem)',fontWeight:700,color:'var(--gold)',lineHeight:1 }}>{stat.num}</div>
-              <div style={{ fontSize:'clamp(0.55rem,1vw,0.62rem)',color:'var(--text-muted)',letterSpacing:'0.14em',marginTop:'5px',textTransform:'uppercase',fontFamily:"'Cinzel',serif" }}>{stat.label}</div>
-            </motion.div>
-          ))}
-        </motion.div>
+          {/* Inline stats — shown on tablet & mobile (≤1024px), hidden on desktop */}
+          <motion.div
+            className="hero-inline-stats"
+            initial={{ opacity:0, y:16 }} animate={{ opacity:1, y:0 }}
+            transition={{ ...SPRING, delay:1.05 }}
+          >
+            {miniStats.map((s,i) => (
+              <motion.div key={i} className="hero-stat-card"
+                whileHover={{ borderColor:'rgba(74,172,220,0.45)' }} transition={{ duration:0.2 }}
+              >
+                <span className="stat-num">{s.num}</span>
+                <span className="stat-label">{s.label}</span>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
 
-        <motion.div className="hero-cta" initial={{ opacity:0,y:24 }} animate={{ opacity:1,y:0 }} transition={{ ...SPRING,delay:1.3 }}>
-          <motion.a href="#sermons" className="btn-gold" whileHover={{ scale:1.05,boxShadow:'0 0 28px rgba(74,172,220,.45)' }} whileTap={{ scale:0.97 }} transition={SPRING}>Watch Sermons</motion.a>
-          <motion.a href="#prayer" className="btn-outline" whileHover={{ scale:1.05 }} whileTap={{ scale:0.97 }} transition={SPRING}><span>Submit Prayer</span></motion.a>
-        </motion.div>
+        {/* RIGHT PANEL — desktop only (hidden on ≤1024px via CSS) */}
+        <HeroRightPanel />
+
+        {/* BOTTOM ROW: CTA + ticker — spans full width */}
+        <div className="hero-bottom">
+          {/* Scripture ticker */}
+          <motion.div className="hero-ticker-strip" initial={{ opacity:0 }} animate={{ opacity:1 }} transition={{ delay:1.1 }}>
+            <div className="hero-ticker-inner">
+              {['JOHN 3:16','PHIL 4:13','PS 23:1','PROV 3:5','MATT 6:33','JER 29:11','JOSH 1:9',
+                'JOHN 3:16','PHIL 4:13','PS 23:1','PROV 3:5','MATT 6:33','JER 29:11','JOSH 1:9'
+              ].map((ref, i) => (
+                <span key={i} className="hero-ticker-item">✦ {ref}</span>
+              ))}
+            </div>
+          </motion.div>
+
+          <motion.div className="hero-cta" initial={{ opacity:0,y:24 }} animate={{ opacity:1,y:0 }} transition={{ ...SPRING,delay:1.25 }}>
+            <motion.a href="#sermons" className="btn-gold" whileHover={{ scale:1.05,boxShadow:'0 0 28px rgba(74,172,220,.45)' }} whileTap={{ scale:0.97 }} transition={SPRING}>Watch Sermons</motion.a>
+            <motion.a href="#prayer" className="btn-outline" whileHover={{ scale:1.05 }} whileTap={{ scale:0.97 }} transition={SPRING}><span>Submit Prayer</span></motion.a>
+          </motion.div>
+        </div>
       </section>
 
       {/* ── VIDEO OF THE DAY ── */}
+      {/* Uses real-time date (getDailyVideoIndex) — changes each calendar day */}
       <motion.section id="video-of-day" initial="hidden" whileInView="visible" viewport={{ once:true,margin:'-80px' }} variants={fadeUp}>
-        <div className="sec-center" style={{ marginBottom:'clamp(24px,4vw,44px)' }}>
+        <div className="sec-center" style={{ marginBottom:'clamp(22px,3.8vw,44px)' }}>
           <div className="sec-lbl">Featured Today</div>
           <h2 className="sec-title">Video of the <span>Day</span></h2>
           <motion.div initial={{ width:0 }} whileInView={{ width:55 }} transition={{ duration:0.8 }}
             style={{ height:2,background:'linear-gradient(to right, var(--gold), transparent)',margin:'20px auto 0' }} />
+          <p style={{ color:'var(--text-muted)',fontSize:'clamp(.82rem,1.4vw,.95rem)',marginTop:'12px' }}
+            suppressHydrationWarning
+          >
+            Today&apos;s video • {new Date().toLocaleDateString('en-ZA',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}
+          </p>
         </div>
         <motion.div className="votd-card" whileHover={{ scale:1.012,boxShadow:'0 32px 72px rgba(0,0,0,.6)' }} transition={SPRING_SOFT}>
-          <div className="votd-badge" suppressHydrationWarning>&#9670; {new Date().toLocaleDateString('en-ZA',{weekday:'long',month:'long',day:'numeric'})}</div>
+          <div className="votd-badge" suppressHydrationWarning>&#9670; {new Date().toLocaleDateString('en-ZA',{weekday:'short',month:'short',day:'numeric'})}</div>
           <div className="video-wrapper">
             <iframe src={`https://www.youtube.com/embed/${videoOfTheDay.id}`} allowFullScreen loading="lazy" title={videoOfTheDay.title} />
           </div>
@@ -890,10 +1000,10 @@ export default function Home() {
           </motion.div>
           <motion.div initial="hidden" whileInView="visible" viewport={{ once:true,margin:'-80px' }} variants={fadeRight}>
             <div className="sec-lbl">Our Leader &amp; Founder</div>
-            <h2 className="sec-title" style={{ fontSize:'clamp(1.8rem,5vw,2.8rem)' }}>Prophet <span>Jay Uriel</span></h2>
+            <h2 className="sec-title" style={{ fontSize:'clamp(1.7rem,4.5vw,2.8rem)' }}>Prophet <span>Jay Uriel</span></h2>
             <motion.div initial={{ width:0 }} whileInView={{ width:70 }} transition={{ duration:0.8 }}
               style={{ height:2,background:'linear-gradient(to right,var(--gold),transparent)',margin:'20px 0' }} />
-            <p style={{ margin:'clamp(18px,3vw,32px) 0 clamp(18px,3vw,40px)',fontSize:'clamp(.9rem,1.5vw,1.08rem)',lineHeight:'1.85',color:'var(--white2)' }}>
+            <p style={{ margin:'clamp(16px,2.8vw,32px) 0 clamp(16px,2.8vw,40px)',fontSize:'clamp(.88rem,1.4vw,1.08rem)',lineHeight:'1.85',color:'var(--white2)' }}>
               Prophet Jay Uriel is a consecrated vessel called by God &mdash; a bold prophetic voice raised for this generation.
               With deep revelation, anointed teaching, and the genuine gift of prophecy, he ministers the fullness of Christ with power, clarity, and compassion.
             </p>
@@ -911,7 +1021,7 @@ export default function Home() {
           <h2 className="sec-title">Saturday <span>Teachings</span></h2>
           <motion.div initial={{ width:0 }} whileInView={{ width:55 }} transition={{ duration:0.8 }}
             style={{ height:2,background:'linear-gradient(to right,var(--gold),transparent)',margin:'20px auto' }} />
-          <p style={{ color:'var(--text-muted)',maxWidth:'680px',margin:'0 auto clamp(28px,4vw,50px)',fontSize:'clamp(.9rem,1.5vw,1.05rem)',lineHeight:'1.75' }}>
+          <p style={{ color:'var(--text-muted)',maxWidth:'680px',margin:'0 auto clamp(24px,3.8vw,50px)',fontSize:'clamp(.88rem,1.4vw,1.05rem)',lineHeight:'1.75' }}>
             Join us every Saturday for powerful anointed teachings with Prophet Jay Uriel. Come expecting an encounter with God.
           </p>
         </motion.div>
@@ -922,7 +1032,7 @@ export default function Home() {
             <div className="sat-info-time"><div className="day-label">Every Saturday</div><div className="time-val">8:00 PM</div></div>
             <div className="sat-divider" />
             <div className="sat-info-venue"><div className="venue-label">Venue</div><div className="venue-val">El Roi Chambers</div></div>
-            <motion.a href="#prayer" className="btn-gold" style={{ whiteSpace:'nowrap',padding:'clamp(12px,2vw,16px) clamp(18px,3vw,36px)' }} whileHover={{ scale:1.05 }} whileTap={{ scale:0.97 }} transition={SPRING}>I Want to Attend</motion.a>
+            <motion.a href="#prayer" className="btn-gold" style={{ whiteSpace:'nowrap',padding:'clamp(11px,1.9vw,16px) clamp(16px,2.8vw,36px)' }} whileHover={{ scale:1.05 }} whileTap={{ scale:0.97 }} transition={SPRING}>I Want to Attend</motion.a>
           </div>
           <div className="sat-badge">United in Christ</div>
         </motion.div>
@@ -942,14 +1052,14 @@ export default function Home() {
           <motion.div initial="hidden" whileInView="visible" viewport={{ once:true }} variants={fadeLeft}>
             <div className="announce-col-header"><div className="announce-col-icon">&#9670;</div>
               <div><div className="sec-lbl" style={{ margin:0,fontSize:'.75rem' }}>Special Broadcast</div>
-                <h3 style={{ fontFamily:"'Playfair Display',serif",fontSize:'clamp(1.3rem,3vw,1.65rem)',color:'var(--white)',margin:0 }}>Word of Life &amp; The Prophetic</h3>
+                <h3 style={{ fontFamily:"'Playfair Display',serif",fontSize:'clamp(1.25rem,2.8vw,1.65rem)',color:'var(--white)',margin:0 }}>Word of Life &amp; The Prophetic</h3>
               </div>
             </div>
             <div className="announce-box">
               <img className="announce-img" src="/announcements/image.jpg" alt="Word of Life and The Prophetic" />
               <div style={{ padding:'0 clamp(4px,1vw,8px)' }}>
                 <div style={{ fontFamily:"'Cinzel',serif",fontSize:'.85rem',letterSpacing:'.08em',color:'var(--gold)',marginBottom:'8px' }}>Coming Soon</div>
-                <div style={{ fontSize:'clamp(.95rem,1.8vw,1.1rem)',lineHeight:'1.4',color:'var(--white)',fontWeight:600,marginBottom:'16px' }}>Host: Prophet Jay Uriel</div>
+                <div style={{ fontSize:'clamp(.92rem,1.7vw,1.1rem)',lineHeight:'1.4',color:'var(--white)',fontWeight:600,marginBottom:'16px' }}>Host: Prophet Jay Uriel</div>
                 <div className="announce-meta">
                   <div className="announce-meta-item"><span className="announce-meta-label">Platform</span><span className="announce-meta-val">Google Meet</span></div>
                   <div className="meta-sep" />
@@ -967,7 +1077,7 @@ export default function Home() {
           <motion.div initial="hidden" whileInView="visible" viewport={{ once:true }} variants={fadeRight}>
             <div className="announce-col-header"><div className="announce-col-icon">&#10022;</div>
               <div><div className="sec-lbl" style={{ margin:0,fontSize:'.75rem' }}>Lives Changed</div>
-                <h3 style={{ fontFamily:"'Playfair Display',serif",fontSize:'clamp(1.3rem,3vw,1.65rem)',color:'var(--white)',margin:0 }}>Testimonials</h3>
+                <h3 style={{ fontFamily:"'Playfair Display',serif",fontSize:'clamp(1.25rem,2.8vw,1.65rem)',color:'var(--white)',margin:0 }}>Testimonials</h3>
               </div>
             </div>
             {[
@@ -1006,7 +1116,7 @@ export default function Home() {
             {videos.map((v,idx)=><LazyVideoCard key={v.id} video={v} index={idx} />)}
           </div>
         </div>
-        <div style={{ textAlign:'center',marginTop:'clamp(32px,5vw,60px)' }}>
+        <div style={{ textAlign:'center',marginTop:'clamp(28px,4.5vw,60px)' }}>
           <motion.a href="https://www.youtube.com/@jayuriel" target="_blank" rel="noopener noreferrer"
             className="btn-gold" style={{ fontSize:'.75rem',padding:'16px 42px' }}
             whileHover={{ scale:1.05,boxShadow:'0 0 28px rgba(74,172,220,.4)' }} whileTap={{ scale:0.97 }} transition={SPRING}>
@@ -1052,7 +1162,7 @@ export default function Home() {
         <h2 className="sec-title" style={{ maxWidth:'560px',margin:'0 auto 16px' }}>Join Us <span>This Saturday</span></h2>
         <motion.div initial={{ width:0 }} whileInView={{ width:55 }} transition={{ duration:0.8 }}
           style={{ height:2,background:'linear-gradient(to right,var(--gold),transparent)',margin:'16px auto 24px' }} />
-        <p style={{ fontFamily:"'Cormorant Garamond',serif",fontStyle:'italic',color:'var(--text-muted)',fontSize:'clamp(.95rem,1.8vw,1.1rem)',maxWidth:'480px',margin:'0 auto 32px',lineHeight:'1.7' }}>
+        <p style={{ fontFamily:"'Cormorant Garamond',serif",fontStyle:'italic',color:'var(--text-muted)',fontSize:'clamp(.92rem,1.7vw,1.1rem)',maxWidth:'480px',margin:'0 auto 32px',lineHeight:'1.7' }}>
           Come as you are. Leave transformed. Every Saturday, we gather to encounter the living God.
         </p>
         <motion.a href="#prayer" className="btn-gold" whileHover={{ scale:1.06,boxShadow:'0 0 28px rgba(74,172,220,.45)' }} whileTap={{ scale:0.97 }} transition={SPRING}>Connect With Us</motion.a>
@@ -1063,10 +1173,10 @@ export default function Home() {
         <VerseOfTheDay />
         <div className="footer-inner">
           <div>
-            <div style={{ fontFamily:"'Cinzel',serif",color:'var(--gold)',fontSize:'clamp(.75rem,1.5vw,.85rem)',letterSpacing:'.12em',marginBottom:'8px' }}>United in Christ</div>
-            <div style={{ fontSize:'clamp(.7rem,1.2vw,.8rem)',color:'var(--text-muted)' }}>Prophet Jay Uriel Ministry</div>
+            <div style={{ fontFamily:"'Cinzel',serif",color:'var(--gold)',fontSize:'clamp(.72rem,1.4vw,.85rem)',letterSpacing:'.12em',marginBottom:'8px' }}>United in Christ</div>
+            <div style={{ fontSize:'clamp(.68rem,1.1vw,.8rem)',color:'var(--text-muted)' }}>Prophet Jay Uriel Ministry</div>
           </div>
-          <div style={{ fontSize:'clamp(.7rem,1.2vw,.78rem)',color:'var(--text-muted)' }}>&copy; 2024 United in Christ. All rights reserved.</div>
+          <div style={{ fontSize:'clamp(.68rem,1.1vw,.78rem)',color:'var(--text-muted)' }}>&copy; 2024 United in Christ. All rights reserved.</div>
         </div>
         <div className="built-by">
           <div className="built-by-beam" />
@@ -1095,6 +1205,15 @@ export default function Home() {
         }
         @media (max-width: 768px) {
           .nav-cross-chain { display: none !important; }
+        }
+        /* Hero inline stats: visible on ≤1024px */
+        @media (min-width: 1025px) {
+          .hero-inline-stats { display: none !important; }
+        }
+        /* Left/right panels: only on ≥1025px */
+        @media (max-width: 1024px) {
+          .hero-left-panel, .hero-right-panel { display: none !important; }
+          .hero-inline-stats { display: flex !important; }
         }
       `}</style>
     </>
