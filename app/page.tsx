@@ -110,23 +110,15 @@ const GLOBAL_CROSSES = [
 // ─────────────────────────────────────────────
 // UTILS
 // ─────────────────────────────────────────────
-
-/**
- * Real-time date-based video selection.
- * Uses actual today's date (year + day of year) so each calendar day
- * consistently maps to one video from the full list.
- */
 function getDailyVideoIndex(listLength: number): number {
   const now = new Date();
   const year = now.getFullYear();
   const start = new Date(year, 0, 0);
   const diff = now.getTime() - start.getTime();
   const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
-  // Combine year + dayOfYear so it resets cleanly each year
   return ((year * 1000) + dayOfYear) % listLength;
 }
 
-/** Same algorithm for picking the daily scripture */
 function getDailyScriptureIndex(listLength: number): number {
   const now = new Date();
   const start = new Date(now.getFullYear(), 0, 0);
@@ -732,9 +724,39 @@ export default function Home() {
   const [ripple,     setRipple]     = useState<{color:string}|null>(null);
   const canvasRef                   = useRef<HTMLCanvasElement>(null);
 
-  // Real-time date-based video of the day
-  // Uses getDailyVideoIndex which reads actual Date() — changes each calendar day
-  const videoOfTheDay = VIDEOS[getDailyVideoIndex(VIDEOS.length)];
+  // ── LIVE DATE STATE for Video of the Day ──
+  // Initialise empty to avoid SSR/hydration mismatch, then fill on client
+  const [vodIndex,     setVodIndex]     = useState(0);
+  const [vodDateLong,  setVodDateLong]  = useState('');
+  const [vodDateShort, setVodDateShort] = useState('');
+
+  useEffect(() => {
+    const update = () => {
+      const now = new Date();
+      setVodIndex(getDailyVideoIndex(VIDEOS.length));
+      setVodDateLong(now.toLocaleDateString('en-ZA', {
+        weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
+      }));
+      setVodDateShort(now.toLocaleDateString('en-ZA', {
+        weekday: 'short', month: 'short', day: 'numeric',
+      }));
+    };
+
+    update();
+
+    // Re-update automatically at midnight so the video/date flips without a page reload
+    const scheduleNextMidnight = (): ReturnType<typeof setTimeout> => {
+      const now        = new Date();
+      const tomorrow   = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+      const msToMidnight = tomorrow.getTime() - now.getTime();
+      return setTimeout(() => { update(); scheduleNextMidnight(); }, msToMidnight);
+    };
+
+    const timer = scheduleNextMidnight();
+    return () => clearTimeout(timer);
+  }, []);
+
+  const videoOfTheDay = VIDEOS[vodIndex];
 
   // Seeded shuffle for sermons grid (consistent within a day's session)
   const dailySeed = new Date().toDateString();
@@ -798,7 +820,6 @@ export default function Home() {
     {href:'#prayer',label:'Prayer'},{href:'#connect',label:'Connect'},
   ];
 
-  // Ministry stats (shown inline on mobile/tablet)
   const miniStats = [
     {num:'40+', label:'Sermons'},
     {num:'11',  label:'Notes'},
@@ -834,7 +855,6 @@ export default function Home() {
           </div>
         </a>
 
-        {/* Animated cross chain */}
         <div className="nav-cross-chain" aria-hidden="true">
           {[0,1,2,3,4].map(i=>(
             <motion.span key={i}
@@ -890,18 +910,14 @@ export default function Home() {
         )}
       </AnimatePresence>
 
-      {/* ════════════════════════════════════════
-          HERO — 3-column desktop, 1-col mobile
-      ════════════════════════════════════════ */}
+      {/* ── HERO ── */}
       <section className="hero">
         <div className="hero-bg" />
         <div className="hero-orb hero-orb-1" />
         <div className="hero-orb hero-orb-2" />
 
-        {/* LEFT PANEL — desktop only (hidden on ≤1024px via CSS) */}
         <HeroLeftPanel />
 
-        {/* CENTER COLUMN */}
         <div className="hero-center-col">
           <motion.div className="hero-ornament" initial={{ opacity:0,y:-20 }} animate={{ opacity:1,y:0 }} transition={{ ...SPRING,delay:0.4 }}>
             Ministry of the Word
@@ -923,7 +939,6 @@ export default function Home() {
             &ldquo;Proclaiming the Word of God with power, truth, and the spirit of prophecy&rdquo;
           </motion.p>
 
-          {/* Inline stats — shown on tablet & mobile (≤1024px), hidden on desktop */}
           <motion.div
             className="hero-inline-stats"
             initial={{ opacity:0, y:16 }} animate={{ opacity:1, y:0 }}
@@ -940,12 +955,9 @@ export default function Home() {
           </motion.div>
         </div>
 
-        {/* RIGHT PANEL — desktop only (hidden on ≤1024px via CSS) */}
         <HeroRightPanel />
 
-        {/* BOTTOM ROW: CTA + ticker — spans full width */}
         <div className="hero-bottom">
-          {/* Scripture ticker */}
           <motion.div className="hero-ticker-strip" initial={{ opacity:0 }} animate={{ opacity:1 }} transition={{ delay:1.1 }}>
             <div className="hero-ticker-inner">
               {['JOHN 3:16','PHIL 4:13','PS 23:1','PROV 3:5','MATT 6:33','JER 29:11','JOSH 1:9',
@@ -963,22 +975,21 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── VIDEO OF THE DAY ── */}
-      {/* Uses real-time date (getDailyVideoIndex) — changes each calendar day */}
+      {/* ── VIDEO OF THE DAY — live date, flips at midnight ── */}
       <motion.section id="video-of-day" initial="hidden" whileInView="visible" viewport={{ once:true,margin:'-80px' }} variants={fadeUp}>
         <div className="sec-center" style={{ marginBottom:'clamp(22px,3.8vw,44px)' }}>
           <div className="sec-lbl">Featured Today</div>
           <h2 className="sec-title">Video of the <span>Day</span></h2>
           <motion.div initial={{ width:0 }} whileInView={{ width:55 }} transition={{ duration:0.8 }}
             style={{ height:2,background:'linear-gradient(to right, var(--gold), transparent)',margin:'20px auto 0' }} />
-          <p style={{ color:'var(--text-muted)',fontSize:'clamp(.82rem,1.4vw,.95rem)',marginTop:'12px' }}
-            suppressHydrationWarning
-          >
-            Today&apos;s video • {new Date().toLocaleDateString('en-ZA',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}
+          <p style={{ color:'var(--text-muted)',fontSize:'clamp(.82rem,1.4vw,.95rem)',marginTop:'12px' }}>
+            {vodDateLong ? `Today's video • ${vodDateLong}` : 'Today\'s featured message'}
           </p>
         </div>
         <motion.div className="votd-card" whileHover={{ scale:1.012,boxShadow:'0 32px 72px rgba(0,0,0,.6)' }} transition={SPRING_SOFT}>
-          <div className="votd-badge" suppressHydrationWarning>&#9670; {new Date().toLocaleDateString('en-ZA',{weekday:'short',month:'short',day:'numeric'})}</div>
+          {vodDateShort && (
+            <div className="votd-badge">&#9670; {vodDateShort}</div>
+          )}
           <div className="video-wrapper">
             <iframe src={`https://www.youtube.com/embed/${videoOfTheDay.id}`} allowFullScreen loading="lazy" title={videoOfTheDay.title} />
           </div>
@@ -1189,7 +1200,6 @@ export default function Home() {
         </div>
       </footer>
 
-      {/* Nav cross chain + responsive rules */}
       <style>{`
         .nav-cross-chain {
           flex: 1;
@@ -1206,11 +1216,9 @@ export default function Home() {
         @media (max-width: 768px) {
           .nav-cross-chain { display: none !important; }
         }
-        /* Hero inline stats: visible on ≤1024px */
         @media (min-width: 1025px) {
           .hero-inline-stats { display: none !important; }
         }
-        /* Left/right panels: only on ≥1025px */
         @media (max-width: 1024px) {
           .hero-left-panel, .hero-right-panel { display: none !important; }
           .hero-inline-stats { display: flex !important; }
