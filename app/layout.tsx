@@ -1,12 +1,25 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
   title: "United in Christ | Prophet Jay Uriel",
   description: "Ministry of the Word — Prophet Jay Uriel",
   icons: {
-    icon: "/photos/united-in-christ-logo.png",
+    icon: [
+      { url: "/photos/united-in-christ-logo.png", type: "image/png" },
+    ],
+    shortcut: "/photos/united-in-christ-logo.png",
+    apple: "/photos/united-in-christ-logo.png",
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  minimumScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+  viewportFit: "cover",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
