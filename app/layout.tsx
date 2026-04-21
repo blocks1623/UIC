@@ -1,35 +1,35 @@
-import type { Metadata, Viewport } from "next";
-import "./globals.css";
+import type { Metadata } from 'next';
+import './globals.css'; // keep if you have one
 
 export const metadata: Metadata = {
-  title: "United in Christ | Prophet Jay Uriel",
-  description: "Ministry of the Word — Prophet Jay Uriel",
-};
-
-export const viewport: Viewport = {
-  width: "device-width",
-  initialScale: 1,
-  minimumScale: 1,
-  maximumScale: 5,
-  userScalable: true,
-  viewportFit: "cover",
+  title: 'United in Christ — Prophet Jay Uriel Ministry',
+  description: 'Proclaiming the Word of God with power, truth, and the spirit of prophecy. Watch sermons, study teaching notes, and submit prayer requests.',
+  icons: {
+    icon: [
+      { url: '/photos/united-in-christ-logo.png', type: 'image/png' },
+    ],
+    apple: '/photos/united-in-christ-logo.png',
+    shortcut: '/photos/united-in-christ-logo.png',
+  },
+  openGraph: {
+    title: 'United in Christ — Prophet Jay Uriel',
+    description: 'Anointed messages, teaching notes, and community prayer.',
+    images: ['/photos/united-in-christ-logo.png'],
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" data-theme="dark" suppressHydrationWarning>
+    <html lang="en" data-theme="dark">
       <head>
-        {/* ── FAVICON: placed directly in <head> so Next.js doesn't override ── */}
-        <link rel="icon" href="/photos/united-in-christ-logo.png" type="image/png" />
-        <link rel="shortcut icon" href="/photos/united-in-christ-logo.png" type="image/png" />
+        {/* ── Favicon (explicit for maximum compatibility) ── */}
+        <link rel="icon" type="image/png" href="/photos/united-in-christ-logo.png" />
         <link rel="apple-touch-icon" href="/photos/united-in-christ-logo.png" />
+        <link rel="shortcut icon" href="/photos/united-in-christ-logo.png" />
 
-        {/* ── FONTS ── */}
+        {/* ── Font preconnect for Google Fonts ── */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Cormorant+Garamond:wght@300;400;600&family=Cinzel:wght@400;600;700&family=Lato:wght@300;400;700&display=swap"
-          rel="stylesheet"
-        />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
       <body>{children}</body>
     </html>
