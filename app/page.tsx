@@ -14,49 +14,273 @@ import {
 // ─────────────────────────────────────────────
 // DATA
 // ─────────────────────────────────────────────
+// ─────────────────────────────────────────────
+// REPLACE your existing VIDEOS array with this
+// ─────────────────────────────────────────────
 const VIDEOS = [
-  { id: "0TS902WHcVc",   title: "Recent Sermon",                url: "https://youtu.be/0TS902WHcVc" },
-  { id: "36V_GmO3050",   title: "Recent Sermon",                url: "https://youtu.be/36V_GmO3050" },
-  { id: "MnnpCZcyYiI",   title: "The Power of Faith in Christ", url: "https://youtu.be/MnnpCZcyYiI" },
-  { id: "yb0ykMTb_dE",   title: "Recent Sermon",                url: "https://youtu.be/yb0ykMTb_dE" },
-  { id: "RvP9Mha5bTA",   title: "Recent Sermon",                url: "https://youtu.be/RvP9Mha5bTA" },
-  { id: "_AZxY5wJ7Pk",   title: "Recent Sermon",                url: "https://youtu.be/_AZxY5wJ7Pk" },
-  { id: "S-IFCaO4A4s",   title: "Walking in God's Grace",       url: "https://youtu.be/S-IFCaO4A4s" },
-  { id: "y7glFO4EkNk",   title: "Recent Sermon",                url: "https://youtu.be/y7glFO4EkNk" },
-  { id: "LkaIPh6m6pc",   title: "Recent Sermon",                url: "https://youtu.be/LkaIPh6m6pc" },
-  { id: "vwsWuBSVxbs",   title: "The Kingdom Mindset",          url: "https://youtu.be/vwsWuBSVxbs" },
-  { id: "ezxL__tQr8A",   title: "Recent Sermon",                url: "https://youtu.be/ezxL__tQr8A" },
-  { id: "hEkVmrYH1qo",   title: "New Sermon",                   url: "https://youtu.be/hEkVmrYH1qo" },
-  { id: "WVEzMYhRbGg",   title: "New Sermon",                   url: "https://youtu.be/WVEzMYhRbGg" },
-  { id: "kEj4c_ayeDY",   title: "New Sermon",                   url: "https://youtu.be/kEj4c_ayeDY" },
-  { id: "n1gOAHFANn4",   title: "New Sermon",                   url: "https://youtu.be/n1gOAHFANn4" },
-  { id: "cxNfd6Hv_mY",   title: "Prophetic Short",              url: "https://youtube.com/shorts/cxNfd6Hv_mY" },
-  { id: "53iDdjlSwNo",   title: "Short",                        url: "https://youtube.com/shorts/53iDdjlSwNo" },
-  { id: "Xu4jocaFM0o",   title: "Short",                        url: "https://youtube.com/shorts/Xu4jocaFM0o" },
-  { id: "XDoobxFlqzs",   title: "Short",                        url: "https://youtube.com/shorts/XDoobxFlqzs" },
-  { id: "En2_4YOxrVw",   title: "Short",                        url: "https://youtube.com/shorts/En2_4YOxrVw" },
-  { id: "WDrH3-Dtpto",   title: "Short",                        url: "https://youtube.com/shorts/WDrH3-Dtpto" },
-  { id: "2EOVwlxiUwE",   title: "Short",                        url: "https://youtube.com/shorts/2EOVwlxiUwE" },
-  { id: "pOIojhQPk18",   title: "Short",                        url: "https://youtube.com/shorts/pOIojhQPk18" },
-  { id: "6IrDC-YlNEs",   title: "Short",                        url: "https://youtube.com/shorts/6IrDC-YlNEs" },
-  { id: "vPBM6grfixs",   title: "Short",                        url: "https://youtube.com/shorts/vPBM6grfixs" },
-  { id: "Wg-hVdQgc3E",   title: "Short",                        url: "https://youtube.com/shorts/Wg-hVdQgc3E" },
-  { id: "cibFZGWUfd8",   title: "Short",                        url: "https://youtube.com/shorts/cibFZGWUfd8" },
-  { id: "rfMnBltV3yI",   title: "Short",                        url: "https://youtube.com/shorts/rfMnBltV3yI" },
-  { id: "DUuek5Gw-Vk",   title: "Short",                        url: "https://youtube.com/shorts/DUuek5Gw-Vk" },
-  { id: "nk6PxjyQmZ8",   title: "Short",                        url: "https://youtube.com/shorts/nk6PxjyQmZ8" },
-  { id: "90Kld0S63W8",   title: "Short",                        url: "https://youtube.com/shorts/90Kld0S63W8" },
-  { id: "SlTpWuFmrCA",   title: "Short",                        url: "https://youtube.com/shorts/SlTpWuFmrCA" },
-  { id: "lW0qJhO5ndU",   title: "Short",                        url: "https://youtube.com/shorts/lW0qJhO5ndU" },
-  { id: "hkPPlXCecsE",   title: "Short",                        url: "https://youtube.com/shorts/hkPPlXCecsE" },
-  { id: "c9pgcEJ2hio",   title: "Short",                        url: "https://youtube.com/shorts/c9pgcEJ2hio" },
-  { id: "hQrsI7cl0GY",   title: "Short",                        url: "https://youtube.com/shorts/hQrsI7cl0GY" },
-  { id: "yNykB7oRYGI",   title: "Short",                        url: "https://youtube.com/shorts/yNykB7oRYGI" },
-  { id: "UfRlNhGwzzs",   title: "Short",                        url: "https://youtube.com/shorts/UfRlNhGwzzs" },
-  { id: "ahqOtvzMmy0",   title: "Short",                        url: "https://youtube.com/shorts/ahqOtvzMmy0" },
-  { id: "vLLWPQvj7Sg",   title: "Short",                        url: "https://youtube.com/shorts/vLLWPQvj7Sg" },
+  {
+    id: "0TS902WHcVc",
+    title: "Voices",
+    summary: "In a world full of competing sounds, Jay Uriel teaches that the voice of God is the one believers cannot afford to lose. He warns that confusion enters when we accept knowledge not rooted in God, and challenges us to intentionally silence the world's noise and listen to the Holy Spirit within.",
+    url: "https://youtu.be/0TS902WHcVc",
+  },
+  {
+    id: "36V_GmO3050",
+    title: "The Imagination",
+    summary: "Exploring the imagination as both the seat of perception and the 'womb of creation,' Uriel teaches that spiritual sight is the prerequisite for possession. Drawing from Abraham's story and Genesis, he shows that creative power is not about the length of prayer but about having a soul in harmony with the Spirit of God.",
+    url: "https://youtu.be/36V_GmO3050",
+  },
+  {
+    id: "MnnpCZcyYiI",
+    title: "In Truth And In Spirit",
+    summary: "This teaching defines worship as deep adoration that begins in the heart. Uriel explains that 'worship in truth' occurs when one's heart posture aligns with their outward expression. He challenges believers to examine their emotional investment — true adoration should be as felt as the emotions shown for movies or sport.",
+    url: "https://youtu.be/MnnpCZcyYiI",
+  },
+  {
+    id: "yb0ykMTb_dE",
+    title: "The Wilderness",
+    summary: "Drawing from Luke 4, Uriel reframes the wilderness not as God's absence but as a place of refining. Dry seasons are where destinies are birthed and visions mature. Just as Jesus returned from the wilderness in power, our difficult seasons are designed to build the strength needed to sustain future greatness.",
+    url: "https://youtu.be/yb0ykMTb_dE",
+  },
+  {
+    id: "RvP9Mha5bTA",
+    title: "Wisdom with Jay Uriel",
+    summary: "True wisdom is not found in books or earthly intelligence — it is found in the person of Jesus Christ. Uriel explains that while Christ is our wisdom, accessing it requires relationship built on two pillars: the fear of the Lord and the choice to depart from evil. Recognising one's lack of wisdom is actually the first sign wisdom is already at work.",
+    url: "https://youtu.be/RvP9Mha5bTA",
+  },
+  {
+    id: "_AZxY5wJ7Pk",
+    title: "What Is Faith? How to Grow in Faith?",
+    summary: "Defining faith as trusting God's character when the full picture is unclear, Uriel provides a roadmap for growth: consistent study of the Word, daily prayer, and perseverance through trials. He recommends starting with small acts of trust, keeping a faithfulness journal, and staying connected to a believing community.",
+    url: "https://youtu.be/_AZxY5wJ7Pk",
+  },
+  {
+    id: "S-IFCaO4A4s",
+    title: "Freedom In Jesus",
+    summary: "True liberty is found only where the Spirit of the Lord is present. Uriel explains that a person who is bound cannot set themselves free — they need Jesus, the source of all freedom. He encourages those in difficult situations to stop leaning on their own understanding and call upon the name of the Lord.",
+    url: "https://youtu.be/S-IFCaO4A4s",
+  },
+  {
+    id: "y7glFO4EkNk",
+    title: "The Kingdom of God Is Within You",
+    summary: "Challenging the view that the Kingdom is strictly an afterlife destination, Uriel points to Luke 17 to show it is currently located within every believer. Seeking the Kingdom is therefore an internal search for the ideas, revelations, and heavenly treasures God has already deposited inside of us.",
+    url: "https://youtu.be/y7glFO4EkNk",
+  },
+  {
+    id: "LkaIPh6m6pc",
+    title: "The Lordship Of Jesus",
+    summary: "Based on Romans 10:9, Uriel defines 'Lord' as a Master with absolute ownership rights. Confessing Jesus as Lord is an agreement to submit one's will and authority to Him. True lordship is proven when a believer stops walking in their own ways and begins to do exactly what Jesus commands.",
+    url: "https://youtu.be/LkaIPh6m6pc",
+  },
+  {
+    id: "vwsWuBSVxbs",
+    title: "The Kingdom Mindset",
+    summary: "Using Romans 12:2, Uriel teaches that transformation only happens when we replace old, wrong information with the Word of God. Believers must intentionally permit the mind of Christ to dwell in them by meditating on things that are pure, lovely, and of good report. Transformation is always inside-out.",
+    url: "https://youtu.be/vwsWuBSVxbs",
+  },
+  {
+    id: "ezxL__tQr8A",
+    title: "What's Next, Since You Received Christ?",
+    summary: "For those new to the faith, Uriel outlines the process of sanctification — being set apart from the world into righteousness. Prayer conquers temptation; the Word cleanses the mind. He recommends starting the spiritual journey by reading the Book of John to understand the image of Christ.",
+    url: "https://youtu.be/ezxL__tQr8A",
+  },
+  {
+    id: "hEkVmrYH1qo",
+    title: "State of Elevation",
+    summary: "Examining the Sermon on the Mount, Uriel explains why Jesus ascended a mountain to teach: it was a position of authority. He applies this to life and business — to be extraordinary, one must separate from the crowd and operate from a higher level of knowledge and understanding than the multitude.",
+    url: "https://youtu.be/hEkVmrYH1qo",
+  },
+  {
+    id: "WVEzMYhRbGg",
+    title: "True And Proper Worship",
+    summary: "Referencing Romans 12:1, Uriel teaches that true and proper worship is offering one's body as a living sacrifice. Worship is adoration proven by obedience. Singing is only true worship when it flows from a heart that has fully surrendered its life and plan to God.",
+    url: "https://youtu.be/WVEzMYhRbGg",
+  },
+  {
+    id: "kEj4c_ayeDY",
+    title: "How To Access The Kingdom Of God",
+    summary: "Because of free will, God does not force entry into His Kingdom. Access is a personal choice made by believing in and receiving Jesus Christ. Uriel reminds viewers that while humans are inherently weak, God's strength is made perfect in that weakness when we rely on His grace.",
+    url: "https://youtu.be/kEj4c_ayeDY",
+  },
+  {
+    id: "n1gOAHFANn4",
+    title: "By This Shall All Men Know",
+    summary: "Focused on John 13:34–35, Uriel argues that love is the primary mark of a disciple — more significant than preaching or demonstrations of power. Walking in love resembles the very nature of Christ and requires a mind transformed by the Word to manifest consistently.",
+    url: "https://youtu.be/n1gOAHFANn4",
+  },
+  // Shorts — no summaries
+  { id: "cxNfd6Hv_mY", title: "Prophetic Short", url: "https://youtube.com/shorts/cxNfd6Hv_mY" },
+  { id: "53iDdjlSwNo", title: "Short", url: "https://youtube.com/shorts/53iDdjlSwNo" },
+  { id: "Xu4jocaFM0o", title: "Short", url: "https://youtube.com/shorts/Xu4jocaFM0o" },
+  { id: "XDoobxFlqzs", title: "Short", url: "https://youtube.com/shorts/XDoobxFlqzs" },
+  { id: "En2_4YOxrVw", title: "Short", url: "https://youtube.com/shorts/En2_4YOxrVw" },
+  { id: "WDrH3-Dtpto", title: "Short", url: "https://youtube.com/shorts/WDrH3-Dtpto" },
+  { id: "2EOVwlxiUwE", title: "Short", url: "https://youtube.com/shorts/2EOVwlxiUwE" },
+  { id: "pOIojhQPk18", title: "Short", url: "https://youtube.com/shorts/pOIojhQPk18" },
+  { id: "6IrDC-YlNEs", title: "Short", url: "https://youtube.com/shorts/6IrDC-YlNEs" },
+  { id: "vPBM6grfixs", title: "Short", url: "https://youtube.com/shorts/vPBM6grfixs" },
+  { id: "Wg-hVdQgc3E", title: "Short", url: "https://youtube.com/shorts/Wg-hVdQgc3E" },
+  { id: "cibFZGWUfd8", title: "Short", url: "https://youtube.com/shorts/cibFZGWUfd8" },
+  { id: "rfMnBltV3yI", title: "Short", url: "https://youtube.com/shorts/rfMnBltV3yI" },
+  { id: "DUuek5Gw-Vk", title: "Short", url: "https://youtube.com/shorts/DUuek5Gw-Vk" },
+  { id: "nk6PxjyQmZ8", title: "Short", url: "https://youtube.com/shorts/nk6PxjyQmZ8" },
+  { id: "90Kld0S63W8", title: "Short", url: "https://youtube.com/shorts/90Kld0S63W8" },
+  { id: "SlTpWuFmrCA", title: "Short", url: "https://youtube.com/shorts/SlTpWuFmrCA" },
+  { id: "lW0qJhO5ndU", title: "Short", url: "https://youtube.com/shorts/lW0qJhO5ndU" },
+  { id: "hkPPlXCecsE", title: "Short", url: "https://youtube.com/shorts/hkPPlXCecsE" },
+  { id: "c9pgcEJ2hio", title: "Short", url: "https://youtube.com/shorts/c9pgcEJ2hio" },
+  { id: "hQrsI7cl0GY", title: "Short", url: "https://youtube.com/shorts/hQrsI7cl0GY" },
+  { id: "yNykB7oRYGI", title: "Short", url: "https://youtube.com/shorts/yNykB7oRYGI" },
+  { id: "UfRlNhGwzzs", title: "Short", url: "https://youtube.com/shorts/UfRlNhGwzzs" },
+  { id: "ahqOtvzMmy0", title: "Short", url: "https://youtube.com/shorts/ahqOtvzMmy0" },
+  { id: "vLLWPQvj7Sg", title: "Short", url: "https://youtube.com/shorts/vLLWPQvj7Sg" },
 ];
 
+
+// ─────────────────────────────────────────────
+// REPLACE your existing VideoCard component with this
+// ─────────────────────────────────────────────
+function VideoCard({
+  video,
+  index,
+}: {
+  video: { id: string; title: string; url: string; summary?: string };
+  index: number;
+}) {
+  const [playing, setPlaying] = useState(false);
+  const [showSummary, setShowSummary] = useState(false);
+  const thumb = `https://img.youtube.com/vi/${video.id}/mqdefault.jpg`;
+
+  return (
+    <motion.div
+      className="vid-card"
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ ...SP, delay: Math.min(index * 0.05, 0.4) }}
+      whileHover={{ y: -5, borderColor: "rgba(0,229,255,0.45)" }}
+      style={{ willChange: "transform" }}
+    >
+      {/* Thumbnail / Player */}
+      <div
+        className="vid-thumb-wrap"
+        onClick={() => !playing && setPlaying(true)}
+      >
+        {playing ? (
+          <iframe
+            src={`https://www.youtube.com/embed/${video.id}?autoplay=1`}
+            allowFullScreen
+            allow="autoplay; encrypted-media"
+            title={video.title}
+            loading="lazy"
+          />
+        ) : (
+          <>
+            <img src={thumb} alt={video.title} loading="lazy" />
+            <div className="vid-play-btn" aria-label="Play video">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            </div>
+          </>
+        )}
+      </div>
+
+      {/* Info row */}
+      <div className="vid-info">
+        <span className="vid-title">{video.title}</span>
+        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          {video.summary && (
+            <motion.button
+              className="vid-summary-btn"
+              onClick={() => setShowSummary((s) => !s)}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              transition={SP}
+              aria-expanded={showSummary}
+            >
+              {showSummary ? "Hide" : "Summary"}
+            </motion.button>
+          )}
+          <a
+            href={video.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="vid-yt-link"
+          >
+            YouTube →
+          </a>
+        </div>
+      </div>
+
+      {/* Animated summary panel */}
+      <AnimatePresence initial={false}>
+        {showSummary && video.summary && (
+          <motion.div
+            className="vid-summary-panel"
+            key="summary"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.38, ease: [0.4, 0, 0.2, 1] }}
+            style={{ overflow: "hidden" }}
+          >
+            <motion.p
+              className="vid-summary-text"
+              initial={{ y: 8, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -4, opacity: 0 }}
+              transition={{ delay: 0.1, duration: 0.3, ease: "easeOut" }}
+            >
+              {video.summary}
+            </motion.p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  );
+}
+
+
+// ─────────────────────────────────────────────
+// ADD these styles inside your existing <style> block
+// (paste anywhere inside the existing `<style>{` ... `}</style>`)
+// ─────────────────────────────────────────────
+/*
+.vid-summary-btn {
+  padding: 5px 12px;
+  min-height: 30px;
+  border-radius: 40px;
+  border: 1px solid rgba(0,229,255,0.3);
+  background: rgba(0,229,255,0.07);
+  color: var(--accent);
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background .2s, border-color .2s;
+  white-space: nowrap;
+}
+.vid-summary-btn:hover {
+  background: rgba(0,229,255,0.14);
+  border-color: rgba(0,229,255,0.55);
+}
+.vid-summary-panel {
+  border-top: 1px solid var(--border);
+  padding: 0 clamp(12px,1.8vw,18px);
+}
+.vid-summary-text {
+  font-size: clamp(.78rem,1.1vw,.86rem);
+  color: var(--text2);
+  line-height: 1.78;
+  padding: 13px 0 15px;
+  border-left: 2px solid rgba(0,229,255,0.3);
+  padding-left: 12px;
+  font-style: italic;
+  margin: 0;
+}
+*/
 const DOCUMENTS = [
   { name: "Dominion & Royalty in Christ",        viewUrl: "https://drive.google.com/file/d/1RehRpaL6Yv2MmSr4zfxo9QCC3tKmDq3c/view", isNew: false },
   { name: "Gifts Impress But Fruit Proves",      viewUrl: "https://drive.google.com/file/d/19E-XcK4mRD-KgfpbTlQDCLvOqpr5wJiX/view", isNew: false },
