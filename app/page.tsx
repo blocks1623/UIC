@@ -1,3 +1,5 @@
+typescript
+
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
@@ -272,6 +274,93 @@ function ElectricRipple({ x, y, toLight, onComplete }: {
 }
 
 // ─────────────────────────────────────────────
+// ✦ NEW: CAL.COM BOOKING MODAL
+// ─────────────────────────────────────────────
+function CalModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+    if (!isOpen) setLoaded(false);
+    return () => { document.body.style.overflow = ''; };
+  }, [isOpen]);
+
+  useEffect(() => {
+    const fn = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+    document.addEventListener('keydown', fn);
+    return () => document.removeEventListener('keydown', fn);
+  }, [onClose]);
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          className="cal-overlay"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.25 }}
+          onClick={e => { if (e.target === e.currentTarget) onClose(); }}
+        >
+          <motion.div
+            className="cal-modal"
+            initial={{ opacity: 0, y: 40, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 40, scale: 0.96 }}
+            transition={SPsoft}
+          >
+            {/* Modal header */}
+            <div className="cal-header">
+              <div className="cal-header-left">
+                <div className="cal-eyebrow">Schedule Your Session</div>
+                <div className="cal-title">Book a Live Session</div>
+              </div>
+              <motion.button
+                className="cal-close"
+                onClick={onClose}
+                whileHover={{ rotate: 90, scale: 1.1 }}
+                transition={SP}
+                aria-label="Close booking"
+              >✕</motion.button>
+            </div>
+
+            {/* Cal.com iframe */}
+            <div className="cal-body">
+              {!loaded && (
+                <div className="cal-loading">
+                  <motion.div
+                    className="cal-loading-cross"
+                    animate={{ rotate: [0, 10, -10, 0], opacity: [0.4, 1, 0.4] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >☩</motion.div>
+                  <div className="cal-loading-text">Loading your calendar…</div>
+                </div>
+              )}
+              <iframe
+                src="https://cal.com/unitedinchrist-vuyzsm"
+                frameBorder="0"
+                width="100%"
+                height="100%"
+                title="Book a Live Session — United in Christ"
+                onLoad={() => setLoaded(true)}
+                style={{ opacity: loaded ? 1 : 0, transition: 'opacity 0.4s ease' }}
+                allow="camera; microphone; clipboard-write"
+              />
+            </div>
+
+            {/* Footer hint */}
+            <div className="cal-footer">
+              <span>🔒 Secure booking via Cal.com</span>
+              <span style={{ color: 'var(--accent)' }}>United in Christ</span>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
+// ─────────────────────────────────────────────
 // SUMMARY MODAL
 // ─────────────────────────────────────────────
 function SummaryModal({ video, onClose }: {
@@ -288,7 +377,6 @@ function SummaryModal({ video, onClose }: {
     return () => document.removeEventListener('keydown', fn);
   }, [onClose]);
 
-  // Animate words one by one
   const [visibleWords, setVisibleWords] = useState(0);
   const words = video?.summary?.split(' ') ?? [];
   useEffect(() => {
@@ -321,7 +409,6 @@ function SummaryModal({ video, onClose }: {
             exit={{ opacity: 0, y: 40, scale: 0.96 }}
             transition={SPsoft}
           >
-            {/* Header */}
             <div className="summary-header">
               <div className="summary-header-left">
                 <div className="summary-eyebrow">Sermon Summary</div>
@@ -334,18 +421,11 @@ function SummaryModal({ video, onClose }: {
                 transition={SP}
               >✕</motion.button>
             </div>
-
-            {/* Thumbnail */}
             <div className="summary-thumb">
-              <img
-                src={`https://img.youtube.com/vi/${video.id}/mqdefault.jpg`}
-                alt={video.title}
-              />
+              <img src={`https://img.youtube.com/vi/${video.id}/mqdefault.jpg`} alt={video.title} />
               <div className="summary-thumb-overlay" />
               <div className="summary-play-hint">▶ Click thumbnail to watch</div>
             </div>
-
-            {/* Animated summary text */}
             <div className="summary-body">
               {video.summary ? (
                 <p className="summary-text">
@@ -365,8 +445,6 @@ function SummaryModal({ video, onClose }: {
                 <p className="summary-no-text">No summary available for this video.</p>
               )}
             </div>
-
-            {/* Footer actions */}
             <div className="summary-footer">
               <motion.a
                 href={video.url}
@@ -445,7 +523,7 @@ function ScrollProgressLine() {
 }
 
 // ─────────────────────────────────────────────
-// VIDEO CARD — with Summary button
+// VIDEO CARD
 // ─────────────────────────────────────────────
 function VideoCard({
   video,
@@ -755,7 +833,7 @@ function PrayerWall() {
 }
 
 // ─────────────────────────────────────────────
-// DUAL-PURPOSE PRAYER & CONNECT SECTION
+// PRAYER SECTION
 // ─────────────────────────────────────────────
 function PrayerSection() {
   const [mode, setMode] = useState<'prayer' | 'connect'>('prayer');
@@ -877,7 +955,6 @@ function PrayerSection() {
               {mode === 'prayer' ? (
                 <motion.div key="prayer-form" className="prayer-form"
                   initial={{ opacity: 0, x: -24 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 24 }} transition={SPsoft}>
-
                   <AnimatePresence>
                     {isSevere && (
                       <motion.div className="severe-banner"
@@ -894,7 +971,6 @@ function PrayerSection() {
                       </motion.div>
                     )}
                   </AnimatePresence>
-
                   <div className="identity-row">
                     <div className="identity-left">
                       <AnimatePresence mode="wait">
@@ -920,7 +996,6 @@ function PrayerSection() {
                       </button>
                     </div>
                   </div>
-
                   <div className="floating-field">
                     <select className="f-bare f-select" value={category} onChange={e => setCategory(e.target.value)} id="pCat">
                       <option value="">Select a category…</option>
@@ -928,7 +1003,6 @@ function PrayerSection() {
                     </select>
                     <label htmlFor="pCat" className={`floating-label${category ? ' elevated' : ''}`}>Prayer Category</label>
                   </div>
-
                   <div className="message-field">
                     <textarea
                       ref={msgRef}
@@ -939,7 +1013,6 @@ function PrayerSection() {
                       onInput={e => { const t = e.target as HTMLTextAreaElement; t.style.height = 'auto'; t.style.height = t.scrollHeight + 'px'; }}
                     />
                   </div>
-
                   <AnimatePresence>
                     {showNotes && (
                       <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.3 }}>
@@ -950,7 +1023,6 @@ function PrayerSection() {
                       </motion.div>
                     )}
                   </AnimatePresence>
-
                   <div className="form-controls-row">
                     <motion.button className="add-notes-btn" onClick={() => setShowNotes(!showNotes)} whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
                       <span className="add-notes-icon">{showNotes ? '−' : '+'}</span>
@@ -961,16 +1033,13 @@ function PrayerSection() {
                       <span>Add to Prayer Wall</span>
                     </label>
                   </div>
-
                   <label className="wall-check" style={{ gap: '10px' }}>
                     <input type="checkbox" className="f-check" checked={notifyWhenPrayed} onChange={e => setNotifyWhenPrayed(e.target.checked)} />
                     <span>Notify me via WhatsApp when my request is prayed over</span>
                   </label>
-
                   <div className="privacy-notice">
                     <span>🔒</span> Your information is strictly confidential and will never be shared outside our prayer team.
                   </div>
-
                   <motion.button className="submit-btn" onClick={handlePrayer}
                     whileHover={{ scale: 1.02, boxShadow: '0 12px 40px rgba(0,229,255,0.28)' }}
                     whileTap={{ scale: 0.98 }} transition={SP}>
@@ -980,12 +1049,10 @@ function PrayerSection() {
               ) : (
                 <motion.div key="connect-form" className="prayer-form"
                   initial={{ opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -24 }} transition={SPsoft}>
-
                   <div className="floating-field">
                     <input className="f-bare" type="text" id="cName" ref={nameRef} placeholder=" " />
                     <label htmlFor="cName" className="floating-label">Your Name *</label>
                   </div>
-
                   <div className="contact-method-row">
                     <div className="cm-label">Preferred contact method</div>
                     <div className="cm-options">
@@ -997,14 +1064,12 @@ function PrayerSection() {
                       ))}
                     </div>
                   </div>
-
                   {(contactMethod === 'whatsapp' || contactMethod === 'call') && (
                     <div className="floating-field">
                       <input className="f-bare" type="tel" id="cPhone" ref={phoneRef} placeholder=" " />
                       <label htmlFor="cPhone" className="floating-label">Phone / WhatsApp Number</label>
                     </div>
                   )}
-
                   <div className="floating-field">
                     <select className="f-bare f-select" value={connectTopic} onChange={e => setConnectTopic(e.target.value)} id="cTopic">
                       <option value="">What is this about?</option>
@@ -1016,21 +1081,17 @@ function PrayerSection() {
                     </select>
                     <label htmlFor="cTopic" className={`floating-label${connectTopic ? ' elevated' : ''}`}>Topic</label>
                   </div>
-
                   <div className="message-field">
                     <textarea ref={msgRef} className="f-bare-area" rows={4} placeholder="What would you like to share or ask?"
                       onInput={e => { const t = e.target as HTMLTextAreaElement; t.style.height = 'auto'; t.style.height = t.scrollHeight + 'px'; }} />
                   </div>
-
                   <label className="wall-check" style={{ gap: '10px' }}>
                     <input type="checkbox" className="f-check" checked={notifyWhenPrayed} onChange={e => setNotifyWhenPrayed(e.target.checked)} />
                     <span>Notify me when my message is received &amp; prayed over</span>
                   </label>
-
                   <div className="privacy-notice">
                     <span>🔒</span> Your details are confidential and used only to respond to your enquiry.
                   </div>
-
                   <motion.button className="submit-btn" onClick={handleConnect}
                     whileHover={{ scale: 1.02, boxShadow: '0 12px 40px rgba(0,229,255,0.28)' }}
                     whileTap={{ scale: 0.98 }} transition={SP}>
@@ -1097,7 +1158,9 @@ export default function Home() {
   const [vodDateShort, setVodDateShort] = useState('');
   const [summaryVideo, setSummaryVideo] = useState<typeof VIDEOS[0] | null>(null);
 
-  // ── Theme: read from localStorage on mount, persist on change ──
+  // ── ✦ NEW: Cal.com modal state ──
+  const [calOpen, setCalOpen] = useState(false);
+
   useEffect(() => {
     const saved = localStorage.getItem('uic-theme');
     if (saved === 'light') setIsDark(false);
@@ -1129,7 +1192,6 @@ export default function Home() {
   const dailySeed     = new Date().toDateString();
   const shuffled      = seededShuffle(VIDEOS, dailySeed);
 
-  // Electric ripple toggle
   const handleThemeToggle = (e: React.MouseEvent) => {
     const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
     const x = rect.left + rect.width / 2;
@@ -1181,7 +1243,7 @@ export default function Home() {
   }, []);
 
   const { scrollY } = useScroll();
-  const navBg       = useTransform(scrollY, [0, 60], ['rgba(13,13,13,0)', 'rgba(13,13,13,0.97)']);
+  const navBg       = useTransform(scrollY, [0, 60], ['rgba(0,0,0,0)', 'rgba(0,0,0,0.97)']);
   const rawPy       = useTransform(scrollY, [0, 80], [22, 12]);
   const navPy       = useSpring(rawPy, { stiffness: 80, damping: 20 });
 
@@ -1196,7 +1258,6 @@ export default function Home() {
 
   return (
     <>
-      {/* FOUC prevention: inline script sets theme before paint */}
       <script dangerouslySetInnerHTML={{ __html: `
         (function(){
           try {
@@ -1217,6 +1278,9 @@ export default function Home() {
 
       {/* Summary Modal */}
       <SummaryModal video={summaryVideo} onClose={() => setSummaryVideo(null)} />
+
+      {/* ✦ Cal.com Booking Modal */}
+      <CalModal isOpen={calOpen} onClose={() => setCalOpen(false)} />
 
       {/* Theme toggle */}
       <motion.button
@@ -1294,34 +1358,94 @@ export default function Home() {
         )}
       </AnimatePresence>
 
-      {/* ── HERO ── */}
+      {/* ── ✦ HERO — REDESIGNED (Vision Ministry aesthetic) ── */}
       <section className="hero">
-        <div className="hero-bg" />
-        <div className="hero-grad" />
-        <div className="hero-orb hero-orb-1" />
-        <div className="hero-orb hero-orb-2" />
-        <div className="hero-content">
-          <motion.div className="hero-eyebrow" initial={{ opacity: 0, y: -16 }} animate={{ opacity: 1, y: 0 }} transition={{ ...SP, delay: 0.4 }}>Ministry of the Word</motion.div>
-          <motion.h1 className="hero-h1" initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ ...SP, delay: 0.55 }}>
-            United in <span>Christ</span>
-          </motion.h1>
-          <motion.p className="hero-tagline" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ ...SP, delay: 0.75 }}>
-            Proclaiming the Word of God with power, truth, and the spirit of prophecy
-          </motion.p>
-          <motion.div className="hero-btns" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ ...SP, delay: 0.92 }}>
-            <motion.a href="#sermons" className="btn-primary" whileHover={{ scale: 1.05, boxShadow: '0 0 36px rgba(0,229,255,.4)' }} whileTap={{ scale: 0.97 }} transition={SP}>Watch Sermons</motion.a>
-            <motion.a href="#prayer" className="btn-ghost" whileHover={{ scale: 1.05, borderColor: 'rgba(255,255,255,.8)' }} whileTap={{ scale: 0.97 }} transition={SP}>Submit Prayer</motion.a>
+        {/* Pure black base — no image background */}
+        <div className="hero-black-bg" />
+
+        {/* Subtle noise texture overlay */}
+        <div className="hero-noise" />
+
+        {/* Minimal horizontal rule accent */}
+        <div className="hero-rule-top" />
+
+        <div className="hero-content-vision">
+          {/* Overline */}
+          <motion.div
+            className="hero-overline"
+            initial={{ opacity: 0, y: -12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ ...SP, delay: 0.3 }}
+          >
+            Ministry of the Word
           </motion.div>
-          <motion.div className="hero-infobar" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.15 }}>
-            <div className="hero-info-item"><span className="hi-label">Every Saturday</span><span className="hi-val">8:00 PM — El Roi Chambers</span></div>
-            <div className="hi-sep" />
-            <div className="hero-info-item"><span className="hi-label">40+ Sermons</span><span className="hi-val">Free to Watch &amp; Share</span></div>
-            <div className="hi-sep" />
-            <div className="hero-info-item"><span className="hi-label">11 Teaching Notes</span><span className="hi-val">Download &amp; Study</span></div>
+
+          {/* ✦ Main headline — bold, massive, like the screenshot */}
+          <motion.h1
+            className="hero-h1-vision"
+            initial={{ opacity: 0, y: 32 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ ...SP, delay: 0.48 }}
+          >
+            Encounter God.<br />Find Purpose.
+          </motion.h1>
+
+          {/* Subtitle */}
+          <motion.p
+            className="hero-sub-vision"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ ...SP, delay: 0.66 }}
+          >
+            A place to grow spiritually, hear the truth, and walk with Christ daily.
+          </motion.p>
+
+          {/* ✦ CTA Buttons */}
+          <motion.div
+            className="hero-btns-vision"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ ...SP, delay: 0.82 }}
+          >
+            {/* Primary: Watch Sermons */}
+            <motion.a
+              href="#sermons"
+              className="hero-btn-primary-vision"
+              whileHover={{ scale: 1.04, backgroundColor: '#e8e8e8' }}
+              whileTap={{ scale: 0.97 }}
+              transition={SP}
+            >
+              Watch Sermons
+            </motion.a>
+
+            {/* ✦ Secondary: Book a Live Session — opens Cal.com modal */}
+            <motion.button
+              className="hero-btn-outline-vision"
+              onClick={() => setCalOpen(true)}
+              whileHover={{ scale: 1.04, backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.9)' }}
+              whileTap={{ scale: 0.97 }}
+              transition={SP}
+            >
+              Book a Live Session
+            </motion.button>
+          </motion.div>
+
+          {/* Info strip */}
+          <motion.div
+            className="hero-infostrip"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.05 }}
+          >
+            <span>Every Saturday · 8:00 PM · El Roi Chambers</span>
+            <span className="strip-dot">·</span>
+            <span>40+ Sermons Free to Watch</span>
           </motion.div>
         </div>
-        <motion.div className="hero-scroll" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }}>
-          <motion.div className="scroll-dot" animate={{ y: [0, 8, 0] }} transition={{ duration: 1.4, repeat: Infinity, ease: 'easeInOut' }} />
+
+        {/* Scroll indicator */}
+        <motion.div className="hero-scroll-vision" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.4 }}>
+          <motion.div className="scroll-dot-vision" animate={{ y: [0, 8, 0] }} transition={{ duration: 1.4, repeat: Infinity, ease: 'easeInOut' }} />
         </motion.div>
       </section>
 
@@ -1581,9 +1705,6 @@ export default function Home() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@300;400;500;600;700;800&family=Archivo+Black&display=swap');
 
-        /* ── FLASH-OF-UNSTYLED-CONTENT prevention ──
-           Applied by the inline script above before React hydrates.
-           These rules kick in immediately. */
         html[data-theme='light'] body { background-color: #F0F2F7 !important; }
         html[data-theme='dark']  body { background-color: #0D0D0D !important; }
 
@@ -1593,12 +1714,9 @@ export default function Home() {
           --container: 1200px;
           --section-py: clamp(72px,9vw,120px);
           --gap: clamp(14px,2.2vw,24px);
-
-          /* GPU-accelerated theme transition — only background-color and color, not 'all' */
           --theme-transition: 0.42s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* ── ELECTRIC DARK ── */
         [data-theme='dark'] {
           --bg:            #0D0D0D;
           --bg-mid:        #111114;
@@ -1623,7 +1741,6 @@ export default function Home() {
           --electric-glow: 0 0 18px rgba(0,229,255,0.35), 0 0 40px rgba(0,229,255,0.12);
         }
 
-        /* ── LIGHT THEME ── */
         [data-theme='light'] {
           --bg:            #F0F2F7;
           --bg-mid:        #E8ECF4;
@@ -1657,10 +1774,7 @@ export default function Home() {
           font-size: 16px;
           line-height: 1.6;
           overflow-x: hidden;
-          /* Only transition the properties that matter — avoids GPU thrash */
-          transition:
-            background-color var(--theme-transition),
-            color var(--theme-transition);
+          transition: background-color var(--theme-transition), color var(--theme-transition);
           will-change: background-color, color;
         }
 
@@ -1684,7 +1798,6 @@ export default function Home() {
           z-index: 1002; transform-origin: top; pointer-events: none;
         }
 
-        /* ── SECTIONS ── */
         section, .join-sec {
           position: relative; z-index: 1;
           padding: var(--section-py) clamp(16px,5vw,52px);
@@ -1718,39 +1831,31 @@ export default function Home() {
           margin: 18px auto 0;
         }
 
-        /* ── BUTTONS ── */
         .btn-primary {
           display: inline-flex; align-items: center; justify-content: center; gap: 6px;
           padding: clamp(13px,1.8vw,15px) clamp(24px,3.5vw,42px);
-          min-height: 48px;
-          border-radius: 40px;
-          background-color: var(--accent);
-          color: #0D0D0D;
+          min-height: 48px; border-radius: 40px;
+          background-color: var(--accent); color: #0D0D0D;
           font-size: clamp(.78rem,1.2vw,.9rem);
           font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
           text-decoration: none; border: none; cursor: pointer;
-          transition: background-color .2s;
-          will-change: transform;
+          transition: background-color .2s; will-change: transform;
         }
-        [data-theme='dark'] .btn-primary { color: #0D0D0D; }
         .btn-primary:hover { background-color: var(--accent-warm); }
         .btn-ghost {
           display: inline-flex; align-items: center; justify-content: center;
           padding: clamp(12px,1.8vw,15px) clamp(24px,3.5vw,42px);
-          min-height: 48px;
-          border-radius: 40px;
+          min-height: 48px; border-radius: 40px;
           background: transparent; color: #fff;
           font-size: clamp(.78rem,1.2vw,.9rem);
           font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
           text-decoration: none;
           border: 1.5px solid rgba(255,255,255,0.35);
-          cursor: pointer; will-change: transform;
-          backdrop-filter: blur(8px);
+          cursor: pointer; will-change: transform; backdrop-filter: blur(8px);
         }
 
         #particles { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
 
-        /* ── THEME TOGGLE ── */
         .theme-toggle {
           position: fixed; bottom: clamp(14px,3vw,24px); right: clamp(14px,3vw,24px);
           z-index: 1001; width: 46px; height: 46px; border-radius: 50%;
@@ -1758,21 +1863,15 @@ export default function Home() {
           border: 1.5px solid var(--accent);
           color: var(--accent); font-size: 1.05rem; cursor: pointer;
           display: flex; align-items: center; justify-content: center;
-          /* Only shadow transitions — avoids layout recalc */
           box-shadow: var(--electric-glow), var(--shadow);
-          backdrop-filter: blur(20px);
-          -webkit-backdrop-filter: blur(20px);
-          overflow: hidden;
+          backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); overflow: hidden;
         }
 
-        /* ── NAVBAR ── */
         #navbar {
           position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
           display: flex; align-items: center; gap: clamp(10px,2vw,24px);
-          padding-left: clamp(16px,3vw,40px);
-          padding-right: clamp(16px,3vw,40px);
-          backdrop-filter: blur(20px);
-          -webkit-backdrop-filter: blur(20px);
+          padding-left: clamp(16px,3vw,40px); padding-right: clamp(16px,3vw,40px);
+          backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
           border-bottom: 1px solid rgba(0,229,255,0.08);
         }
         .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
@@ -1781,22 +1880,10 @@ export default function Home() {
         .nav-logo-name { font-family: 'Instrument Serif', serif; font-size: clamp(.82rem,1.3vw,.96rem); font-weight: 400; color: var(--text); line-height: 1.2; }
         .nav-logo-sub { font-size: clamp(.56rem,.85vw,.68rem); color: var(--accent); letter-spacing: .08em; text-transform: uppercase; font-weight: 700; }
         .nav-links { display: flex; list-style: none; gap: clamp(2px,1.2vw,18px); flex: 1; justify-content: center; }
-        .nav-link {
-          text-decoration: none; font-size: clamp(.72rem,.98vw,.84rem);
-          font-weight: 600; color: var(--text2); letter-spacing: .04em; text-transform: uppercase;
-          padding: 6px 10px; border-radius: 8px; transition: color .18s, background-color .18s;
-        }
+        .nav-link { text-decoration: none; font-size: clamp(.72rem,.98vw,.84rem); font-weight: 600; color: var(--text2); letter-spacing: .04em; text-transform: uppercase; padding: 6px 10px; border-radius: 8px; transition: color .18s, background-color .18s; }
         .nav-link:hover { background-color: var(--accent-dim); }
         .nav-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-        .nav-cta {
-          display: inline-flex; align-items: center; padding: 9px 18px;
-          min-height: 40px;
-          border-radius: 40px; background-color: var(--accent); color: #0D0D0D;
-          font-size: clamp(.66rem,.92vw,.78rem); font-weight: 800; letter-spacing: .07em; text-transform: uppercase;
-          text-decoration: none; white-space: nowrap;
-          transition: background-color .2s;
-          box-shadow: 0 0 12px rgba(0,229,255,.2);
-        }
+        .nav-cta { display: inline-flex; align-items: center; padding: 9px 18px; min-height: 40px; border-radius: 40px; background-color: var(--accent); color: #0D0D0D; font-size: clamp(.66rem,.92vw,.78rem); font-weight: 800; letter-spacing: .07em; text-transform: uppercase; text-decoration: none; white-space: nowrap; transition: background-color .2s; box-shadow: 0 0 12px rgba(0,229,255,.2); }
         .nav-cta:hover { background-color: var(--accent-warm); }
         .hamburger { display: none; flex-direction: column; justify-content: space-between; width: 24px; height: 16px; background: none; border: none; cursor: pointer; padding: 0; }
         .hamburger span { display: block; height: 2px; background: var(--text); border-radius: 2px; transition: all .28s; }
@@ -1805,56 +1892,280 @@ export default function Home() {
         .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
         @media (max-width:860px) { .nav-links { display: none; } .nav-cta { display: none; } .hamburger { display: flex; } }
 
-        /* ── MOBILE MENU ── */
         .mobile-overlay { position: fixed; inset: 0; z-index: 998; background: rgba(13,13,13,.82); backdrop-filter: blur(6px); }
-        .mobile-menu {
-          position: fixed; top: 0; right: 0;
-          width: min(300px,88vw); height: 100dvh;
-          background: var(--surface-solid);
-          z-index: 999; list-style: none;
-          padding: 80px 28px 32px;
-          display: flex; flex-direction: column; gap: 4px;
-          box-shadow: -12px 0 50px rgba(0,0,0,.6);
-          overflow-y: auto;
-          border-left: 1px solid rgba(0,229,255,.12);
-        }
+        .mobile-menu { position: fixed; top: 0; right: 0; width: min(300px,88vw); height: 100dvh; background: var(--surface-solid); z-index: 999; list-style: none; padding: 80px 28px 32px; display: flex; flex-direction: column; gap: 4px; box-shadow: -12px 0 50px rgba(0,0,0,.6); overflow-y: auto; border-left: 1px solid rgba(0,229,255,.12); }
         .mobile-menu a { display: flex; padding: 16px 0; min-height: 52px; align-items: center; color: var(--text2); text-decoration: none; font-size: 1.05rem; font-weight: 600; border-bottom: 1px solid var(--border); transition: color .2s; }
         .mobile-menu a:hover { color: var(--accent); }
         .mobile-cta { margin-top: 12px !important; background-color: var(--accent) !important; color: #0D0D0D !important; text-align: center; border-radius: 40px; border: none !important; padding: 13px 0 !important; justify-content: center !important; }
 
-        /* ── HERO ── */
-        .hero { position: relative; min-height: 100svh; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; padding: 0; max-width: 100%; }
-        .hero-bg { position: absolute; inset: 0; background: url('/photos/IMG_4616.jpg') center/cover no-repeat; transform: scale(1.04); z-index: 0; filter: brightness(0.42) saturate(0.55); }
-        .hero-grad { position: absolute; inset: 0; z-index: 1; background: linear-gradient(to bottom, rgba(13,13,13,.5) 0%, rgba(13,13,13,.18) 35%, rgba(13,13,13,.72) 72%, rgba(13,13,13,1) 100%); }
-        .hero-orb { position: absolute; border-radius: 50%; z-index: 1; pointer-events: none; }
-        .hero-orb-1 { width: clamp(300px,50vw,600px); height: clamp(300px,50vw,600px); background: radial-gradient(circle, rgba(0,229,255,0.07) 0%, transparent 70%); top: 8%; left: -10%; }
-        .hero-orb-2 { width: clamp(240px,40vw,500px); height: clamp(240px,40vw,500px); background: radial-gradient(circle, rgba(0,229,255,0.05) 0%, transparent 70%); bottom: 12%; right: -8%; }
-        .hero-content { position: relative; z-index: 2; text-align: center; padding: 140px clamp(20px,6vw,60px) clamp(80px,12vw,120px); max-width: 820px; margin: 0 auto; width: 100%; }
-        .hero-eyebrow { display: inline-block; font-size: clamp(.62rem,1vw,.76rem); font-weight: 800; letter-spacing: .25em; text-transform: uppercase; color: var(--accent); margin-bottom: 18px; padding: 5px 16px; border: 1px solid rgba(0,229,255,.25); border-radius: 40px; background: rgba(0,229,255,.06); backdrop-filter: blur(8px); box-shadow: 0 0 12px rgba(0,229,255,.1); }
-        .hero-h1 { font-family: 'Instrument Serif', serif; font-size: clamp(2.8rem,7.5vw,6rem); font-weight: 400; color: #fff; line-height: 1.06; letter-spacing: -0.02em; margin-bottom: clamp(14px,2.2vw,22px); }
-        .hero-h1 span { color: var(--accent); font-style: italic; text-shadow: 0 0 40px rgba(0,229,255,.4); }
-        .hero-tagline { font-family: 'Instrument Serif', serif; font-style: italic; font-size: clamp(1rem,2vw,1.32rem); color: rgba(255,255,255,.76); line-height: 1.68; max-width: 560px; margin: 0 auto clamp(28px,4vw,44px); }
-        .hero-btns { display: flex; gap: clamp(10px,2vw,14px); justify-content: center; flex-wrap: wrap; margin-bottom: clamp(40px,7vw,70px); }
-        .hero-infobar {
-          display: grid;
-          grid-template-columns: 1fr auto 1fr auto 1fr;
-          align-items: center; justify-items: center;
-          gap: clamp(8px,2vw,20px);
-          padding: clamp(14px,2vw,20px) clamp(16px,3vw,32px);
-          background: rgba(255,255,255,.04);
-          backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-          border: 1px solid rgba(0,229,255,.12); border-radius: var(--radius);
-          max-width: 660px; margin: 0 auto;
-          box-shadow: 0 0 24px rgba(0,229,255,.05);
+        /* ═══════════════════════════════════════════
+           ✦ HERO — NEW VISION MINISTRY DESIGN
+        ═══════════════════════════════════════════ */
+        .hero {
+          position: relative;
+          min-height: 100svh;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          overflow: hidden;
+          padding: 0;
+          max-width: 100%;
+          /* Force pure black regardless of theme */
+          background: #000 !important;
         }
-        .hero-info-item { text-align: center; min-width: 0; }
-        .hi-label { display: block; font-size: clamp(.58rem,.9vw,.72rem); font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: 3px; white-space: nowrap; }
-        .hi-val   { display: block; font-size: clamp(.72rem,1vw,.84rem); color: rgba(255,255,255,.76); word-break: break-word; }
-        .hi-sep   { width: 1px; height: 28px; background: rgba(0,229,255,.15); flex-shrink: 0; }
-        @media (max-width:480px) { .hero-infobar { grid-template-columns: 1fr 1fr 1fr; column-gap: 6px; } .hi-sep { display: none; } }
-        @media (max-width:360px) { .hero-infobar { grid-template-columns: 1fr 1fr; } }
-        .hero-scroll { position: absolute; bottom: 26px; left: 50%; transform: translateX(-50%); z-index: 2; width: 26px; height: 40px; border: 1.5px solid rgba(255,255,255,.18); border-radius: 13px; display: flex; align-items: flex-start; justify-content: center; padding-top: 6px; }
-        .scroll-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,.65); }
+
+        /* Pure matte black base */
+        .hero-black-bg {
+          position: absolute; inset: 0;
+          background: #000;
+          z-index: 0;
+        }
+
+        /* Subtle grain/noise texture */
+        .hero-noise {
+          position: absolute; inset: 0; z-index: 1; pointer-events: none;
+          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+          background-size: 200px 200px;
+          opacity: 0.6;
+        }
+
+        /* Thin horizontal lines — architectural accent */
+        .hero-rule-top {
+          position: absolute; top: 0; left: 0; right: 0; z-index: 2;
+          height: 1px;
+          background: linear-gradient(to right, transparent, rgba(255,255,255,0.12) 30%, rgba(255,255,255,0.12) 70%, transparent);
+        }
+
+        /* Hero content container */
+        .hero-content-vision {
+          position: relative; z-index: 3;
+          text-align: center;
+          padding: clamp(100px,12vw,140px) clamp(20px,6vw,80px) clamp(80px,10vw,120px);
+          max-width: 1000px; margin: 0 auto; width: 100%;
+          display: flex; flex-direction: column; align-items: center; gap: 0;
+        }
+
+        /* Overline */
+        .hero-overline {
+          font-size: clamp(.62rem,.9vw,.72rem);
+          font-weight: 700;
+          letter-spacing: .28em;
+          text-transform: uppercase;
+          color: rgba(255,255,255,0.38);
+          margin-bottom: clamp(20px,3vw,32px);
+        }
+
+        /* ✦ The big headline — matches screenshot */
+        .hero-h1-vision {
+          font-family: 'Archivo Black', 'Inter Tight', sans-serif;
+          font-size: clamp(2.8rem,8.5vw,7.2rem);
+          font-weight: 900;
+          color: #ffffff;
+          line-height: 1.02;
+          letter-spacing: -0.03em;
+          margin-bottom: clamp(20px,2.8vw,32px);
+          text-align: center;
+        }
+
+        /* Subtitle */
+        .hero-sub-vision {
+          font-size: clamp(.92rem,1.5vw,1.18rem);
+          color: rgba(255,255,255,0.5);
+          line-height: 1.72;
+          max-width: 520px;
+          margin-bottom: clamp(36px,5vw,52px);
+          font-weight: 400;
+        }
+
+        /* Button row */
+        .hero-btns-vision {
+          display: flex;
+          gap: clamp(10px,1.8vw,16px);
+          justify-content: center;
+          flex-wrap: wrap;
+          margin-bottom: clamp(40px,6vw,64px);
+        }
+
+        /* Primary CTA — filled white (matches screenshot) */
+        .hero-btn-primary-vision {
+          display: inline-flex; align-items: center; justify-content: center;
+          padding: clamp(14px,1.8vw,17px) clamp(28px,3.8vw,44px);
+          min-height: 52px;
+          border-radius: 100px;
+          background: #ffffff;
+          color: #000000;
+          font-size: clamp(.82rem,1.2vw,.96rem);
+          font-weight: 700;
+          letter-spacing: .04em;
+          text-decoration: none;
+          border: none;
+          cursor: pointer;
+          will-change: transform;
+          transition: background-color .18s;
+          white-space: nowrap;
+        }
+
+        /* Secondary CTA — outlined white (matches screenshot) */
+        .hero-btn-outline-vision {
+          display: inline-flex; align-items: center; justify-content: center;
+          padding: clamp(14px,1.8vw,17px) clamp(28px,3.8vw,44px);
+          min-height: 52px;
+          border-radius: 100px;
+          background: transparent;
+          color: #ffffff;
+          font-size: clamp(.82rem,1.2vw,.96rem);
+          font-weight: 700;
+          letter-spacing: .04em;
+          border: 1.5px solid rgba(255,255,255,0.45);
+          cursor: pointer;
+          will-change: transform;
+          white-space: nowrap;
+          transition: background-color .2s, border-color .2s;
+          backdrop-filter: blur(8px);
+        }
+
+        /* Info strip */
+        .hero-infostrip {
+          display: flex; align-items: center; gap: 12px;
+          font-size: clamp(.7rem,.95vw,.82rem);
+          color: rgba(255,255,255,0.28);
+          font-weight: 500;
+          letter-spacing: .04em;
+        }
+        .strip-dot { color: rgba(255,255,255,0.18); }
+
+        /* Scroll indicator */
+        .hero-scroll-vision {
+          position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
+          z-index: 3; width: 24px; height: 38px;
+          border: 1.5px solid rgba(255,255,255,0.16);
+          border-radius: 12px;
+          display: flex; align-items: flex-start; justify-content: center; padding-top: 6px;
+        }
+        .scroll-dot-vision {
+          width: 4px; height: 4px; border-radius: 50%;
+          background: rgba(255,255,255,0.5);
+        }
+
+        @media (max-width:480px) {
+          .hero-h1-vision { font-size: clamp(2.4rem,10vw,3.2rem); }
+          .hero-btns-vision { flex-direction: column; align-items: center; width: 100%; max-width: 320px; }
+          .hero-btn-primary-vision, .hero-btn-outline-vision { width: 100%; justify-content: center; }
+          .hero-infostrip { flex-direction: column; gap: 4px; text-align: center; }
+          .strip-dot { display: none; }
+        }
+
+        /* ═══════════════════════════════════════════
+           ✦ CAL.COM BOOKING MODAL
+        ═══════════════════════════════════════════ */
+        .cal-overlay {
+          position: fixed; inset: 0; z-index: 9000;
+          background: rgba(0,0,0,0.88);
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
+          display: flex; align-items: center; justify-content: center;
+          padding: 16px;
+        }
+
+        .cal-modal {
+          background: #0a0a0f;
+          border: 1px solid rgba(255,255,255,0.1);
+          border-radius: 20px;
+          width: 100%;
+          max-width: 900px;
+          height: min(90dvh, 720px);
+          display: flex;
+          flex-direction: column;
+          overflow: hidden;
+          box-shadow:
+            0 0 0 1px rgba(0,229,255,0.06),
+            0 40px 100px rgba(0,0,0,0.9),
+            0 0 60px rgba(0,229,255,0.04);
+        }
+
+        .cal-header {
+          display: flex; align-items: center; justify-content: space-between;
+          gap: 12px;
+          padding: 18px 22px 16px;
+          border-bottom: 1px solid rgba(255,255,255,0.06);
+          background: rgba(255,255,255,0.02);
+          flex-shrink: 0;
+        }
+        .cal-header-left { flex: 1; min-width: 0; }
+        .cal-eyebrow {
+          font-size: .58rem; font-weight: 800; letter-spacing: .22em;
+          text-transform: uppercase; color: rgba(0,229,255,0.7);
+          margin-bottom: 4px;
+        }
+        .cal-title {
+          font-family: 'Instrument Serif', serif;
+          font-size: clamp(.96rem,1.8vw,1.2rem);
+          color: #fff; font-weight: 400;
+        }
+        .cal-close {
+          background: rgba(255,255,255,0.06);
+          border: 1px solid rgba(255,255,255,0.1);
+          color: rgba(255,255,255,0.6);
+          width: 34px; height: 34px; border-radius: 50%;
+          cursor: pointer; font-size: .8rem;
+          display: flex; align-items: center; justify-content: center;
+          transition: background-color .2s, color .2s, border-color .2s;
+          flex-shrink: 0;
+        }
+        .cal-close:hover {
+          background-color: rgba(0,229,255,0.15);
+          color: #00E5FF;
+          border-color: rgba(0,229,255,0.3);
+        }
+
+        .cal-body {
+          flex: 1;
+          position: relative;
+          overflow: hidden;
+          background: #fff; /* Cal.com uses white bg */
+        }
+
+        .cal-body iframe {
+          position: absolute; inset: 0;
+          width: 100%; height: 100%;
+          border: none;
+        }
+
+        .cal-loading {
+          position: absolute; inset: 0;
+          display: flex; flex-direction: column;
+          align-items: center; justify-content: center;
+          gap: 14px;
+          background: #fff;
+          z-index: 2;
+        }
+        .cal-loading-cross {
+          font-size: 2.4rem;
+          color: #000;
+          opacity: 0.2;
+        }
+        .cal-loading-text {
+          font-size: .84rem;
+          color: rgba(0,0,0,0.4);
+          letter-spacing: .06em;
+          font-weight: 600;
+        }
+
+        .cal-footer {
+          display: flex; align-items: center; justify-content: space-between;
+          padding: 10px 20px;
+          border-top: 1px solid rgba(255,255,255,0.06);
+          font-size: .7rem;
+          color: rgba(255,255,255,0.3);
+          flex-shrink: 0;
+          background: rgba(255,255,255,0.01);
+        }
+
+        @media (max-width:600px) {
+          .cal-modal { height: 96dvh; border-radius: 16px; }
+          .cal-footer { display: none; }
+        }
 
         /* ── SCROLL BRIDGE ── */
         .scroll-bridge { display: flex; align-items: center; justify-content: center; gap: 16px; padding: clamp(12px,2vw,20px) clamp(16px,5vw,52px); position: relative; z-index: 1; }
@@ -1864,15 +2175,7 @@ export default function Home() {
 
         /* ── VIDEO OF THE DAY ── */
         #video-of-day { padding-top: clamp(24px,4vw,48px); padding-bottom: var(--section-py); }
-        .votd-card {
-          max-width: var(--container); margin: 0 auto;
-          background: var(--glass-bg);
-          border: 1px solid var(--glass-border);
-          overflow: hidden; position: relative;
-          box-shadow: var(--shadow);
-          backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-          border-radius: calc(var(--radius)*1.2);
-        }
+        .votd-card { max-width: var(--container); margin: 0 auto; background: var(--glass-bg); border: 1px solid var(--glass-border); overflow: hidden; position: relative; box-shadow: var(--shadow); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-radius: calc(var(--radius)*1.2); }
         .votd-badge { position: absolute; top: 14px; left: 14px; z-index: 2; background-color: var(--accent); color: #0D0D0D; font-size: .68rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; padding: 4px 13px; border-radius: 40px; }
         .votd-info { padding: clamp(14px,2.2vw,26px) clamp(18px,2.8vw,32px); display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; background: var(--glass-bg); }
         .votd-info-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
@@ -1880,30 +2183,12 @@ export default function Home() {
         .vid-yt-link { font-size: .76rem; font-weight: 700; letter-spacing: .05em; color: var(--accent); text-decoration: none; text-transform: uppercase; }
         .vid-yt-link:hover { opacity: .7; }
 
-        /* ── SUMMARY BUTTON ── */
-        .vid-summary-btn {
-          display: inline-flex; align-items: center; gap: 5px;
-          padding: 6px 13px; min-height: 32px;
-          border-radius: 40px;
-          background: var(--accent-dim);
-          border: 1px solid rgba(0,229,255,.3);
-          color: var(--accent);
-          font-size: .7rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
-          cursor: pointer; white-space: nowrap;
-          transition: background-color .2s, color .2s;
-        }
+        .vid-summary-btn { display: inline-flex; align-items: center; gap: 5px; padding: 6px 13px; min-height: 32px; border-radius: 40px; background: var(--accent-dim); border: 1px solid rgba(0,229,255,.3); color: var(--accent); font-size: .7rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; cursor: pointer; white-space: nowrap; transition: background-color .2s, color .2s; }
         .vid-summary-btn:hover { background-color: var(--accent); color: #0D0D0D; }
 
-        /* ── VIDEO CARDS ── */
         .sermons-wrap { max-width: calc(var(--container) + 32px); margin: 0 auto; }
         .sermons-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(clamp(260px,27vw,340px),1fr)); gap: var(--gap); margin-top: clamp(28px,4vw,48px); }
-        .vid-card {
-          background: var(--glass-bg); border: 1px solid var(--glass-border);
-          border-radius: var(--radius); overflow: hidden;
-          transition: border-color .25s;
-          box-shadow: var(--shadow);
-          backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-        }
+        .vid-card { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius); overflow: hidden; transition: border-color .25s; box-shadow: var(--shadow); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
         .vid-thumb-wrap { position: relative; width: 100%; padding-top: 56.25%; cursor: pointer; overflow: hidden; background: var(--surface2); }
         .vid-thumb-wrap img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .45s ease; }
         .vid-card:hover .vid-thumb-wrap img { transform: scale(1.05); }
@@ -1915,72 +2200,24 @@ export default function Home() {
         .vid-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 
         /* ── SUMMARY MODAL ── */
-        .summary-overlay {
-          position: fixed; inset: 0; z-index: 2500;
-          background: rgba(13,13,13,.92);
-          backdrop-filter: blur(14px);
-          display: flex; align-items: center; justify-content: center;
-          padding: 16px;
-        }
-        .summary-box {
-          background: var(--surface-solid);
-          border: 1px solid rgba(0,229,255,.2);
-          border-radius: calc(var(--radius)*1.5);
-          width: 100%; max-width: 580px;
-          max-height: 90dvh;
-          display: flex; flex-direction: column;
-          overflow: hidden;
-          box-shadow: 0 40px 100px rgba(0,0,0,.85), 0 0 50px rgba(0,229,255,.08);
-        }
-        .summary-header {
-          display: flex; align-items: flex-start; justify-content: space-between;
-          gap: 12px; padding: 20px 22px 16px;
-          border-bottom: 1px solid var(--border);
-        }
+        .summary-overlay { position: fixed; inset: 0; z-index: 2500; background: rgba(13,13,13,.92); backdrop-filter: blur(14px); display: flex; align-items: center; justify-content: center; padding: 16px; }
+        .summary-box { background: var(--surface-solid); border: 1px solid rgba(0,229,255,.2); border-radius: calc(var(--radius)*1.5); width: 100%; max-width: 580px; max-height: 90dvh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 40px 100px rgba(0,0,0,.85), 0 0 50px rgba(0,229,255,.08); }
+        .summary-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 20px 22px 16px; border-bottom: 1px solid var(--border); }
         .summary-header-left { flex: 1; min-width: 0; }
         .summary-eyebrow { font-size: .6rem; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); margin-bottom: 5px; }
         .summary-title { font-family: 'Instrument Serif', serif; font-size: clamp(1rem,2.2vw,1.32rem); color: var(--text); font-weight: 400; line-height: 1.3; }
-        .summary-close {
-          background: transparent; border: 1px solid var(--border);
-          color: var(--text); width: 32px; height: 32px; border-radius: 50%;
-          cursor: pointer; font-size: .8rem; display: flex; align-items: center; justify-content: center;
-          transition: background-color .2s, color .2s; flex-shrink: 0;
-        }
+        .summary-close { background: transparent; border: 1px solid var(--border); color: var(--text); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: .8rem; display: flex; align-items: center; justify-content: center; transition: background-color .2s, color .2s; flex-shrink: 0; }
         .summary-close:hover { background-color: var(--accent); color: #0D0D0D; border-color: var(--accent); }
-        .summary-thumb {
-          position: relative; width: 100%; padding-top: 40%;
-          overflow: hidden; flex-shrink: 0;
-        }
+        .summary-thumb { position: relative; width: 100%; padding-top: 40%; overflow: hidden; flex-shrink: 0; }
         .summary-thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
         .summary-thumb-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 40%, rgba(13,13,13,.7) 100%); }
-        .summary-play-hint {
-          position: absolute; bottom: 12px; left: 16px;
-          font-size: .65rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
-          color: rgba(255,255,255,.6);
-        }
+        .summary-play-hint { position: absolute; bottom: 12px; left: 16px; font-size: .65rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.6); }
         .summary-body { flex: 1; overflow-y: auto; padding: 22px 22px 8px; }
-        .summary-text {
-          font-family: 'Instrument Serif', serif;
-          font-size: clamp(.94rem,1.5vw,1.06rem);
-          line-height: 1.85; color: var(--text2);
-          font-style: italic;
-        }
+        .summary-text { font-family: 'Instrument Serif', serif; font-size: clamp(.94rem,1.5vw,1.06rem); line-height: 1.85; color: var(--text2); font-style: italic; }
         .summary-word { display: inline; }
         .summary-no-text { color: var(--text-muted); font-style: italic; font-size: .9rem; }
-        .summary-footer {
-          display: flex; gap: 8px; flex-wrap: wrap;
-          padding: 16px 22px 20px;
-          border-top: 1px solid var(--border);
-        }
-        .summary-btn {
-          flex: 1; min-width: 110px;
-          padding: 11px 16px; min-height: 44px;
-          border-radius: var(--radius-sm);
-          font-size: .76rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase;
-          cursor: pointer; border: none; text-decoration: none;
-          display: inline-flex; align-items: center; justify-content: center;
-          transition: opacity .2s;
-        }
+        .summary-footer { display: flex; gap: 8px; flex-wrap: wrap; padding: 16px 22px 20px; border-top: 1px solid var(--border); }
+        .summary-btn { flex: 1; min-width: 110px; padding: 11px 16px; min-height: 44px; border-radius: var(--radius-sm); font-size: .76rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; cursor: pointer; border: none; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; transition: opacity .2s; }
         .summary-btn-watch { background-color: var(--accent); color: #0D0D0D; }
         .summary-btn-watch:hover { opacity: .88; }
         .summary-btn-share { background: transparent; border: 1px solid var(--glass-border) !important; color: var(--text2); }
@@ -2002,26 +2239,13 @@ export default function Home() {
 
         /* ── SATURDAY ── */
         .sat-outer { position: relative; max-width: var(--container); margin: clamp(24px,4vw,48px) auto 0; }
-        .sat-typeback {
-          position: absolute; top: 50%; left: 50%;
-          transform: translate(-50%, -50%);
-          font-family: 'Archivo Black', sans-serif;
-          font-size: clamp(48px,10vw,160px);
-          color: transparent;
-          -webkit-text-stroke: 1px rgba(0,229,255,0.05);
-          white-space: nowrap; pointer-events: none; z-index: 0;
-          letter-spacing: .06em; user-select: none;
-          overflow: hidden; max-width: 100%;
-        }
+        .sat-typeback { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-family: 'Archivo Black', sans-serif; font-size: clamp(48px,10vw,160px); color: transparent; -webkit-text-stroke: 1px rgba(0,229,255,0.05); white-space: nowrap; pointer-events: none; z-index: 0; letter-spacing: .06em; user-select: none; overflow: hidden; max-width: 100%; }
         [data-theme='light'] .sat-typeback { -webkit-text-stroke: 1px rgba(0,100,160,0.04); }
         .sat-wrap { position: relative; border-radius: calc(var(--radius)*1.5); overflow: hidden; box-shadow: var(--shadow); cursor: pointer; z-index: 1; }
         .sat-wrap img { width: 100%; height: clamp(280px,44vw,500px); object-fit: cover; filter: brightness(.5) saturate(.65); transition: filter .45s; }
         .sat-wrap:hover img { filter: brightness(.65) saturate(.8); }
         .sat-grad { position: absolute; inset: 0; background: linear-gradient(to top, rgba(13,13,13,.95) 0%, transparent 55%); }
-        .sat-info {
-          position: absolute; bottom: clamp(14px,3vw,36px); left: clamp(14px,3vw,40px); right: clamp(14px,3vw,40px);
-          display: flex; align-items: center; gap: clamp(10px,2vw,22px); flex-wrap: wrap;
-        }
+        .sat-info { position: absolute; bottom: clamp(14px,3vw,36px); left: clamp(14px,3vw,40px); right: clamp(14px,3vw,40px); display: flex; align-items: center; gap: clamp(10px,2vw,22px); flex-wrap: wrap; }
         .sat-label { font-size: .62rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); margin-bottom: 3px; }
         .sat-val { font-family: 'Instrument Serif', serif; font-size: clamp(.9rem,1.6vw,1.28rem); color: #fff; }
         .sat-badge { position: absolute; top: 16px; right: 16px; background: rgba(0,229,255,.1); backdrop-filter: blur(12px); border: 1px solid rgba(0,229,255,.25); color: var(--accent); font-size: .66rem; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; padding: 5px 14px; border-radius: 40px; }
@@ -2038,15 +2262,7 @@ export default function Home() {
         .s-dot.active { background-color: var(--accent); box-shadow: 0 0 8px rgba(0,229,255,.5); }
 
         /* ── DOCUMENTS ── */
-        .search-btn-mobile {
-          display: inline-flex; align-items: center; gap: 8px;
-          padding: 12px 22px; min-height: 48px;
-          background: var(--glass-bg); border: 1.5px solid var(--glass-border);
-          border-radius: 40px; color: var(--text2);
-          font-size: .88rem; font-weight: 600; cursor: pointer;
-          margin-top: 24px;
-          transition: border-color .2s, color .2s;
-        }
+        .search-btn-mobile { display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; min-height: 48px; background: var(--glass-bg); border: 1.5px solid var(--glass-border); border-radius: 40px; color: var(--text2); font-size: .88rem; font-weight: 600; cursor: pointer; margin-top: 24px; transition: border-color .2s, color .2s; }
         .search-btn-mobile:hover { border-color: var(--accent); color: var(--text); }
         .cmd-trigger { display: inline-flex; align-items: center; gap: 10px; padding: 12px 20px; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 40px; color: var(--text-muted); font-size: clamp(.78rem,1.2vw,.88rem); font-weight: 600; cursor: pointer; margin-top: 28px; transition: border-color .2s; min-width: min(320px, 90vw); justify-content: space-between; backdrop-filter: blur(16px); }
         .cmd-trigger:hover { border-color: var(--accent); color: var(--text); }
@@ -2094,26 +2310,10 @@ export default function Home() {
         .pdf-dl  { background-color: var(--accent); color: #0D0D0D; }
         .pdf-wa  { background: #25D366; color: #fff; }
 
-        /* ── PRAYER MODE TOGGLE ── */
-        .prayer-mode-toggle {
-          display: flex; gap: 8px;
-          background: var(--surface2);
-          border: 1px solid var(--glass-border);
-          border-radius: 40px;
-          padding: 5px;
-          margin-bottom: 32px;
-          max-width: 360px;
-        }
-        .pmt-btn {
-          flex: 1; padding: 11px 16px; min-height: 44px;
-          border-radius: 40px; border: none; cursor: pointer;
-          font-size: .78rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
-          color: var(--text-muted); background: transparent;
-          transition: all .3s cubic-bezier(.4,0,.2,1);
-        }
+        /* ── PRAYER ── */
+        .prayer-mode-toggle { display: flex; gap: 8px; background: var(--surface2); border: 1px solid var(--glass-border); border-radius: 40px; padding: 5px; margin-bottom: 32px; max-width: 360px; }
+        .pmt-btn { flex: 1; padding: 11px 16px; min-height: 44px; border-radius: 40px; border: none; cursor: pointer; font-size: .78rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--text-muted); background: transparent; transition: all .3s cubic-bezier(.4,0,.2,1); }
         .pmt-btn.active { background-color: var(--accent); color: #0D0D0D; box-shadow: 0 0 16px rgba(0,229,255,.35); }
-
-        /* ── PRAYER SECTION ── */
         .prayer-wrap { max-width: 660px; margin: 0 auto; }
         .prayer-verse { font-family: 'Instrument Serif', serif; font-style: italic; font-size: clamp(.9rem,1.4vw,1.05rem); color: var(--text2); line-height: 1.74; padding: 16px 22px; border-left: 2px solid var(--accent); background: var(--accent-dim); border-radius: 0 var(--radius) var(--radius) 0; margin: 20px 0 0; text-align: left; }
         .prayer-form { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: calc(var(--radius)*1.4); padding: clamp(22px,3.5vw,42px); margin-top: 32px; display: flex; flex-direction: column; gap: 16px; box-shadow: var(--shadow); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
@@ -2240,33 +2440,26 @@ export default function Home() {
         .votd-play svg { width: 76px; height: 76px; fill: rgba(255,255,255,.92); filter: drop-shadow(0 4px 20px rgba(0,0,0,.55)); transition: transform .22s; }
         .votd-player-wrap:hover .votd-play svg { transform: scale(1.09); }
 
-        /* ── MOBILE SPECIFICS ── */
-        @media (max-width:390px) {
-          .hero-btns { flex-direction: column; align-items: center; gap: 12px; }
-          .btn-primary, .btn-ghost { width: 100%; max-width: 280px; justify-content: center; }
-          .prayer-mode-toggle { max-width: 100%; }
-          .sat-typeback { font-size: clamp(40px,9vw,80px); }
-          .docs-grid { grid-template-columns: 1fr 1fr; }
-          .social-grid { grid-template-columns: 1fr 1fr; }
-          .cm-options { flex-direction: column; }
-          .cm-btn { min-width: unset; }
-          .summary-thumb { padding-top: 52%; }
-        }
+        /* ── MOBILE ── */
         @media (max-width:640px) {
-          .hero-btns { flex-wrap: wrap; justify-content: center; }
           .pdf-footer { flex-direction: column; }
           .pdf-btn { width: 100%; }
           .sat-info { flex-direction: column; align-items: flex-start; gap: 10px; }
           .summary-footer { flex-direction: column; }
           .summary-btn { width: 100%; }
         }
+        @media (max-width:390px) {
+          .docs-grid { grid-template-columns: 1fr 1fr; }
+          .social-grid { grid-template-columns: 1fr 1fr; }
+          .prayer-mode-toggle { max-width: 100%; }
+          .sat-typeback { font-size: clamp(40px,9vw,80px); }
+          .cm-options { flex-direction: column; }
+        }
 
-        /* ── ACCESSIBILITY ── */
         @media (prefers-reduced-motion: reduce) {
           *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
         }
 
-        /* ── SCROLLBAR ── */
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(0,229,255,.2); border-radius: 2px; }
